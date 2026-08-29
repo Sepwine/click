@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Connect</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <style>
+    :root {
+      --bg-light: #fafafa;
+      --text-main: #262626;
+      --border-color: #dbdbdb;
+      --accent: #0095f6;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-main);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 顶部导航栏 */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      border-bottom: 1px solid var(--border-color);
+      background: #fff;
+    }
+    .logo {
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    .profile-trigger {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      overflow: hidden;
+      cursor: pointer;
+      border: 1px solid var(--border-color);
+    }
+    .profile-trigger img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* 状态按钮区 */
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .button-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      width: 100%;
+      max-width: 350px;
+    }
+    .action-btn {
+      background: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 25px 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: var(--text-main);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .action-btn:active {
+      background-color: #f0f0f0;
+      transform: scale(0.97);
+    }
+    .btn-icon { font-size: 2rem; }
+    .btn-label { font-size: 0.9rem; font-weight: 500; }
+
+    /* 模态框 (个人信息面板) */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(8px);
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-content {
+      background: #fff;
+      width: 100%;
+      max-width: 450px;
+      border-radius: 20px 20px 0 0;
+      padding: 30px 20px;
+      box-sizing: border-box;
+      transform: translateY(100%);
+      transition: transform 0.3s cubic-bezier(0.1, 0.8, 0.2, 1);
+    }
+    .modal-overlay.active .modal-content {
+      transform: translateY(0);
+    }
+
+    /* 双人羁绊区 */
+    .connection-avatars {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .avatar-wrapper {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(45deg, #d3cce3, #e9e4f0);
+      cursor: pointer;
+      position: relative;
+    }
+    .avatar-wrapper img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #fff;
+      box-sizing: border-box;
+    }
+    .avatar-wrapper::after {
+      content: '+';
+      position: absolute;
+      bottom: -5px; right: -5px;
+      background: var(--text-main);
+      color: #fff;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      display: flex; justify-content: center; align-items: center;
+      font-size: 12px; font-weight: bold;
+      border: 2px solid #fff;
+    }
+    .mobius {
+      font-size: 2rem;
+      color: #999;
+      font-weight: 300;
+    }
+
+    /* 链接分享区 */
+    .share-section {
+      text-align: center;
+    }
+    .share-btn {
+      background: var(--text-main);
+      color: #fff;
+      border: none;
+      padding: 14px 24px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+    .share-btn:active { background: #000; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Sync.</div>
+    <div class="profile-trigger" id="openModalBtn">
+      <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23efefef' width='100' height='100'/></svg>" id="headerAvatar">
+    </div>
+  </header>
+
+  <main>
+    <div class="button-container" id="buttonContainer"></div>
+  </main>
+
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-content" id="modalContent">
+      <div class="connection-avatars">
+        <div class="avatar-wrapper" id="myAvatarWrapper">
+          <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23efefef' width='100' height='100'/></svg>" id="myAvatar">
+        </div>
+        <div class="mobius">∞</div>
+        <div class="avatar-wrapper" id="partnerAvatarWrapper">
+          <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23efefef' width='100' height='100'/></svg>" id="partnerAvatar">
+        </div>
+      </div>
+      
+      <div class="share-section">
+        <button class="share-btn" id="shareBtn">
+          <span>🖇️ 获取专属连接</span>
+        </button>
+        <p style="font-size: 0.8rem; color: #888; margin-top: 12px;">对方打开连接并添加到主屏幕后，即可相互感应</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- 1. 界面初始化与按钮渲染 ---
+    const buttonsConfig = [
+      { id: "eat", icon: "🍴", label: "吃饭", msg: "对方准备去吃饭了" },
+      { id: "sleep", icon: "🌙", label: "睡觉", msg: "对方困了，准备休息" },
+      { id: "miss", icon: "🤍", label: "想你", msg: "对方正在想你" },
+      { id: "work", icon: "📖", label: "专注", msg: "对方开始认真了" }
+    ];
+
+    const container = document.getElementById('buttonContainer');
+    buttonsConfig.forEach(btn => {
+      const btnEl = document.createElement('button');
+      btnEl.className = 'action-btn';
+      btnEl.innerHTML = `<span class="btn-icon">${btn.icon}</span><span class="btn-label">${btn.label}</span>`;
+      btnEl.onclick = () => alert(`测试: 发送 "${btn.msg}"`);
+      container.appendChild(btnEl);
+    });
+
+    // --- 2. 模态框交互逻辑 ---
+    const modal = document.getElementById('modalOverlay');
+    const openBtn = document.getElementById('openModalBtn');
+    
+    openBtn.onclick = () => modal.classList.add('active');
+    modal.onclick = (e) => {
+      if (e.target === modal) modal.classList.remove('active');
+    };
+
+    // --- 3. 头像读取与修改逻辑 ---
+    function setupAvatar(wrapperId, imgIds, storageKey) {
+      const wrapper = document.getElementById(wrapperId);
+      const savedImage = localStorage.getItem(storageKey);
+      
+      if (savedImage) {
+        imgIds.forEach(id => document.getElementById(id).src = savedImage);
+      }
+
+      wrapper.onclick = () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/png, image/jpeg';
+        input.onchange = (e) => {
+          const file = e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+              const base64Str = event.target.result;
+              imgIds.forEach(id => document.getElementById(id).src = base64Str);
+              localStorage.setItem(storageKey, base64Str);
+            };
+            reader.readAsDataURL(file);
+          }
+        };
+        input.click();
+      };
+    }
+
+    setupAvatar('myAvatarWrapper', ['myAvatar', 'headerAvatar'], 'my_avatar_data');
+    setupAvatar('partnerAvatarWrapper', ['partnerAvatar'], 'partner_avatar_data');
+
+    // --- 4. 专属链接生成逻辑 ---
+    document.getElementById('shareBtn').onclick = () => {
+      let roomId = localStorage.getItem('sync_room_id');
+      if (!roomId) {
+        // 生成一段随机的房间标识符
+        roomId = Math.random().toString(36).substring(2, 15);
+        localStorage.setItem('sync_room_id', roomId);
+      }
+      const shareUrl = `${window.location.origin}${window.location.pathname}?room=${roomId}`;
+      
+      navigator.clipboard.writeText(shareUrl).then(() => {
+        alert("🔗 专属链接已复制！发送给对方即可配对。\n\n链接: " + shareUrl);
+      }).catch(() => {
+        alert("复制失败，请手动复制: " + shareUrl);
+      });
+    };
+  </script>
+</body>
+</html>
+ to
