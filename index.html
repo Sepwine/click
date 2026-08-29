@@ -3,259 +3,1721 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Click.</title>
+  <title>Sync.</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <style>
+
+  <style id="customStyle">
     :root {
       --bg-light: #fafafa;
       --text-main: #262626;
       --border-color: #dbdbdb;
       --accent: #0095f6;
     }
-    
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       background-color: var(--bg-light);
       color: var(--text-main);
-      margin: 0; padding: 0; min-height: 100vh;
-      display: flex; flex-direction: column;
-      user-select: none; /* 防止长按选中文本 */
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
     }
 
     header {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 15px 20px; border-bottom: 1px solid var(--border-color); background: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      border-bottom: 1px solid var(--border-color);
+      background: #fff;
     }
-    .logo { font-size: 1.2rem; font-weight: 600; letter-spacing: 1px; }
-    .profile-trigger {
-      width: 36px; height: 36px; border-radius: 50%; overflow: hidden;
-      cursor: pointer; border: 1px solid var(--border-color);
-    }
-    .profile-trigger img { width: 100%; height: 100%; object-fit: cover; }
 
-    main { flex: 1; display: flex; justify-content: center; align-items: flex-start; padding: 30px 20px; }
+    .logo {
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border-color);
+      background: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .header-btn:active {
+      transform: scale(0.94);
+      background: #f0f0f0;
+    }
+
+    .profile-trigger {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      overflow: hidden;
+      cursor: pointer;
+      border: 1px solid var(--border-color);
+    }
+
+    .profile-trigger img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 30px 20px;
+    }
+
     .button-container {
-      display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;
-      width: 100%; max-width: 350px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      width: 100%;
+      max-width: 350px;
     }
+
     .action-btn {
-      background: #fff; border: 1px solid var(--border-color); border-radius: 12px;
-      padding: 25px 15px; display: flex; flex-direction: column; align-items: center; gap: 12px;
-      cursor: pointer; transition: all 0.2s ease; color: var(--text-main);
-      -webkit-tap-highlight-color: transparent; position: relative;
+      background: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 25px 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: var(--text-main);
+      -webkit-tap-highlight-color: transparent;
+      position: relative;
+      touch-action: pan-y;
     }
-    .action-btn:active { background-color: #f0f0f0; transform: scale(0.97); }
-    .btn-icon { font-size: 2rem; pointer-events: none; }
-    .btn-label { font-size: 0.9rem; font-weight: 500; pointer-events: none; }
-    
-    /* 添加按钮样式 */
+
+    .action-btn:active {
+      background-color: #f0f0f0;
+      transform: scale(0.97);
+    }
+
+    .btn-icon {
+      font-size: 2rem;
+      pointer-events: none;
+    }
+
+    .btn-label {
+      font-size: 0.9rem;
+      font-weight: 500;
+      pointer-events: none;
+    }
+
     .add-btn {
-      background: transparent; border: 2px dashed var(--border-color);
+      background: transparent;
+      border: 2px dashed var(--border-color);
       color: #999;
     }
-    .add-btn:active { background: rgba(0,0,0,0.02); }
 
-    /* 通用模态框样式 */
+    .add-btn:active {
+      background: rgba(0,0,0,0.02);
+    }
+
+    /* =========================
+       模态框
+    ========================= */
+
     .modal-overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px);
-      display: flex; justify-content: center; align-items: flex-end;
-      opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(8px);
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
       z-index: 100;
     }
-    .modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
     .modal-content {
-      background: #fff; width: 100%; max-width: 450px;
-      border-radius: 20px 20px 0 0; padding: 30px 20px; box-sizing: border-box;
-      transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.1, 0.8, 0.2, 1);
+      background: #fff;
+      width: 100%;
+      max-width: 450px;
+      max-height: 90vh;
+      overflow-y: auto;
+      border-radius: 20px 20px 0 0;
+      padding: 30px 20px;
+      transform: translateY(100%);
+      transition: transform 0.3s cubic-bezier(0.1, 0.8, 0.2, 1);
     }
-    .modal-overlay.active .modal-content { transform: translateY(0); }
 
-    /* 个人中心羁绊区 */
-    .connection-avatars { display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 30px; }
-    .avatar-wrapper { width: 70px; height: 70px; border-radius: 50%; padding: 3px; background: linear-gradient(45deg, #d3cce3, #e9e4f0); cursor: pointer; position: relative; }
-    .avatar-wrapper img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid #fff; box-sizing: border-box; }
-    .avatar-wrapper::after { content: '+'; position: absolute; bottom: -5px; right: -5px; background: var(--text-main); color: #fff; width: 22px; height: 22px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 12px; font-weight: bold; border: 2px solid #fff; }
-    .mobius { font-size: 2rem; color: #999; font-weight: 300; }
-    
+    .modal-overlay.active .modal-content {
+      transform: translateY(0);
+    }
+
+    /* =========================
+       个人中心
+    ========================= */
+
+    .connection-avatars {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .avatar-wrapper {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(45deg, #d3cce3, #e9e4f0);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .avatar-wrapper img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #fff;
+    }
+
+    .avatar-wrapper::after {
+      content: '+';
+      position: absolute;
+      bottom: -5px;
+      right: -5px;
+      background: var(--text-main);
+      color: #fff;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 12px;
+      font-weight: bold;
+      border: 2px solid #fff;
+    }
+
+    .mobius {
+      font-size: 2rem;
+      color: #999;
+      font-weight: 300;
+    }
+
+    /* =========================
+       通用按钮
+    ========================= */
+
     .primary-btn {
-      background: var(--text-main); color: #fff; border: none; padding: 14px 24px;
-      border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; width: 100%;
+      background: var(--text-main);
+      color: #fff;
+      border: none;
+      padding: 14px 24px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
     }
 
-    /* 表单输入区 */
-    .input-group { margin-bottom: 15px; }
-    .input-group label { display: block; font-size: 0.85rem; color: #666; margin-bottom: 5px; }
-    .input-group input { 
-      width: 100%; padding: 12px; border: 1px solid var(--border-color); 
-      border-radius: 8px; box-sizing: border-box; font-size: 1rem; 
+    .secondary-btn {
+      background: #f2f2f2;
+      color: var(--text-main);
+      border: none;
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      cursor: pointer;
     }
-    .input-group input:focus { outline: none; border-color: var(--text-main); }
+
+    /* =========================
+       表单
+    ========================= */
+
+    .input-group {
+      margin-bottom: 15px;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 5px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    .input-group input:focus {
+      outline: none;
+      border-color: var(--text-main);
+    }
+
+    /* =========================
+       CSS 编辑器
+    ========================= */
+
+    .editor-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .editor-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+    }
+
+    .editor-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .small-btn {
+      border: 1px solid var(--border-color);
+      background: #fff;
+      padding: 7px 12px;
+      border-radius: 7px;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    .css-editor {
+      width: 100%;
+      height: 330px;
+      resize: none;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 15px;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      background: #fafafa;
+      color: #222;
+      outline: none;
+    }
+
+    .css-editor:focus {
+      border-color: #999;
+    }
+
+    /* =========================
+       已保存美化
+    ========================= */
+
+    .saved-section {
+      margin-top: 20px;
+    }
+
+    .section-title {
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    .saved-list {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scrollbar-width: none;
+    }
+
+    .saved-list::-webkit-scrollbar {
+      display: none;
+    }
+
+    .saved-item {
+      flex: 0 0 auto;
+      position: relative;
+      width: 130px;
+      height: 50px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      background: #fff;
+      transition: all 0.25s ease;
+      touch-action: pan-x;
+    }
+
+    .saved-item.swiped {
+      transform: translateX(-65px);
+    }
+
+    .saved-name {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 0 10px;
+    }
+
+    .saved-item.selected {
+      border: 2px solid var(--text-main);
+    }
+
+    .delete-style-btn {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 65px;
+      height: 100%;
+      border: none;
+      background: #ff3b30;
+      color: #fff;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+
+    /* =========================
+       CSS 底部操作栏
+    ========================= */
+
+    .editor-bottom {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .bottom-btn {
+      border: none;
+      border-radius: 8px;
+      padding: 12px 15px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    .reset-btn {
+      background: #f0f0f0;
+      color: #333;
+    }
+
+    .save-css-btn {
+      background: var(--text-main);
+      color: #fff;
+    }
+
+    /* =========================
+       Toast
+    ========================= */
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 30px;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(0,0,0,0.82);
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s ease;
+      z-index: 999;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
   </style>
 </head>
+
 <body>
 
-  <header>
-    <div class="logo">Sync.</div>
+<header>
+  <div class="logo">Sync.</div>
+
+  <div class="header-right">
+
+    <!-- 测试发送 -->
+    <button class="header-btn" id="testSendBtn" title="测试发送">
+      ◇
+    </button>
+
+    <!-- CSS 美化 -->
+    <button class="header-btn" id="openStyleBtn" title="页面美化">
+      Aa
+    </button>
+
+    <!-- 个人中心 -->
     <div class="profile-trigger" id="openProfileBtn">
-      <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23efefef' width='100' height='100'/></svg>" id="headerAvatar">
+      <img
+        src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23efefef' width='100' height='100'/></svg>"
+        id="headerAvatar"
+      >
     </div>
-  </header>
 
-  <main>
-    <div class="button-container" id="buttonContainer"></div>
-  </main>
+  </div>
+</header>
 
-  <!-- 个人中心模态框 -->
-  <div class="modal-overlay" id="profileModal">
-    <div class="modal-content">
-      <div class="connection-avatars">
-        <div class="avatar-wrapper" id="myAvatarWrapper">
-          <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23efefef' width='100' height='100'/></svg>" id="myAvatar">
-        </div>
-        <div class="mobius">∞</div>
-        <div class="avatar-wrapper" id="partnerAvatarWrapper">
-          <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23efefef' width='100' height='100'/></svg>" id="partnerAvatar">
-        </div>
+
+<main>
+  <div class="button-container" id="buttonContainer"></div>
+</main>
+
+
+<!-- =========================
+     个人中心
+========================= -->
+
+<div class="modal-overlay" id="profileModal">
+  <div class="modal-content">
+
+    <div class="connection-avatars">
+
+      <div class="avatar-wrapper" id="myAvatarWrapper">
+        <img
+          src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23efefef' width='100' height='100'/></svg>"
+          id="myAvatar"
+        >
       </div>
-      <div style="text-align: center;">
-        <button class="primary-btn" id="shareBtn">🖇️ 获取专属连接</button>
+
+      <div class="mobius">∞</div>
+
+      <div class="avatar-wrapper" id="partnerAvatarWrapper">
+        <img
+          src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23efefef' width='100' height='100'/></svg>"
+          id="partnerAvatar"
+        >
       </div>
+
     </div>
+
+    <div style="text-align:center;">
+      <button class="primary-btn" id="shareBtn">
+        🖇️ 获取专属连接
+      </button>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- =========================
+     添加状态
+========================= -->
+
+<div class="modal-overlay" id="addBtnModal">
+  <div class="modal-content">
+
+    <h3 style="margin-top:0;margin-bottom:20px;">
+      新建状态按钮
+    </h3>
+
+    <div class="input-group">
+      <label>Emoji 图标</label>
+      <input
+        type="text"
+        id="newIcon"
+        placeholder="例如: 🎮"
+        maxlength="2"
+      >
+    </div>
+
+    <div class="input-group">
+      <label>按钮名称</label>
+      <input
+        type="text"
+        id="newLabel"
+        placeholder="例如: 打游戏"
+        maxlength="6"
+      >
+    </div>
+
+    <div class="input-group">
+      <label>推送给对方的消息内容</label>
+      <input
+        type="text"
+        id="newMsg"
+        placeholder="例如: 对方正在大杀四方！"
+      >
+    </div>
+
+    <button class="primary-btn" id="saveNewBtn">
+      保存
+    </button>
+
+  </div>
+</div>
+
+
+<!-- =========================
+     CSS 美化编辑器
+========================= -->
+
+<div class="modal-overlay" id="styleModal">
+
+  <div class="modal-content">
+
+    <div class="editor-header">
+
+      <div class="editor-title">
+        页面美化
+      </div>
+
+      <div class="editor-actions">
+
+        <button class="small-btn" id="importStyleBtn">
+          导入
+        </button>
+
+        <button class="small-btn" id="exportStyleBtn">
+          导出
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <textarea
+      class="css-editor"
+      id="cssEditor"
+      spellcheck="false"
+      placeholder="在这里输入 CSS..."
+    ></textarea>
+
+
+    <div class="saved-section">
+
+      <div class="section-title">
+        已保存的美化
+      </div>
+
+      <div class="saved-list" id="savedStyleList"></div>
+
+    </div>
+
+
+    <div class="editor-bottom">
+
+      <button
+        class="bottom-btn reset-btn"
+        id="resetStyleBtn"
+      >
+        重置
+      </button>
+
+      <button
+        class="bottom-btn save-css-btn"
+        id="saveStyleBtn"
+      >
+        保存
+      </button>
+
+    </div>
+
   </div>
 
-  <!-- 添加按钮模态框 -->
-  <div class="modal-overlay" id="addBtnModal">
-    <div class="modal-content">
-      <h3 style="margin-top:0; margin-bottom: 20px;">新建状态按钮</h3>
-      <div class="input-group">
-        <label>Emoji 图标</label>
-        <input type="text" id="newIcon" placeholder="例如: 🎮" maxlength="2">
-      </div>
-      <div class="input-group">
-        <label>按钮名称</label>
-        <input type="text" id="newLabel" placeholder="例如: 打游戏" maxlength="6">
-      </div>
-      <div class="input-group">
-        <label>推送给对方的消息内容</label>
-        <input type="text" id="newMsg" placeholder="例如: 对方正在大杀四方！">
-      </div>
-      <button class="primary-btn" id="saveNewBtn">保存</button>
-    </div>
-  </div>
+</div>
 
-  <script>
-    // --- 1. 动态按钮数据管理 (LocalStorage) ---
-    const defaultButtons = [
-      { id: "eat", icon: "🍴", label: "吃饭", msg: "对方准备去吃饭了" },
-      { id: "sleep", icon: "💤", label: "睡觉", msg: "对方困了，准备休息" }
-    ];
 
-    // 读取本地配置，如果没有就用默认的
-    let savedButtons = JSON.parse(localStorage.getItem('sync_custom_buttons')) || defaultButtons;
-    const container = document.getElementById('buttonContainer');
+<!-- 隐藏文件输入 -->
 
-    function renderButtons() {
-      container.innerHTML = ''; // 清空容器
-      
-      savedButtons.forEach((btn, index) => {
-        const btnEl = document.createElement('div');
-        btnEl.className = 'action-btn';
-        btnEl.innerHTML = `<span class="btn-icon">${btn.icon}</span><span class="btn-label">${btn.label}</span>`;
-        
-        // 长按删除逻辑
-        let pressTimer;
-        btnEl.addEventListener('touchstart', () => {
-          pressTimer = setTimeout(() => {
-            if(confirm(`确定要删除 [${btn.label}] 按钮吗？`)) {
+<input
+  type="file"
+  id="styleFileInput"
+  accept=".json,application/json"
+  style="display:none;"
+>
+
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+
+/* =========================================================
+   1. 默认按钮
+========================================================= */
+
+const defaultButtons = [
+  {
+    id: "eat",
+    icon: "🍴",
+    label: "吃饭",
+    msg: "对方准备去吃饭了"
+  },
+  {
+    id: "sleep",
+    icon: "🌙",
+    label: "睡觉",
+    msg: "对方困了，准备休息"
+  }
+];
+
+
+let savedButtons =
+  JSON.parse(
+    localStorage.getItem("sync_custom_buttons")
+  ) || defaultButtons;
+
+
+const container =
+  document.getElementById("buttonContainer");
+
+
+/* =========================================================
+   2. Toast
+========================================================= */
+
+function showToast(message) {
+
+  const toast =
+    document.getElementById("toast");
+
+  toast.textContent = message;
+
+  toast.classList.add("show");
+
+  clearTimeout(window.toastTimer);
+
+  window.toastTimer =
+    setTimeout(() => {
+      toast.classList.remove("show");
+    }, 1800);
+}
+
+
+/* =========================================================
+   3. 状态按钮
+========================================================= */
+
+function sendStatusMessage(btn) {
+
+  /*
+   * 这里就是未来真正连接后端 / WebSocket / API
+   * 的位置。
+   *
+   * 现在不再弹出测试 alert。
+   */
+
+  console.log("发送状态:", btn.msg);
+
+  showToast("已发送：" + btn.label);
+}
+
+
+function renderButtons() {
+
+  container.innerHTML = "";
+
+  savedButtons.forEach((btn, index) => {
+
+    const btnEl =
+      document.createElement("div");
+
+    btnEl.className = "action-btn";
+
+    btnEl.innerHTML = `
+      <span class="btn-icon">${btn.icon}</span>
+      <span class="btn-label">${btn.label}</span>
+    `;
+
+
+    /* 长按删除 */
+
+    let pressTimer;
+
+    btnEl.addEventListener(
+      "touchstart",
+      () => {
+
+        pressTimer =
+          setTimeout(() => {
+
+            if (
+              confirm(
+                `确定要删除 [${btn.label}] 按钮吗？`
+              )
+            ) {
+
               savedButtons.splice(index, 1);
-              localStorage.setItem('sync_custom_buttons', JSON.stringify(savedButtons));
+
+              localStorage.setItem(
+                "sync_custom_buttons",
+                JSON.stringify(savedButtons)
+              );
+
               renderButtons();
+
             }
-          }, 800); // 长按 0.8 秒触发
-        });
-        btnEl.addEventListener('touchend', () => clearTimeout(pressTimer));
-        
-        // 短按发送消息
-        btnEl.addEventListener('click', () => {
-          alert(`模拟推送: "${btn.msg}"`);
-        });
 
-        container.appendChild(btnEl);
-      });
+          }, 800);
 
-      // 添加 "+" 按钮
-      const addBtn = document.createElement('div');
-      addBtn.className = 'action-btn add-btn';
-      addBtn.innerHTML = `<span class="btn-icon">＋</span><span class="btn-label">添加状态</span>`;
-      addBtn.onclick = () => document.getElementById('addBtnModal').classList.add('active');
-      container.appendChild(addBtn);
-    }
+      },
+      { passive: true }
+    );
 
-    renderButtons(); // 初始渲染
 
-    // --- 2. 保存新按钮逻辑 ---
-    document.getElementById('saveNewBtn').onclick = () => {
-      const icon = document.getElementById('newIcon').value || '✨';
-      const label = document.getElementById('newLabel').value || '新状态';
-      const msg = document.getElementById('newMsg').value || '发送了一个新状态';
-
-      savedButtons.push({ id: Date.now().toString(), icon, label, msg });
-      localStorage.setItem('sync_custom_buttons', JSON.stringify(savedButtons));
-      
-      renderButtons();
-      
-      // 清空输入框并关闭模态框
-      document.getElementById('newIcon').value = '';
-      document.getElementById('newLabel').value = '';
-      document.getElementById('newMsg').value = '';
-      document.getElementById('addBtnModal').classList.remove('active');
-    };
-
-    // --- 3. 模态框通用关闭逻辑 ---
-    document.querySelectorAll('.modal-overlay').forEach(modal => {
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) modal.classList.remove('active');
-      });
-    });
-    document.getElementById('openProfileBtn').onclick = () => document.getElementById('profileModal').classList.add('active');
-
-    // --- 4. 头像与链接逻辑 (保持不变) ---
-    function setupAvatar(wrapperId, imgIds, storageKey) {
-      const wrapper = document.getElementById(wrapperId);
-      const savedImage = localStorage.getItem(storageKey);
-      if (savedImage) imgIds.forEach(id => document.getElementById(id).src = savedImage);
-
-      wrapper.onclick = () => {
-        const input = document.createElement('input'); input.type = 'file'; input.accept = 'image/png, image/jpeg';
-        input.onchange = (e) => {
-          const file = e.target.files[0];
-          if (file) {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-              const b64 = event.target.result;
-              imgIds.forEach(id => document.getElementById(id).src = b64);
-              localStorage.setItem(storageKey, b64);
-            };
-            reader.readAsDataURL(file);
-          }
-        };
-        input.click();
-      };
-    }
-    setupAvatar('myAvatarWrapper', ['myAvatar', 'headerAvatar'], 'my_avatar_data');
-    setupAvatar('partnerAvatarWrapper', ['partnerAvatar'], 'partner_avatar_data');
-
-    document.getElementById('shareBtn').onclick = () => {
-      let roomId = localStorage.getItem('sync_room_id');
-      if (!roomId) {
-        roomId = Math.random().toString(36).substring(2, 15);
-        localStorage.setItem('sync_room_id', roomId);
+    btnEl.addEventListener(
+      "touchend",
+      () => {
+        clearTimeout(pressTimer);
       }
-      const shareUrl = `${window.location.origin}${window.location.pathname}?room=${roomId}`;
-      navigator.clipboard.writeText(shareUrl).then(() => alert("🔗 专属链接已复制！\n\n" + shareUrl))
-      .catch(() => alert("复制失败，请手动复制: " + shareUrl));
+    );
+
+
+    btnEl.addEventListener(
+      "touchmove",
+      () => {
+        clearTimeout(pressTimer);
+      }
+    );
+
+
+    /* 普通点击 */
+
+    btnEl.addEventListener(
+      "click",
+      () => {
+        sendStatusMessage(btn);
+      }
+    );
+
+
+    container.appendChild(btnEl);
+
+  });
+
+
+  /* 添加按钮 */
+
+  const addBtn =
+    document.createElement("div");
+
+  addBtn.className =
+    "action-btn add-btn";
+
+  addBtn.innerHTML = `
+    <span class="btn-icon">＋</span>
+    <span class="btn-label">添加状态</span>
+  `;
+
+  addBtn.onclick = () => {
+
+    document
+      .getElementById("addBtnModal")
+      .classList.add("active");
+
+  };
+
+  container.appendChild(addBtn);
+}
+
+
+renderButtons();
+
+
+/* =========================================================
+   4. 新建按钮
+========================================================= */
+
+document
+  .getElementById("saveNewBtn")
+  .onclick = () => {
+
+    const icon =
+      document.getElementById("newIcon").value
+      || "✨";
+
+    const label =
+      document.getElementById("newLabel").value
+      || "新状态";
+
+    const msg =
+      document.getElementById("newMsg").value
+      || "发送了一个新状态";
+
+
+    savedButtons.push({
+      id: Date.now().toString(),
+      icon,
+      label,
+      msg
+    });
+
+
+    localStorage.setItem(
+      "sync_custom_buttons",
+      JSON.stringify(savedButtons)
+    );
+
+
+    renderButtons();
+
+
+    document.getElementById("newIcon").value = "";
+    document.getElementById("newLabel").value = "";
+    document.getElementById("newMsg").value = "";
+
+
+    document
+      .getElementById("addBtnModal")
+      .classList.remove("active");
+
+  };
+
+
+/* =========================================================
+   5. 测试发送按钮
+========================================================= */
+
+document
+  .getElementById("testSendBtn")
+  .onclick = () => {
+
+    console.log(
+      "测试消息：这是一条来自 Click. 的测试消息"
+    );
+
+    showToast("测试消息已发送");
+
+  };
+
+
+/* =========================================================
+   6. 通用模态框关闭
+========================================================= */
+
+document
+  .querySelectorAll(".modal-overlay")
+  .forEach(modal => {
+
+    modal.addEventListener(
+      "click",
+      e => {
+
+        if (e.target === modal) {
+          modal.classList.remove("active");
+        }
+
+      }
+    );
+
+  });
+
+
+/* =========================================================
+   7. 个人中心
+========================================================= */
+
+document
+  .getElementById("openProfileBtn")
+  .onclick = () => {
+
+    document
+      .getElementById("profileModal")
+      .classList.add("active");
+
+  };
+
+
+/* =========================================================
+   8. 头像
+========================================================= */
+
+function setupAvatar(
+  wrapperId,
+  imgIds,
+  storageKey
+) {
+
+  const wrapper =
+    document.getElementById(wrapperId);
+
+  const savedImage =
+    localStorage.getItem(storageKey);
+
+
+  if (savedImage) {
+
+    imgIds.forEach(id => {
+
+      document.getElementById(id).src =
+        savedImage;
+
+    });
+
+  }
+
+
+  wrapper.onclick = () => {
+
+    const input =
+      document.createElement("input");
+
+    input.type = "file";
+
+    input.accept =
+      "image/png, image/jpeg";
+
+
+    input.onchange = e => {
+
+      const file =
+        e.target.files[0];
+
+      if (!file) return;
+
+
+      const reader =
+        new FileReader();
+
+
+      reader.onload = event => {
+
+        const b64 =
+          event.target.result;
+
+
+        imgIds.forEach(id => {
+
+          document.getElementById(id).src =
+            b64;
+
+        });
+
+
+        localStorage.setItem(
+          storageKey,
+          b64
+        );
+
+      };
+
+
+      reader.readAsDataURL(file);
+
     };
-  </script>
+
+
+    input.click();
+
+  };
+
+}
+
+
+setupAvatar(
+  "myAvatarWrapper",
+  ["myAvatar", "headerAvatar"],
+  "my_avatar_data"
+);
+
+
+setupAvatar(
+  "partnerAvatarWrapper",
+  ["partnerAvatar"],
+  "partner_avatar_data"
+);
+
+
+/* =========================================================
+   9. 专属连接
+========================================================= */
+
+document
+  .getElementById("shareBtn")
+  .onclick = () => {
+
+    let roomId =
+      localStorage.getItem("sync_room_id");
+
+
+    if (!roomId) {
+
+      roomId =
+        Math.random()
+          .toString(36)
+          .substring(2, 15);
+
+      localStorage.setItem(
+        "sync_room_id",
+        roomId
+      );
+
+    }
+
+
+    const shareUrl =
+      `${window.location.origin}${window.location.pathname}?room=${roomId}`;
+
+
+    navigator.clipboard
+      .writeText(shareUrl)
+      .then(() => {
+
+        showToast("专属链接已复制");
+
+      })
+      .catch(() => {
+
+        alert(
+          "复制失败，请手动复制：\n" +
+          shareUrl
+        );
+
+      });
+
+  };
+
+
+/* =========================================================
+   10. CSS 美化系统
+========================================================= */
+
+const defaultCSS =
+`/* Sync. 默认样式 */
+
+/* 页面背景 */
+body {
+  background-color: #fafafa;
+}
+
+/* 顶栏 */
+header {
+  background: #ffffff;
+}
+
+/* 状态按钮 */
+.action-btn {
+  background: #ffffff;
+  border-radius: 12px;
+}
+
+/* 主文字 */
+.btn-label {
+  font-weight: 500;
+}
+`;
+
+
+let savedStyles =
+  JSON.parse(
+    localStorage.getItem("sync_saved_styles")
+  ) || [];
+
+
+let currentStyleId =
+  localStorage.getItem(
+    "sync_current_style_id"
+  );
+
+
+const cssEditor =
+  document.getElementById("cssEditor");
+
+
+const customStyle =
+  document.getElementById("customStyle");
+
+
+/* =========================================================
+   CSS 应用
+========================================================= */
+
+function applyCSS(css) {
+
+  /*
+   * 保留原始 CSS，
+   * 让用户输入的 CSS 在最后执行。
+   */
+
+  customStyle.textContent =
+    customStyle.dataset.base +
+    "\n\n" +
+    css;
+
+}
+
+
+/* 保存基础 CSS */
+
+customStyle.dataset.base =
+  customStyle.textContent;
+
+
+/* =========================================================
+   打开美化编辑器
+========================================================= */
+
+document
+  .getElementById("openStyleBtn")
+  .onclick = () => {
+
+    cssEditor.value =
+      localStorage.getItem(
+        "sync_current_css"
+      ) || defaultCSS;
+
+
+    renderSavedStyles();
+
+
+    document
+      .getElementById("styleModal")
+      .classList.add("active");
+
+  };
+
+
+/* =========================================================
+   实时预览
+========================================================= */
+
+cssEditor.addEventListener(
+  "input",
+  () => {
+
+    applyCSS(cssEditor.value);
+
+  }
+);
+
+
+/* =========================================================
+   保存 CSS
+========================================================= */
+
+document
+  .getElementById("saveStyleBtn")
+  .onclick = () => {
+
+    const css =
+      cssEditor.value;
+
+
+    const name =
+      prompt(
+        "请输入这个美化的名称："
+      );
+
+
+    if (!name || !name.trim()) {
+      return;
+    }
+
+
+    const style = {
+
+      id: Date.now().toString(),
+
+      name: name.trim(),
+
+      css: css
+
+    };
+
+
+    savedStyles.push(style);
+
+
+    localStorage.setItem(
+      "sync_saved_styles",
+      JSON.stringify(savedStyles)
+    );
+
+
+    currentStyleId =
+      style.id;
+
+
+    localStorage.setItem(
+      "sync_current_style_id",
+      currentStyleId
+    );
+
+
+    localStorage.setItem(
+      "sync_current_css",
+      css
+    );
+
+
+    renderSavedStyles();
+
+    showToast("美化已保存");
+
+  };
+
+
+/* =========================================================
+   已保存美化
+========================================================= */
+
+function renderSavedStyles() {
+
+  const list =
+    document.getElementById(
+      "savedStyleList"
+    );
+
+
+  list.innerHTML = "";
+
+
+  if (savedStyles.length === 0) {
+
+    list.innerHTML =
+      `<div style="
+        color:#999;
+        font-size:13px;
+        padding:10px 0;
+      ">
+        暂无保存的美化
+      </div>`;
+
+    return;
+
+  }
+
+
+  savedStyles.forEach(style => {
+
+    const item =
+      document.createElement("div");
+
+    item.className =
+      "saved-item";
+
+
+    if (style.id === currentStyleId) {
+      item.classList.add("selected");
+    }
+
+
+    const name =
+      document.createElement("div");
+
+    name.className =
+      "saved-name";
+
+    name.textContent =
+      style.name;
+
+
+    const deleteBtn =
+      document.createElement("button");
+
+    deleteBtn.className =
+      "delete-style-btn";
+
+    deleteBtn.textContent =
+      "删除";
+
+
+    /* 点击选择 */
+
+    name.onclick = () => {
+
+      cssEditor.value =
+        style.css;
+
+      applyCSS(style.css);
+
+
+      currentStyleId =
+        style.id;
+
+
+      localStorage.setItem(
+        "sync_current_style_id",
+        currentStyleId
+      );
+
+
+      localStorage.setItem(
+        "sync_current_css",
+        style.css
+      );
+
+
+      renderSavedStyles();
+
+      showToast(
+        "已应用：" + style.name
+      );
+
+    };
+
+
+    /* 删除 */
+
+    deleteBtn.onclick = e => {
+
+      e.stopPropagation();
+
+
+      if (
+        !confirm(
+          `确定删除「${style.name}」吗？`
+        )
+      ) {
+        return;
+      }
+
+
+      savedStyles =
+        savedStyles.filter(
+          item => item.id !== style.id
+        );
+
+
+      localStorage.setItem(
+        "sync_saved_styles",
+        JSON.stringify(savedStyles)
+      );
+
+
+      if (currentStyleId === style.id) {
+
+        currentStyleId = null;
+
+        localStorage.removeItem(
+          "sync_current_style_id"
+        );
+
+      }
+
+
+      renderSavedStyles();
+
+      showToast("已删除");
+
+    };
+
+
+    item.appendChild(name);
+
+    item.appendChild(deleteBtn);
+
+    list.appendChild(item);
+
+
+    /* =================================================
+       左滑
+    ================================================= */
+
+    let startX = 0;
+    let currentX = 0;
+
+
+    item.addEventListener(
+      "touchstart",
+      e => {
+
+        startX =
+          e.touches[0].clientX;
+
+      },
+      { passive: true }
+    );
+
+
+    item.addEventListener(
+      "touchmove",
+      e => {
+
+        currentX =
+          e.touches[0].clientX;
+
+        const distance =
+          startX - currentX;
+
+
+        if (
+          distance > 10 &&
+          distance < 100
+        ) {
+
+          item.style.transform =
+            `translateX(-${distance}px)`;
+
+        }
+
+      },
+      { passive: true }
+    );
+
+
+    item.addEventListener(
+      "touchend",
+      () => {
+
+        const distance =
+          startX - currentX;
+
+
+        if (distance > 45) {
+
+          item.classList.add("swiped");
+
+        } else {
+
+          item.style.transform = "";
+
+        }
+
+        startX = 0;
+        currentX = 0;
+
+      }
+    );
+
+  });
+
+}
+
+
+/* =========================================================
+   重置 CSS
+========================================================= */
+
+document
+  .getElementById("resetStyleBtn")
+  .onclick = () => {
+
+    cssEditor.value =
+      defaultCSS;
+
+
+    applyCSS(defaultCSS);
+
+
+    localStorage.setItem(
+      "sync_current_css",
+      defaultCSS
+    );
+
+
+    currentStyleId = null;
+
+
+    localStorage.removeItem(
+      "sync_current_style_id"
+    );
+
+
+    renderSavedStyles();
+
+    showToast("已恢复默认样式");
+
+  };
+
+
+/* =========================================================
+   11. 导出 CSS
+========================================================= */
+
+document
+  .getElementById("exportStyleBtn")
+  .onclick = () => {
+
+    const data = {
+
+      type: "SyncCSS",
+
+      version: 1,
+
+      css: cssEditor.value
+
+    };
+
+
+    const blob =
+      new Blob(
+        [
+          JSON.stringify(
+            data,
+            null,
+            2
+          )
+        ],
+        {
+          type: "application/json"
+        }
+      );
+
+
+    const url =
+      URL.createObjectURL(blob);
+
+
+    const a =
+      document.createElement("a");
+
+    a.href = url;
+
+    a.download =
+      "sync-style.json";
+
+    a.click();
+
+
+    URL.revokeObjectURL(url);
+
+
+    showToast("美化已导出");
+
+  };
+
+
+/* =========================================================
+   12. 导入 CSS
+========================================================= */
+
+const styleFileInput =
+  document.getElementById(
+    "styleFileInput"
+  );
+
+
+document
+  .getElementById("importStyleBtn")
+  .onclick = () => {
+
+    styleFileInput.click();
+
+  };
+
+
+styleFileInput.onchange =
+  e => {
+
+    const file =
+      e.target.files[0];
+
+    if (!file) return;
+
+
+    const reader =
+      new FileReader();
+
+
+    reader.onload =
+      event => {
+
+        try {
+
+          const data =
+            JSON.parse(
+              event.target.result
+            );
+
+
+          if (
+            !data.css &&
+            data.css !== ""
+          ) {
+
+            throw new Error(
+              "Invalid CSS file"
+            );
+
+          }
+
+
+          cssEditor.value =
+            data.css;
+
+
+          applyCSS(data.css);
+
+
+          showToast(
+            "美化已导入"
+          );
+
+
+        } catch (error) {
+
+          alert(
+            "导入失败：文件格式不正确。"
+          );
+
+        }
+
+      };
+
+
+    reader.readAsText(file);
+
+
+    styleFileInput.value = "";
+
+  };
+
+
+/* =========================================================
+   13. 页面启动时恢复 CSS
+========================================================= */
+
+const storedCSS =
+  localStorage.getItem(
+    "sync_current_css"
+  );
+
+
+if (storedCSS) {
+
+  applyCSS(storedCSS);
+
+}
+
+</script>
+
 </body>
 </html>
