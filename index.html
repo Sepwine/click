@@ -1074,21 +1074,32 @@ const defaultAvatar =
    用户身份
 ===================================================== */
 
-let myId =
-  localStorage.getItem(
-    "click_user_id"
-  );
+let myId = null;
 
+async function initUser() {
 
-if (!myId) {
+  const {
+    data: {
+      user
+    },
+    error
+  } = await supabase.auth.signInAnonymously();
 
-  myId =
-    crypto.randomUUID();
+  if (error) {
 
-  localStorage.setItem(
-    "click_user_id",
-    myId
-  );
+    console.error(error);
+
+    showToast(
+      "匿名身份创建失败"
+    );
+
+    return false;
+
+  }
+
+  myId = user.id;
+
+  return true;
 
 }
 
@@ -2750,7 +2761,18 @@ function showInvalidRoom() {
    启动
 ===================================================== */
 
-init();
+async function startClick() {
+
+  const success =
+    await initUser();
+
+  if (!success) return;
+
+  await init();
+
+}
+
+startClick();
 
 </script>
 
