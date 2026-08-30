@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Sync.</title>
+  <title>Click.</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
 
   <style id="customStyle">
@@ -141,7 +141,7 @@
     }
 
     .add-btn:active {
-      background: rgba(0,0,0,0.02);
+      background: rgba(0, 0, 0, 0.02);
     }
 
     /* =========================
@@ -337,6 +337,7 @@
       background: #fafafa;
       color: #222;
       outline: none;
+      display: block;
     }
 
     .css-editor:focus {
@@ -424,7 +425,7 @@
     .editor-bottom {
       margin-top: 18px;
       display: grid;
-      grid-template-columns: 1fr auto auto;
+      grid-template-columns: 1fr auto;
       gap: 8px;
       align-items: center;
     }
@@ -445,6 +446,7 @@
     .save-css-btn {
       background: var(--text-main);
       color: #fff;
+      min-width: 100px;
     }
 
     /* =========================
@@ -456,7 +458,7 @@
       left: 50%;
       bottom: 30px;
       transform: translateX(-50%) translateY(20px);
-      background: rgba(0,0,0,0.82);
+      background: rgba(0, 0, 0, 0.82);
       color: #fff;
       padding: 10px 16px;
       border-radius: 20px;
@@ -465,6 +467,7 @@
       pointer-events: none;
       transition: all 0.25s ease;
       z-index: 999;
+      white-space: nowrap;
     }
 
     .toast.show {
@@ -477,22 +480,33 @@
 <body>
 
 <header>
-  <div class="logo">Sync.</div>
+  <div class="logo">Click.</div>
 
   <div class="header-right">
 
     <!-- 测试发送 -->
-    <button class="header-btn" id="testSendBtn" title="测试发送">
+    <button
+      class="header-btn"
+      id="testSendBtn"
+      title="测试发送"
+    >
       ◇
     </button>
 
-    <!-- CSS 美化 -->
-    <button class="header-btn" id="openStyleBtn" title="页面美化">
+    <!-- 页面美化 -->
+    <button
+      class="header-btn"
+      id="openStyleBtn"
+      title="页面美化"
+    >
       Aa
     </button>
 
     <!-- 个人中心 -->
-    <div class="profile-trigger" id="openProfileBtn">
+    <div
+      class="profile-trigger"
+      id="openProfileBtn"
+    >
       <img
         src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23efefef' width='100' height='100'/></svg>"
         id="headerAvatar"
@@ -504,7 +518,10 @@
 
 
 <main>
-  <div class="button-container" id="buttonContainer"></div>
+  <div
+    class="button-container"
+    id="buttonContainer"
+  ></div>
 </main>
 
 
@@ -512,21 +529,32 @@
      个人中心
 ========================= -->
 
-<div class="modal-overlay" id="profileModal">
+<div
+  class="modal-overlay"
+  id="profileModal"
+>
   <div class="modal-content">
 
     <div class="connection-avatars">
 
-      <div class="avatar-wrapper" id="myAvatarWrapper">
+      <div
+        class="avatar-wrapper"
+        id="myAvatarWrapper"
+      >
         <img
           src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23efefef' width='100' height='100'/></svg>"
           id="myAvatar"
         >
       </div>
 
-      <div class="mobius">∞</div>
+      <div class="mobius">
+        ∞
+      </div>
 
-      <div class="avatar-wrapper" id="partnerAvatarWrapper">
+      <div
+        class="avatar-wrapper"
+        id="partnerAvatarWrapper"
+      >
         <img
           src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23efefef' width='100' height='100'/></svg>"
           id="partnerAvatar"
@@ -536,7 +564,10 @@
     </div>
 
     <div style="text-align:center;">
-      <button class="primary-btn" id="shareBtn">
+      <button
+        class="primary-btn"
+        id="shareBtn"
+      >
         🖇️ 获取专属连接
       </button>
     </div>
@@ -549,15 +580,23 @@
      添加状态
 ========================= -->
 
-<div class="modal-overlay" id="addBtnModal">
+<div
+  class="modal-overlay"
+  id="addBtnModal"
+>
   <div class="modal-content">
 
-    <h3 style="margin-top:0;margin-bottom:20px;">
+    <h3
+      style="margin-top:0;margin-bottom:20px;"
+    >
       新建状态按钮
     </h3>
 
     <div class="input-group">
-      <label>Emoji 图标</label>
+      <label>
+        Emoji 图标
+      </label>
+
       <input
         type="text"
         id="newIcon"
@@ -567,7 +606,10 @@
     </div>
 
     <div class="input-group">
-      <label>按钮名称</label>
+      <label>
+        按钮名称
+      </label>
+
       <input
         type="text"
         id="newLabel"
@@ -577,7 +619,10 @@
     </div>
 
     <div class="input-group">
-      <label>推送给对方的消息内容</label>
+      <label>
+        推送给对方的消息内容
+      </label>
+
       <input
         type="text"
         id="newMsg"
@@ -585,7 +630,10 @@
       >
     </div>
 
-    <button class="primary-btn" id="saveNewBtn">
+    <button
+      class="primary-btn"
+      id="saveNewBtn"
+    >
       保存
     </button>
 
@@ -594,10 +642,13 @@
 
 
 <!-- =========================
-     CSS 美化编辑器
+     页面美化编辑器
 ========================= -->
 
-<div class="modal-overlay" id="styleModal">
+<div
+  class="modal-overlay"
+  id="styleModal"
+>
 
   <div class="modal-content">
 
@@ -609,11 +660,17 @@
 
       <div class="editor-actions">
 
-        <button class="small-btn" id="importStyleBtn">
+        <button
+          class="small-btn"
+          id="importStyleBtn"
+        >
           导入
         </button>
 
-        <button class="small-btn" id="exportStyleBtn">
+        <button
+          class="small-btn"
+          id="exportStyleBtn"
+        >
           导出
         </button>
 
@@ -636,7 +693,10 @@
         已保存的美化
       </div>
 
-      <div class="saved-list" id="savedStyleList"></div>
+      <div
+        class="saved-list"
+        id="savedStyleList"
+      ></div>
 
     </div>
 
@@ -664,7 +724,7 @@
 </div>
 
 
-<!-- 隐藏文件输入 -->
+<!-- 导入文件 -->
 
 <input
   type="file"
@@ -674,13 +734,18 @@
 >
 
 
-<div class="toast" id="toast"></div>
+<!-- Toast -->
+
+<div
+  class="toast"
+  id="toast"
+></div>
 
 
 <script>
 
 /* =========================================================
-   1. 默认按钮
+   1. 默认状态按钮
 ========================================================= */
 
 const defaultButtons = [
@@ -701,12 +766,16 @@ const defaultButtons = [
 
 let savedButtons =
   JSON.parse(
-    localStorage.getItem("sync_custom_buttons")
+    localStorage.getItem(
+      "click_custom_buttons"
+    )
   ) || defaultButtons;
 
 
 const container =
-  document.getElementById("buttonContainer");
+  document.getElementById(
+    "buttonContainer"
+  );
 
 
 /* =========================================================
@@ -716,145 +785,222 @@ const container =
 function showToast(message) {
 
   const toast =
-    document.getElementById("toast");
+    document.getElementById(
+      "toast"
+    );
 
-  toast.textContent = message;
+  toast.textContent =
+    message;
 
-  toast.classList.add("show");
+  toast.classList.add(
+    "show"
+  );
 
-  clearTimeout(window.toastTimer);
+  clearTimeout(
+    window.toastTimer
+  );
 
   window.toastTimer =
     setTimeout(() => {
-      toast.classList.remove("show");
+
+      toast.classList.remove(
+        "show"
+      );
+
     }, 1800);
 }
 
 
 /* =========================================================
-   3. 状态按钮
+   3. 状态发送
 ========================================================= */
 
 function sendStatusMessage(btn) {
 
   /*
-   * 这里就是未来真正连接后端 / WebSocket / API
-   * 的位置。
+   * 这里以后接入真正的：
    *
-   * 现在不再弹出测试 alert。
+   * WebSocket
+   * Firebase
+   * Supabase
+   * 自己的后端 API
+   *
+   * 现在只负责执行发送逻辑。
    */
 
-  console.log("发送状态:", btn.msg);
+  console.log(
+    "发送状态：",
+    btn.msg
+  );
 
-  showToast("已发送：" + btn.label);
+  showToast(
+    "已发送：" + btn.label
+  );
 }
 
+
+/* =========================================================
+   4. 渲染状态按钮
+========================================================= */
 
 function renderButtons() {
 
   container.innerHTML = "";
 
-  savedButtons.forEach((btn, index) => {
 
-    const btnEl =
-      document.createElement("div");
+  savedButtons.forEach(
+    (btn, index) => {
 
-    btnEl.className = "action-btn";
+      const btnEl =
+        document.createElement(
+          "div"
+        );
 
-    btnEl.innerHTML = `
-      <span class="btn-icon">${btn.icon}</span>
-      <span class="btn-label">${btn.label}</span>
-    `;
-
-
-    /* 长按删除 */
-
-    let pressTimer;
-
-    btnEl.addEventListener(
-      "touchstart",
-      () => {
-
-        pressTimer =
-          setTimeout(() => {
-
-            if (
-              confirm(
-                `确定要删除 [${btn.label}] 按钮吗？`
-              )
-            ) {
-
-              savedButtons.splice(index, 1);
-
-              localStorage.setItem(
-                "sync_custom_buttons",
-                JSON.stringify(savedButtons)
-              );
-
-              renderButtons();
-
-            }
-
-          }, 800);
-
-      },
-      { passive: true }
-    );
+      btnEl.className =
+        "action-btn";
 
 
-    btnEl.addEventListener(
-      "touchend",
-      () => {
-        clearTimeout(pressTimer);
-      }
-    );
+      btnEl.innerHTML = `
+        <span class="btn-icon">
+          ${btn.icon}
+        </span>
+
+        <span class="btn-label">
+          ${btn.label}
+        </span>
+      `;
 
 
-    btnEl.addEventListener(
-      "touchmove",
-      () => {
-        clearTimeout(pressTimer);
-      }
-    );
+      /* 长按删除 */
+
+      let pressTimer;
 
 
-    /* 普通点击 */
+      btnEl.addEventListener(
+        "touchstart",
+        () => {
 
-    btnEl.addEventListener(
-      "click",
-      () => {
-        sendStatusMessage(btn);
-      }
-    );
+          pressTimer =
+            setTimeout(() => {
+
+              if (
+                confirm(
+                  `确定要删除 [${btn.label}] 按钮吗？`
+                )
+              ) {
+
+                savedButtons.splice(
+                  index,
+                  1
+                );
 
 
-    container.appendChild(btnEl);
+                localStorage.setItem(
+                  "click_custom_buttons",
+                  JSON.stringify(
+                    savedButtons
+                  )
+                );
 
-  });
+
+                renderButtons();
+
+              }
+
+            }, 800);
+
+        },
+        {
+          passive: true
+        }
+      );
+
+
+      btnEl.addEventListener(
+        "touchend",
+        () => {
+
+          clearTimeout(
+            pressTimer
+          );
+
+        }
+      );
+
+
+      btnEl.addEventListener(
+        "touchmove",
+        () => {
+
+          clearTimeout(
+            pressTimer
+          );
+
+        }
+      );
+
+
+      /* 普通点击 */
+
+      btnEl.addEventListener(
+        "click",
+        () => {
+
+          sendStatusMessage(
+            btn
+          );
+
+        }
+      );
+
+
+      container.appendChild(
+        btnEl
+      );
+
+    }
+  );
 
 
   /* 添加按钮 */
 
   const addBtn =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
+
 
   addBtn.className =
     "action-btn add-btn";
 
+
   addBtn.innerHTML = `
-    <span class="btn-icon">＋</span>
-    <span class="btn-label">添加状态</span>
+    <span class="btn-icon">
+      ＋
+    </span>
+
+    <span class="btn-label">
+      添加状态
+    </span>
   `;
+
 
   addBtn.onclick = () => {
 
     document
-      .getElementById("addBtnModal")
-      .classList.add("active");
+      .getElementById(
+        "addBtnModal"
+      )
+      .classList.add(
+        "active"
+      );
 
   };
 
-  container.appendChild(addBtn);
+
+  container.appendChild(
+    addBtn
+  );
 }
 
 
@@ -862,111 +1008,160 @@ renderButtons();
 
 
 /* =========================================================
-   4. 新建按钮
+   5. 保存新状态
 ========================================================= */
 
 document
-  .getElementById("saveNewBtn")
+  .getElementById(
+    "saveNewBtn"
+  )
   .onclick = () => {
 
     const icon =
-      document.getElementById("newIcon").value
-      || "✨";
+      document.getElementById(
+        "newIcon"
+      ).value || "✨";
+
 
     const label =
-      document.getElementById("newLabel").value
-      || "新状态";
+      document.getElementById(
+        "newLabel"
+      ).value || "新状态";
+
 
     const msg =
-      document.getElementById("newMsg").value
-      || "发送了一个新状态";
+      document.getElementById(
+        "newMsg"
+      ).value || "发送了一个新状态";
 
 
     savedButtons.push({
-      id: Date.now().toString(),
+
+      id:
+        Date.now().toString(),
+
       icon,
+
       label,
+
       msg
+
     });
 
 
     localStorage.setItem(
-      "sync_custom_buttons",
-      JSON.stringify(savedButtons)
+      "click_custom_buttons",
+      JSON.stringify(
+        savedButtons
+      )
     );
 
 
     renderButtons();
 
 
-    document.getElementById("newIcon").value = "";
-    document.getElementById("newLabel").value = "";
-    document.getElementById("newMsg").value = "";
+    document.getElementById(
+      "newIcon"
+    ).value = "";
+
+
+    document.getElementById(
+      "newLabel"
+    ).value = "";
+
+
+    document.getElementById(
+      "newMsg"
+    ).value = "";
 
 
     document
-      .getElementById("addBtnModal")
-      .classList.remove("active");
+      .getElementById(
+        "addBtnModal"
+      )
+      .classList.remove(
+        "active"
+      );
 
   };
 
 
 /* =========================================================
-   5. 测试发送按钮
+   6. 测试发送
 ========================================================= */
 
 document
-  .getElementById("testSendBtn")
+  .getElementById(
+    "testSendBtn"
+  )
   .onclick = () => {
 
     console.log(
       "测试消息：这是一条来自 Click. 的测试消息"
     );
 
-    showToast("测试消息已发送");
+    showToast(
+      "测试消息已发送"
+    );
 
   };
 
 
 /* =========================================================
-   6. 通用模态框关闭
+   7. 模态框关闭
 ========================================================= */
 
 document
-  .querySelectorAll(".modal-overlay")
-  .forEach(modal => {
+  .querySelectorAll(
+    ".modal-overlay"
+  )
+  .forEach(
+    modal => {
 
-    modal.addEventListener(
-      "click",
-      e => {
+      modal.addEventListener(
+        "click",
+        e => {
 
-        if (e.target === modal) {
-          modal.classList.remove("active");
+          if (
+            e.target === modal
+          ) {
+
+            modal.classList.remove(
+              "active"
+            );
+
+          }
+
         }
+      );
 
-      }
-    );
-
-  });
+    }
+  );
 
 
 /* =========================================================
-   7. 个人中心
+   8. 打开个人中心
 ========================================================= */
 
 document
-  .getElementById("openProfileBtn")
+  .getElementById(
+    "openProfileBtn"
+  )
   .onclick = () => {
 
     document
-      .getElementById("profileModal")
-      .classList.add("active");
+      .getElementById(
+        "profileModal"
+      )
+      .classList.add(
+        "active"
+      );
 
   };
 
 
 /* =========================================================
-   8. 头像
+   9. 头像
 ========================================================= */
 
 function setupAvatar(
@@ -976,20 +1171,29 @@ function setupAvatar(
 ) {
 
   const wrapper =
-    document.getElementById(wrapperId);
+    document.getElementById(
+      wrapperId
+    );
+
 
   const savedImage =
-    localStorage.getItem(storageKey);
+    localStorage.getItem(
+      storageKey
+    );
 
 
   if (savedImage) {
 
-    imgIds.forEach(id => {
+    imgIds.forEach(
+      id => {
 
-      document.getElementById(id).src =
-        savedImage;
+        document.getElementById(
+          id
+        ).src =
+          savedImage;
 
-    });
+      }
+    );
 
   }
 
@@ -997,51 +1201,67 @@ function setupAvatar(
   wrapper.onclick = () => {
 
     const input =
-      document.createElement("input");
+      document.createElement(
+        "input"
+      );
 
-    input.type = "file";
+
+    input.type =
+      "file";
+
 
     input.accept =
       "image/png, image/jpeg";
 
 
-    input.onchange = e => {
+    input.onchange =
+      e => {
 
-      const file =
-        e.target.files[0];
-
-      if (!file) return;
-
-
-      const reader =
-        new FileReader();
+        const file =
+          e.target.files[0];
 
 
-      reader.onload = event => {
-
-        const b64 =
-          event.target.result;
-
-
-        imgIds.forEach(id => {
-
-          document.getElementById(id).src =
-            b64;
-
-        });
+        if (!file) {
+          return;
+        }
 
 
-        localStorage.setItem(
-          storageKey,
-          b64
+        const reader =
+          new FileReader();
+
+
+        reader.onload =
+          event => {
+
+            const b64 =
+              event.target.result;
+
+
+            imgIds.forEach(
+              id => {
+
+                document.getElementById(
+                  id
+                ).src =
+                  b64;
+
+              }
+            );
+
+
+            localStorage.setItem(
+              storageKey,
+              b64
+            );
+
+          };
+
+
+        reader.readAsDataURL(
+          file
         );
 
       };
-
-
-      reader.readAsDataURL(file);
-
-    };
 
 
     input.click();
@@ -1053,28 +1273,37 @@ function setupAvatar(
 
 setupAvatar(
   "myAvatarWrapper",
-  ["myAvatar", "headerAvatar"],
-  "my_avatar_data"
+  [
+    "myAvatar",
+    "headerAvatar"
+  ],
+  "click_my_avatar_data"
 );
 
 
 setupAvatar(
   "partnerAvatarWrapper",
-  ["partnerAvatar"],
-  "partner_avatar_data"
+  [
+    "partnerAvatar"
+  ],
+  "click_partner_avatar_data"
 );
 
 
 /* =========================================================
-   9. 专属连接
+   10. 专属连接
 ========================================================= */
 
 document
-  .getElementById("shareBtn")
+  .getElementById(
+    "shareBtn"
+  )
   .onclick = () => {
 
     let roomId =
-      localStorage.getItem("sync_room_id");
+      localStorage.getItem(
+        "click_room_id"
+      );
 
 
     if (!roomId) {
@@ -1082,10 +1311,14 @@ document
       roomId =
         Math.random()
           .toString(36)
-          .substring(2, 15);
+          .substring(
+            2,
+            15
+          );
+
 
       localStorage.setItem(
-        "sync_room_id",
+        "click_room_id",
         roomId
       );
 
@@ -1097,10 +1330,14 @@ document
 
 
     navigator.clipboard
-      .writeText(shareUrl)
+      .writeText(
+        shareUrl
+      )
       .then(() => {
 
-        showToast("专属链接已复制");
+        showToast(
+          "专属链接已复制"
+        );
 
       })
       .catch(() => {
@@ -1116,11 +1353,11 @@ document
 
 
 /* =========================================================
-   10. CSS 美化系统
+   11. CSS 美化系统
 ========================================================= */
 
-const defaultCSS =
-`/* Sync. 默认样式 */
+const defaultCSS = `
+/* Click. 默认美化 */
 
 /* 页面背景 */
 body {
@@ -1138,7 +1375,7 @@ header {
   border-radius: 12px;
 }
 
-/* 主文字 */
+/* 状态文字 */
 .btn-label {
   font-weight: 500;
 }
@@ -1147,34 +1384,43 @@ header {
 
 let savedStyles =
   JSON.parse(
-    localStorage.getItem("sync_saved_styles")
+    localStorage.getItem(
+      "click_saved_styles"
+    )
   ) || [];
 
 
 let currentStyleId =
   localStorage.getItem(
-    "sync_current_style_id"
+    "click_current_style_id"
   );
 
 
 const cssEditor =
-  document.getElementById("cssEditor");
+  document.getElementById(
+    "cssEditor"
+  );
 
 
 const customStyle =
-  document.getElementById("customStyle");
+  document.getElementById(
+    "customStyle"
+  );
 
 
 /* =========================================================
-   CSS 应用
+   12. 保存基础 CSS
+========================================================= */
+
+customStyle.dataset.base =
+  customStyle.textContent;
+
+
+/* =========================================================
+   13. 应用 CSS
 ========================================================= */
 
 function applyCSS(css) {
-
-  /*
-   * 保留原始 CSS，
-   * 让用户输入的 CSS 在最后执行。
-   */
 
   customStyle.textContent =
     customStyle.dataset.base +
@@ -1184,23 +1430,19 @@ function applyCSS(css) {
 }
 
 
-/* 保存基础 CSS */
-
-customStyle.dataset.base =
-  customStyle.textContent;
-
-
 /* =========================================================
-   打开美化编辑器
+   14. 打开美化编辑器
 ========================================================= */
 
 document
-  .getElementById("openStyleBtn")
+  .getElementById(
+    "openStyleBtn"
+  )
   .onclick = () => {
 
     cssEditor.value =
       localStorage.getItem(
-        "sync_current_css"
+        "click_current_css"
       ) || defaultCSS;
 
 
@@ -1208,32 +1450,40 @@ document
 
 
     document
-      .getElementById("styleModal")
-      .classList.add("active");
+      .getElementById(
+        "styleModal"
+      )
+      .classList.add(
+        "active"
+      );
 
   };
 
 
 /* =========================================================
-   实时预览
+   15. 实时 CSS 预览
 ========================================================= */
 
 cssEditor.addEventListener(
   "input",
   () => {
 
-    applyCSS(cssEditor.value);
+    applyCSS(
+      cssEditor.value
+    );
 
   }
 );
 
 
 /* =========================================================
-   保存 CSS
+   16. 保存美化
 ========================================================= */
 
 document
-  .getElementById("saveStyleBtn")
+  .getElementById(
+    "saveStyleBtn"
+  )
   .onclick = () => {
 
     const css =
@@ -1246,28 +1496,40 @@ document
       );
 
 
-    if (!name || !name.trim()) {
+    if (
+      !name ||
+      !name.trim()
+    ) {
+
       return;
+
     }
 
 
     const style = {
 
-      id: Date.now().toString(),
+      id:
+        Date.now().toString(),
 
-      name: name.trim(),
+      name:
+        name.trim(),
 
-      css: css
+      css:
+        css
 
     };
 
 
-    savedStyles.push(style);
+    savedStyles.push(
+      style
+    );
 
 
     localStorage.setItem(
-      "sync_saved_styles",
-      JSON.stringify(savedStyles)
+      "click_saved_styles",
+      JSON.stringify(
+        savedStyles
+      )
     );
 
 
@@ -1276,26 +1538,29 @@ document
 
 
     localStorage.setItem(
-      "sync_current_style_id",
+      "click_current_style_id",
       currentStyleId
     );
 
 
     localStorage.setItem(
-      "sync_current_css",
+      "click_current_css",
       css
     );
 
 
     renderSavedStyles();
 
-    showToast("美化已保存");
+
+    showToast(
+      "美化已保存"
+    );
 
   };
 
 
 /* =========================================================
-   已保存美化
+   17. 渲染已保存美化
 ========================================================= */
 
 function renderSavedStyles() {
@@ -1309,270 +1574,352 @@ function renderSavedStyles() {
   list.innerHTML = "";
 
 
-  if (savedStyles.length === 0) {
+  if (
+    savedStyles.length === 0
+  ) {
 
-    list.innerHTML =
-      `<div style="
-        color:#999;
-        font-size:13px;
-        padding:10px 0;
-      ">
+    list.innerHTML = `
+      <div
+        style="
+          color:#999;
+          font-size:13px;
+          padding:10px 0;
+        "
+      >
         暂无保存的美化
-      </div>`;
+      </div>
+    `;
 
     return;
 
   }
 
 
-  savedStyles.forEach(style => {
+  savedStyles.forEach(
+    style => {
 
-    const item =
-      document.createElement("div");
-
-    item.className =
-      "saved-item";
-
-
-    if (style.id === currentStyleId) {
-      item.classList.add("selected");
-    }
+      const item =
+        document.createElement(
+          "div"
+        );
 
 
-    const name =
-      document.createElement("div");
-
-    name.className =
-      "saved-name";
-
-    name.textContent =
-      style.name;
-
-
-    const deleteBtn =
-      document.createElement("button");
-
-    deleteBtn.className =
-      "delete-style-btn";
-
-    deleteBtn.textContent =
-      "删除";
-
-
-    /* 点击选择 */
-
-    name.onclick = () => {
-
-      cssEditor.value =
-        style.css;
-
-      applyCSS(style.css);
-
-
-      currentStyleId =
-        style.id;
-
-
-      localStorage.setItem(
-        "sync_current_style_id",
-        currentStyleId
-      );
-
-
-      localStorage.setItem(
-        "sync_current_css",
-        style.css
-      );
-
-
-      renderSavedStyles();
-
-      showToast(
-        "已应用：" + style.name
-      );
-
-    };
-
-
-    /* 删除 */
-
-    deleteBtn.onclick = e => {
-
-      e.stopPropagation();
+      item.className =
+        "saved-item";
 
 
       if (
-        !confirm(
-          `确定删除「${style.name}」吗？`
-        )
+        style.id ===
+        currentStyleId
       ) {
-        return;
+
+        item.classList.add(
+          "selected"
+        );
+
       }
 
 
-      savedStyles =
-        savedStyles.filter(
-          item => item.id !== style.id
+      const name =
+        document.createElement(
+          "div"
         );
 
 
-      localStorage.setItem(
-        "sync_saved_styles",
-        JSON.stringify(savedStyles)
+      name.className =
+        "saved-name";
+
+
+      name.textContent =
+        style.name;
+
+
+      const deleteBtn =
+        document.createElement(
+          "button"
+        );
+
+
+      deleteBtn.className =
+        "delete-style-btn";
+
+
+      deleteBtn.textContent =
+        "删除";
+
+
+      /* 选择美化 */
+
+      name.onclick = () => {
+
+        cssEditor.value =
+          style.css;
+
+
+        applyCSS(
+          style.css
+        );
+
+
+        currentStyleId =
+          style.id;
+
+
+        localStorage.setItem(
+          "click_current_style_id",
+          currentStyleId
+        );
+
+
+        localStorage.setItem(
+          "click_current_css",
+          style.css
+        );
+
+
+        renderSavedStyles();
+
+
+        showToast(
+          "已应用：" +
+          style.name
+        );
+
+      };
+
+
+      /* 删除 */
+
+      deleteBtn.onclick =
+        e => {
+
+          e.stopPropagation();
+
+
+          if (
+            !confirm(
+              `确定删除「${style.name}」吗？`
+            )
+          ) {
+
+            return;
+
+          }
+
+
+          savedStyles =
+            savedStyles.filter(
+              item =>
+                item.id !==
+                style.id
+            );
+
+
+          localStorage.setItem(
+            "click_saved_styles",
+            JSON.stringify(
+              savedStyles
+            )
+          );
+
+
+          if (
+            currentStyleId ===
+            style.id
+          ) {
+
+            currentStyleId =
+              null;
+
+
+            localStorage.removeItem(
+              "click_current_style_id"
+            );
+
+          }
+
+
+          renderSavedStyles();
+
+
+          showToast(
+            "已删除"
+          );
+
+        };
+
+
+      item.appendChild(
+        name
       );
 
 
-      if (currentStyleId === style.id) {
-
-        currentStyleId = null;
-
-        localStorage.removeItem(
-          "sync_current_style_id"
-        );
-
-      }
+      item.appendChild(
+        deleteBtn
+      );
 
 
-      renderSavedStyles();
-
-      showToast("已删除");
-
-    };
+      list.appendChild(
+        item
+      );
 
 
-    item.appendChild(name);
+      /* =========================
+         左滑删除
+      ========================= */
 
-    item.appendChild(deleteBtn);
-
-    list.appendChild(item);
-
-
-    /* =================================================
-       左滑
-    ================================================= */
-
-    let startX = 0;
-    let currentX = 0;
+      let startX = 0;
+      let currentX = 0;
 
 
-    item.addEventListener(
-      "touchstart",
-      e => {
+      item.addEventListener(
+        "touchstart",
+        e => {
 
-        startX =
-          e.touches[0].clientX;
+          startX =
+            e.touches[0].clientX;
 
-      },
-      { passive: true }
-    );
+          currentX =
+            startX;
 
-
-    item.addEventListener(
-      "touchmove",
-      e => {
-
-        currentX =
-          e.touches[0].clientX;
-
-        const distance =
-          startX - currentX;
+        },
+        {
+          passive: true
+        }
+      );
 
 
-        if (
-          distance > 10 &&
-          distance < 100
-        ) {
+      item.addEventListener(
+        "touchmove",
+        e => {
 
-          item.style.transform =
-            `translateX(-${distance}px)`;
+          currentX =
+            e.touches[0].clientX;
+
+
+          const distance =
+            startX -
+            currentX;
+
+
+          if (
+            distance > 0 &&
+            distance < 65
+          ) {
+
+            item.style.transform =
+              `translateX(-${distance}px)`;
+
+          }
+
+        },
+        {
+          passive: true
+        }
+      );
+
+
+      item.addEventListener(
+        "touchend",
+        () => {
+
+          const distance =
+            startX -
+            currentX;
+
+
+          if (
+            distance >= 35
+          ) {
+
+            item.classList.add(
+              "swiped"
+            );
+
+          } else {
+
+            item.style.transform =
+              "";
+
+          }
+
+
+          startX = 0;
+          currentX = 0;
 
         }
+      );
 
-      },
-      { passive: true }
-    );
-
-
-    item.addEventListener(
-      "touchend",
-      () => {
-
-        const distance =
-          startX - currentX;
-
-
-        if (distance > 45) {
-
-          item.classList.add("swiped");
-
-        } else {
-
-          item.style.transform = "";
-
-        }
-
-        startX = 0;
-        currentX = 0;
-
-      }
-    );
-
-  });
+    }
+  );
 
 }
 
 
 /* =========================================================
-   重置 CSS
+   18. 重置 CSS
 ========================================================= */
 
 document
-  .getElementById("resetStyleBtn")
+  .getElementById(
+    "resetStyleBtn"
+  )
   .onclick = () => {
 
     cssEditor.value =
       defaultCSS;
 
 
-    applyCSS(defaultCSS);
-
-
-    localStorage.setItem(
-      "sync_current_css",
+    applyCSS(
       defaultCSS
     );
 
 
-    currentStyleId = null;
+    localStorage.setItem(
+      "click_current_css",
+      defaultCSS
+    );
+
+
+    currentStyleId =
+      null;
 
 
     localStorage.removeItem(
-      "sync_current_style_id"
+      "click_current_style_id"
     );
 
 
     renderSavedStyles();
 
-    showToast("已恢复默认样式");
+
+    showToast(
+      "已恢复默认样式"
+    );
 
   };
 
 
 /* =========================================================
-   11. 导出 CSS
+   19. 导出美化
 ========================================================= */
 
 document
-  .getElementById("exportStyleBtn")
+  .getElementById(
+    "exportStyleBtn"
+  )
   .onclick = () => {
 
     const data = {
 
-      type: "SyncCSS",
+      type:
+        "ClickCSS",
 
-      version: 1,
+      version:
+        1,
 
-      css: cssEditor.value
+      css:
+        cssEditor.value
 
     };
 
@@ -1587,36 +1934,57 @@ document
           )
         ],
         {
-          type: "application/json"
+          type:
+            "application/json"
         }
       );
 
 
     const url =
-      URL.createObjectURL(blob);
+      URL.createObjectURL(
+        blob
+      );
 
 
     const a =
-      document.createElement("a");
+      document.createElement(
+        "a"
+      );
 
-    a.href = url;
+
+    a.href =
+      url;
+
 
     a.download =
-      "sync-style.json";
+      "click-style.json";
+
+
+    document.body.appendChild(
+      a
+    );
+
 
     a.click();
 
 
-    URL.revokeObjectURL(url);
+    a.remove();
 
 
-    showToast("美化已导出");
+    URL.revokeObjectURL(
+      url
+    );
+
+
+    showToast(
+      "美化已导出"
+    );
 
   };
 
 
 /* =========================================================
-   12. 导入 CSS
+   20. 导入美化
 ========================================================= */
 
 const styleFileInput =
@@ -1626,7 +1994,9 @@ const styleFileInput =
 
 
 document
-  .getElementById("importStyleBtn")
+  .getElementById(
+    "importStyleBtn"
+  )
   .onclick = () => {
 
     styleFileInput.click();
@@ -1640,7 +2010,10 @@ styleFileInput.onchange =
     const file =
       e.target.files[0];
 
-    if (!file) return;
+
+    if (!file) {
+      return;
+    }
 
 
     const reader =
@@ -1659,8 +2032,8 @@ styleFileInput.onchange =
 
 
           if (
-            !data.css &&
-            data.css !== ""
+            typeof data.css !==
+            "string"
           ) {
 
             throw new Error(
@@ -1674,7 +2047,15 @@ styleFileInput.onchange =
             data.css;
 
 
-          applyCSS(data.css);
+          applyCSS(
+            data.css
+          );
+
+
+          localStorage.setItem(
+            "click_current_css",
+            data.css
+          );
 
 
           showToast(
@@ -1693,27 +2074,32 @@ styleFileInput.onchange =
       };
 
 
-    reader.readAsText(file);
+    reader.readAsText(
+      file
+    );
 
 
-    styleFileInput.value = "";
+    styleFileInput.value =
+      "";
 
   };
 
 
 /* =========================================================
-   13. 页面启动时恢复 CSS
+   21. 启动时恢复当前 CSS
 ========================================================= */
 
 const storedCSS =
   localStorage.getItem(
-    "sync_current_css"
+    "click_current_css"
   );
 
 
 if (storedCSS) {
 
-  applyCSS(storedCSS);
+  applyCSS(
+    storedCSS
+  );
 
 }
 
