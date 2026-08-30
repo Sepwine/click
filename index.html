@@ -1,635 +1,756 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
-  <meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width,
-    initial-scale=1.0,
-    maximum-scale=1.0,
-    user-scalable=no"
-  >
+<meta charset="UTF-8">
 
-  <title>Click.</title>
+<meta
+  name="viewport"
+  content="width=device-width,
+  initial-scale=1.0,
+  maximum-scale=1.0,
+  user-scalable=no"
+>
 
-  <meta name="apple-mobile-web-app-capable" content="yes">
+<title>Click.</title>
 
-  <style>
+<meta
+  name="apple-mobile-web-app-capable"
+  content="yes"
+>
 
-    :root {
-      --bg-light: #fafafa;
-      --text-main: #262626;
-      --border-color: #dbdbdb;
-    }
+<style>
 
-    * {
-      box-sizing: border-box;
-    }
+:root {
 
-    body {
-      margin: 0;
-      padding: 0;
+  --bg-light: #fafafa;
+  --text-main: #262626;
+  --border-color: #dbdbdb;
 
-      min-height: 100vh;
+}
 
-      font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Helvetica,
-        Arial,
-        sans-serif;
+* {
 
-      background: var(--bg-light);
-      color: var(--text-main);
+  box-sizing: border-box;
 
-      user-select: none;
-    }
+}
 
-    header {
-      height: 68px;
+body {
 
-      display: flex;
-      align-items: center;
+  margin: 0;
+  padding: 0;
 
-      justify-content: space-between;
+  min-height: 100vh;
 
-      padding: 0 18px;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
 
-      background: #fff;
+  background:
+    var(--bg-light);
 
-      border-bottom:
-        1px solid
-        var(--border-color);
-    }
+  color:
+    var(--text-main);
 
-    .header-left {
-      display: flex;
-      align-items: center;
+  user-select: none;
 
-      gap: 8px;
-    }
+}
 
-    .logo {
-      font-size: 1.2rem;
-      font-weight: 600;
 
-      letter-spacing: 1px;
+/* =========================
+   顶栏
+========================= */
 
-      margin-right: 5px;
-    }
+header {
 
-    .header-btn {
-      width: 36px;
-      height: 36px;
+  height: 68px;
 
-      border-radius: 50%;
+  display: flex;
 
-      border:
-        1px solid
-        var(--border-color);
+  align-items: center;
 
-      background: #fff;
+  justify-content: space-between;
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+  padding: 0 18px;
 
-      font-size: 16px;
+  background: #fff;
 
-      cursor: pointer;
+  border-bottom:
+    1px solid
+    var(--border-color);
 
-      -webkit-tap-highlight-color: transparent;
-    }
+}
 
-    .header-btn:active {
-      transform: scale(.94);
-      background: #f0f0f0;
-    }
+.header-left {
 
-    .profile-trigger {
-      width: 36px;
-      height: 36px;
+  display: flex;
 
-      border-radius: 50%;
+  align-items: center;
 
-      overflow: hidden;
+  gap: 8px;
 
-      cursor: pointer;
+}
 
-      border:
-        1px solid
-        var(--border-color);
-    }
+.logo {
 
-    .profile-trigger img {
-      width: 100%;
-      height: 100%;
+  font-size: 1.2rem;
 
-      object-fit: cover;
-    }
+  font-weight: 600;
 
-    main {
-      min-height:
-        calc(100vh - 68px);
+  letter-spacing: 1px;
 
-      display: flex;
+  margin-right: 5px;
 
-      justify-content: center;
+}
 
-      align-items: flex-start;
+.header-btn {
 
-      padding:
-        30px 20px;
-    }
+  width: 36px;
+  height: 36px;
 
-    .button-container {
+  border-radius: 50%;
 
-      display: grid;
+  border:
+    1px solid
+    var(--border-color);
 
-      grid-template-columns:
-        repeat(2, 1fr);
+  background: #fff;
 
-      gap: 15px;
+  display: flex;
 
-      width: 100%;
+  align-items: center;
+  justify-content: center;
 
-      max-width: 350px;
-    }
+  font-size: 16px;
 
-    .action-btn {
+  cursor: pointer;
 
-      background: #fff;
+  -webkit-tap-highlight-color:
+    transparent;
 
-      border:
-        1px solid
-        var(--border-color);
+}
 
-      border-radius: 12px;
+.header-btn:active {
 
-      padding:
-        25px 15px;
+  transform: scale(.94);
 
-      display: flex;
+  background: #f0f0f0;
 
-      flex-direction: column;
+}
 
-      align-items: center;
+.profile-trigger {
 
-      gap: 12px;
+  width: 36px;
+  height: 36px;
 
-      cursor: pointer;
+  border-radius: 50%;
 
-      color: var(--text-main);
+  overflow: hidden;
 
-      transition:
-        all .2s ease;
+  cursor: pointer;
 
-      position: relative;
-    }
+  border:
+    1px solid
+    var(--border-color);
 
-    .action-btn:active {
+}
 
-      background: #f0f0f0;
+.profile-trigger img {
 
-      transform: scale(.97);
-    }
+  width: 100%;
+  height: 100%;
 
-    .btn-icon {
-      font-size: 2rem;
-    }
+  object-fit: cover;
 
-    .btn-label {
-      font-size: .9rem;
+}
 
-      font-weight: 500;
-    }
 
-    .add-btn {
+/* =========================
+   主页面
+========================= */
 
-      background: transparent;
+main {
 
-      border:
-        2px dashed
-        var(--border-color);
+  min-height:
+    calc(100vh - 68px);
 
-      color: #999;
-    }
+  display: flex;
 
-    /* =========================
-       模态框
-    ========================= */
+  justify-content: center;
 
-    .modal-overlay {
+  align-items: flex-start;
 
-      position: fixed;
+  padding:
+    30px 20px;
 
-      inset: 0;
+}
 
-      background:
-        rgba(0,0,0,.4);
+.button-container {
 
-      backdrop-filter:
-        blur(8px);
+  display: grid;
 
-      display: flex;
+  grid-template-columns:
+    repeat(2, 1fr);
 
-      justify-content: center;
+  gap: 15px;
 
-      align-items: flex-end;
+  width: 100%;
 
-      opacity: 0;
+  max-width: 350px;
 
-      pointer-events: none;
+}
 
-      transition:
-        opacity .25s ease;
+.action-btn {
 
-      z-index: 100;
-    }
+  background: #fff;
 
-    .modal-overlay.active {
+  border:
+    1px solid
+    var(--border-color);
 
-      opacity: 1;
+  border-radius: 12px;
 
-      pointer-events: auto;
-    }
+  padding:
+    25px 15px;
 
-    .modal-content {
+  display: flex;
 
-      background: #fff;
+  flex-direction: column;
 
-      width: 100%;
+  align-items: center;
 
-      max-width: 450px;
+  gap: 12px;
 
-      border-radius:
-        20px 20px 0 0;
+  cursor: pointer;
 
-      padding:
-        30px 20px;
+  color:
+    var(--text-main);
 
-      transform:
-        translateY(100%);
+  transition:
+    all .2s ease;
 
-      transition:
-        transform .3s ease;
+  position: relative;
 
-      max-height: 90vh;
+}
 
-      overflow-y: auto;
-    }
+.action-btn:active {
 
-    .modal-overlay.active
-    .modal-content {
+  background: #f0f0f0;
 
-      transform:
-        translateY(0);
-    }
+  transform: scale(.97);
 
-    /* =========================
-       个人中心
-    ========================= */
+}
 
-    .connection-avatars {
+.btn-icon {
 
-      display: flex;
+  font-size: 2rem;
 
-      justify-content: center;
+}
 
-      align-items: center;
+.btn-label {
 
-      gap: 20px;
+  font-size: .9rem;
 
-      margin-bottom: 30px;
-    }
+  font-weight: 500;
 
-    .avatar-wrapper {
+}
 
-      width: 70px;
-      height: 70px;
+.add-btn {
 
-      border-radius: 50%;
+  background: transparent;
 
-      padding: 3px;
+  border:
+    2px dashed
+    var(--border-color);
 
-      background:
-        linear-gradient(
-          45deg,
-          #d3cce3,
-          #e9e4f0
-        );
+  color: #999;
 
-      cursor: pointer;
+}
 
-      position: relative;
-    }
 
-    .avatar-wrapper img {
+/* =========================
+   Modal
+========================= */
 
-      width: 100%;
-      height: 100%;
+.modal-overlay {
 
-      border-radius: 50%;
+  position: fixed;
 
-      object-fit: cover;
+  inset: 0;
 
-      border:
-        2px solid #fff;
-    }
+  background:
+    rgba(0,0,0,.4);
 
-    .avatar-wrapper.locked {
+  backdrop-filter:
+    blur(8px);
 
-      cursor: default;
+  display: flex;
 
-      opacity: .9;
-    }
+  justify-content: center;
 
-    .avatar-wrapper::after {
+  align-items: flex-end;
 
-      content: '+';
+  opacity: 0;
 
-      position: absolute;
+  pointer-events: none;
 
-      bottom: -5px;
-      right: -5px;
+  transition:
+    opacity .25s ease;
 
-      background:
-        var(--text-main);
+  z-index: 100;
 
-      color: #fff;
+}
 
-      width: 22px;
-      height: 22px;
+.modal-overlay.active {
 
-      border-radius: 50%;
+  opacity: 1;
 
-      display: flex;
+  pointer-events: auto;
 
-      justify-content: center;
+}
 
-      align-items: center;
+.modal-content {
 
-      font-size: 12px;
+  background: #fff;
 
-      font-weight: bold;
+  width: 100%;
 
-      border:
-        2px solid #fff;
-    }
+  max-width: 450px;
 
-    .avatar-wrapper.locked::after {
+  border-radius:
+    20px 20px 0 0;
 
-      content: '●';
+  padding:
+    30px 20px;
 
-      font-size: 8px;
+  transform:
+    translateY(100%);
 
-      background: #aaa;
-    }
+  transition:
+    transform .3s ease;
 
-    .mobius {
+  max-height: 90vh;
 
-      font-size: 2rem;
+  overflow-y: auto;
 
-      color: #999;
+}
 
-      font-weight: 300;
-    }
+.modal-overlay.active
+.modal-content {
 
-    .role-text {
+  transform:
+    translateY(0);
 
-      text-align: center;
+}
 
-      color: #777;
 
-      font-size: .85rem;
+/* =========================
+   头像
+========================= */
 
-      margin-top: -20px;
+.connection-avatars {
 
-      margin-bottom: 20px;
-    }
+  display: flex;
 
-    .connection-status {
+  justify-content: center;
 
-      text-align: center;
+  align-items: center;
 
-      margin-bottom: 20px;
+  gap: 20px;
 
-      font-size: .85rem;
+  margin-bottom: 30px;
 
-      color: #777;
-    }
+}
 
-    .primary-btn {
+.avatar-wrapper {
 
-      width: 100%;
+  width: 70px;
+  height: 70px;
 
-      background:
-        var(--text-main);
+  border-radius: 50%;
 
-      color: #fff;
+  padding: 3px;
 
-      border: none;
+  background:
+    linear-gradient(
+      45deg,
+      #d3cce3,
+      #e9e4f0
+    );
 
-      padding:
-        14px 24px;
+  cursor: pointer;
 
-      border-radius: 8px;
+  position: relative;
 
-      font-size: 1rem;
+}
 
-      font-weight: 600;
+.avatar-wrapper img {
 
-      cursor: pointer;
+  width: 100%;
+  height: 100%;
 
-      margin-top: 8px;
-    }
+  border-radius: 50%;
 
-    .danger-btn {
+  object-fit: cover;
 
-      background: #e5e5e5;
+  border:
+    2px solid #fff;
 
-      color: #333;
-    }
+}
 
-    /* =========================
-       输入框
-    ========================= */
+.avatar-wrapper.locked {
 
-    .input-group {
+  cursor: default;
 
-      margin-bottom: 15px;
-    }
+  opacity: .9;
 
-    .input-group label {
+}
 
-      display: block;
+.avatar-wrapper.locked::after {
 
-      font-size: .85rem;
+  content: "●";
 
-      color: #666;
+  position: absolute;
 
-      margin-bottom: 5px;
-    }
+  bottom: -5px;
+  right: -5px;
 
-    .input-group input {
+  background: #aaa;
 
-      width: 100%;
+  color: #fff;
 
-      padding: 12px;
+  width: 22px;
+  height: 22px;
 
-      border:
-        1px solid
-        var(--border-color);
+  border-radius: 50%;
 
-      border-radius: 8px;
+  display: flex;
 
-      font-size: 1rem;
-    }
+  align-items: center;
+  justify-content: center;
 
-    /* =========================
-       Toast
-    ========================= */
+  font-size: 7px;
 
-    #toast {
+  border:
+    2px solid #fff;
 
-      position: fixed;
+}
 
-      left: 50%;
+.avatar-wrapper:not(.locked)::after {
 
-      bottom: 30px;
+  content: "+";
 
-      transform:
-        translate(-50%, 20px);
+  position: absolute;
 
-      background:
-        rgba(40,40,40,.92);
+  bottom: -5px;
+  right: -5px;
 
-      color: #fff;
+  background:
+    var(--text-main);
 
-      padding:
-        12px 18px;
+  color: #fff;
 
-      border-radius: 10px;
+  width: 22px;
+  height: 22px;
 
-      font-size: .9rem;
+  border-radius: 50%;
 
-      opacity: 0;
+  display: flex;
 
-      pointer-events: none;
+  align-items: center;
+  justify-content: center;
 
-      transition:
-        all .25s ease;
+  font-size: 12px;
 
-      z-index: 1000;
+  font-weight: bold;
 
-      max-width: 85%;
+  border:
+    2px solid #fff;
 
-      text-align: center;
-    }
+}
 
-    #toast.show {
+.mobius {
 
-      opacity: 1;
+  font-size: 2rem;
 
-      transform:
-        translate(-50%, 0);
-    }
+  color: #999;
 
-    /* =========================
-       消息弹窗
-    ========================= */
+}
 
-    #messagePopup {
+.role-text {
 
-      position: fixed;
+  text-align: center;
 
-      top: 85px;
+  color: #777;
 
-      left: 50%;
+  font-size: .85rem;
 
-      transform:
-        translateX(-50%)
-        translateY(-20px);
+  margin-bottom: 20px;
 
-      width: calc(100% - 40px);
+}
 
-      max-width: 380px;
+.connection-status {
 
-      background: #fff;
+  text-align: center;
 
-      border:
-        1px solid
-        var(--border-color);
+  font-size: .85rem;
 
-      border-radius: 14px;
+  color: #777;
 
-      padding: 15px;
+  margin-bottom: 20px;
 
-      box-shadow:
-        0 8px 30px
-        rgba(0,0,0,.15);
+}
 
-      opacity: 0;
+.primary-btn {
 
-      pointer-events: none;
+  width: 100%;
 
-      transition:
-        all .3s ease;
+  background:
+    var(--text-main);
 
-      z-index: 900;
-    }
+  color: #fff;
 
-    #messagePopup.show {
+  border: none;
 
-      opacity: 1;
+  padding:
+    14px 24px;
 
-      transform:
-        translateX(-50%)
-        translateY(0);
-    }
+  border-radius: 8px;
 
-    .popup-title {
+  font-size: 1rem;
 
-      font-size: .8rem;
+  font-weight: 600;
 
-      color: #888;
+  cursor: pointer;
 
-      margin-bottom: 5px;
-    }
+  margin-top: 8px;
 
-    .popup-message {
+}
 
-      font-size: 1rem;
+.danger-btn {
 
-      color: #222;
+  background: #e5e5e5;
 
-      line-height: 1.5;
-    }
+  color: #333;
 
-    /* =========================
-       房间信息
-    ========================= */
+}
 
-    .room-info {
+.room-info {
 
-      text-align: center;
+  text-align: center;
 
-      font-size: .75rem;
+  font-size: .75rem;
 
-      color: #999;
+  color: #999;
 
-      margin-top: 15px;
+  margin-top: 15px;
 
-      word-break: break-all;
-    }
+  word-break: break-all;
 
-  </style>
+}
+
+
+/* =========================
+   输入框
+========================= */
+
+.input-group {
+
+  margin-bottom: 15px;
+
+}
+
+.input-group label {
+
+  display: block;
+
+  font-size: .85rem;
+
+  color: #666;
+
+  margin-bottom: 5px;
+
+}
+
+.input-group input {
+
+  width: 100%;
+
+  padding: 12px;
+
+  border:
+    1px solid
+    var(--border-color);
+
+  border-radius: 8px;
+
+  font-size: 1rem;
+
+}
+
+
+/* =========================
+   Toast
+========================= */
+
+#toast {
+
+  position: fixed;
+
+  left: 50%;
+
+  bottom: 30px;
+
+  transform:
+    translate(-50%,20px);
+
+  background:
+    rgba(40,40,40,.92);
+
+  color: #fff;
+
+  padding:
+    12px 18px;
+
+  border-radius: 10px;
+
+  font-size: .9rem;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transition:
+    all .25s ease;
+
+  z-index: 1000;
+
+  max-width: 85%;
+
+  text-align: center;
+
+}
+
+#toast.show {
+
+  opacity: 1;
+
+  transform:
+    translate(-50%,0);
+
+}
+
+
+/* =========================
+   消息
+========================= */
+
+#messagePopup {
+
+  position: fixed;
+
+  top: 85px;
+
+  left: 50%;
+
+  transform:
+    translateX(-50%)
+    translateY(-20px);
+
+  width:
+    calc(100% - 40px);
+
+  max-width: 380px;
+
+  background: #fff;
+
+  border:
+    1px solid
+    var(--border-color);
+
+  border-radius: 14px;
+
+  padding: 15px;
+
+  box-shadow:
+    0 8px 30px
+    rgba(0,0,0,.15);
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transition:
+    all .3s ease;
+
+  z-index: 900;
+
+}
+
+#messagePopup.show {
+
+  opacity: 1;
+
+  transform:
+    translateX(-50%)
+    translateY(0);
+
+}
+
+.popup-title {
+
+  font-size: .8rem;
+
+  color: #888;
+
+  margin-bottom: 5px;
+
+}
+
+.popup-message {
+
+  font-size: 1rem;
+
+  color: #222;
+
+  line-height: 1.5;
+
+}
+
+
+/* =========================
+   无效房间
+========================= */
+
+.invalid-room {
+
+  min-height: 100vh;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 30px;
+
+  text-align: center;
+
+}
+
+</style>
+
 </head>
 
+
 <body>
+
 
 <header>
 
@@ -639,16 +760,20 @@
       Click.
     </div>
 
+
     <!-- 测试消息 -->
+
     <button
       class="header-btn"
       id="testMessageBtn"
-      title="发送测试信息"
+      title="发送测试消息"
     >
       ♢
     </button>
 
-    <!-- 美化设置入口 -->
+
+    <!-- 美化入口 -->
+
     <button
       class="header-btn"
       id="styleBtn"
@@ -658,6 +783,7 @@
     </button>
 
   </div>
+
 
   <div
     class="profile-trigger"
@@ -696,9 +822,12 @@
 
   <div class="modal-content">
 
+
     <div class="connection-avatars">
 
+
       <!-- Owner -->
+
       <div
         class="avatar-wrapper"
         id="ownerAvatarWrapper"
@@ -719,6 +848,7 @@
 
 
       <!-- Guest -->
+
       <div
         class="avatar-wrapper"
         id="guestAvatarWrapper"
@@ -739,7 +869,7 @@
       class="role-text"
       id="roleText"
     >
-      当前身份
+      正在连接
     </div>
 
 
@@ -747,7 +877,7 @@
       class="connection-status"
       id="connectionStatus"
     >
-      未连接
+      正在初始化
     </div>
 
 
@@ -762,9 +892,8 @@
     <button
       class="primary-btn danger-btn"
       id="leaveBtn"
-      style="display:none;"
     >
-      断开链接
+      退出
     </button>
 
 
@@ -801,8 +930,8 @@
       </label>
 
       <input
-        type="text"
         id="newIcon"
+        type="text"
         placeholder="例如：🎮"
         maxlength="2"
       >
@@ -817,8 +946,8 @@
       </label>
 
       <input
-        type="text"
         id="newLabel"
+        type="text"
         placeholder="例如：打游戏"
         maxlength="6"
       >
@@ -833,8 +962,8 @@
       </label>
 
       <input
-        type="text"
         id="newMsg"
+        type="text"
         placeholder="例如：对方正在打游戏"
       >
 
@@ -854,7 +983,7 @@
 
 
 <!-- =========================
-     消息提示
+     消息
 ========================= -->
 
 <div id="messagePopup">
@@ -879,126 +1008,200 @@
 
 <script type="module">
 
+
+/* =====================================================
+   Supabase 配置
+===================================================== */
+
+import {
+  createClient
+}
+from
+"https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+
 /*
-==================================================
- Firebase 配置
-==================================================
-
-把下面这些内容替换成你自己的 Firebase Web App 配置。
-
-Firebase Console
-→ Project settings
-→ Your apps
-→ Web app
-→ SDK setup and configuration
-
-==================================================
+========================================================
+  只修改这里
+========================================================
 */
 
-import {
-  initializeApp
-} from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import {
-  getAuth,
-  signInAnonymously,
-  onAuthStateChanged
-} from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-import {
-  getDatabase,
-  ref,
-  get,
-  set,
-  update,
-  remove,
-  onValue,
-  onDisconnect,
-  push
-} from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+const SUPABASE_URL =
+  "你的 Project URL";
 
 
-/* =================================================
-   在这里填写 Firebase 配置
-================================================= */
-
-const firebaseConfig = {
-
-  apiKey:
-    "YOUR_API_KEY",
-
-  authDomain:
-    "YOUR_PROJECT.firebaseapp.com",
-
-  databaseURL:
-    "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
-
-  projectId:
-    "YOUR_PROJECT_ID",
-
-  storageBucket:
-    "YOUR_PROJECT.firebasestorage.app",
-
-  messagingSenderId:
-    "YOUR_MESSAGING_SENDER_ID",
-
-  appId:
-    "YOUR_APP_ID"
-
-};
+const SUPABASE_KEY =
+  "你的 Publishable key";
 
 
-/* =================================================
-   Firebase 初始化
-================================================= */
+/*
+========================================================
+  初始化
+========================================================
+*/
 
-const app =
-  initializeApp(firebaseConfig);
-
-const auth =
-  getAuth(app);
-
-const db =
-  getDatabase(app);
-
-
-/* =================================================
-   基础变量
-================================================= */
-
-let currentUser = null;
-
-let roomId = null;
-
-let role = null;
-
-let roomListener = null;
-
-let messageListener = null;
-
-let messagePopupTimer = null;
+const supabase =
+  createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
 
-/* =================================================
+/* =====================================================
    默认头像
-================================================= */
+===================================================== */
 
 const defaultAvatar =
   "data:image/svg+xml;utf8," +
   "<svg xmlns='http://www.w3.org/2000/svg' " +
   "viewBox='0 0 100 100'>" +
-  "<rect fill='%23eeeeee' width='100' height='100'/>" +
-  "<circle cx='50' cy='38' r='18' fill='%23bbbbbb'/>" +
-  "<path d='M20 90 C20 65 80 65 80 90' fill='%23bbbbbb'/>" +
+
+  "<rect fill='%23eeeeee' " +
+  "width='100' height='100'/>" +
+
+  "<circle " +
+  "cx='50' cy='38' r='18' " +
+  "fill='%23bbbbbb'/>" +
+
+  "<path " +
+  "d='M20 90 C20 65 80 65 80 90' " +
+  "fill='%23bbbbbb'/>" +
+
   "</svg>";
 
 
-/* =================================================
-   默认状态按钮
-================================================= */
+/* =====================================================
+   用户身份
+===================================================== */
+
+let myId =
+  localStorage.getItem(
+    "click_user_id"
+  );
+
+
+if (!myId) {
+
+  myId =
+    crypto.randomUUID();
+
+  localStorage.setItem(
+    "click_user_id",
+    myId
+  );
+
+}
+
+
+let role =
+  null;
+
+
+let roomId =
+  null;
+
+
+let realtimeChannel =
+  null;
+
+
+/* =====================================================
+   DOM
+===================================================== */
+
+const container =
+  document.getElementById(
+    "buttonContainer"
+  );
+
+
+const profileModal =
+  document.getElementById(
+    "profileModal"
+  );
+
+
+const addBtnModal =
+  document.getElementById(
+    "addBtnModal"
+  );
+
+
+const ownerAvatar =
+  document.getElementById(
+    "ownerAvatar"
+  );
+
+
+const guestAvatar =
+  document.getElementById(
+    "guestAvatar"
+  );
+
+
+const headerAvatar =
+  document.getElementById(
+    "headerAvatar"
+  );
+
+
+const roleText =
+  document.getElementById(
+    "roleText"
+  );
+
+
+const connectionStatus =
+  document.getElementById(
+    "connectionStatus"
+  );
+
+
+const roomInfo =
+  document.getElementById(
+    "roomInfo"
+  );
+
+
+const shareBtn =
+  document.getElementById(
+    "shareBtn"
+  );
+
+
+const leaveBtn =
+  document.getElementById(
+    "leaveBtn"
+  );
+
+
+const toast =
+  document.getElementById(
+    "toast"
+  );
+
+
+const messagePopup =
+  document.getElementById(
+    "messagePopup"
+  );
+
+
+const popupTitle =
+  document.getElementById(
+    "popupTitle"
+  );
+
+
+const popupMessage =
+  document.getElementById(
+    "popupMessage"
+  );
+
+
+/* =====================================================
+   默认状态
+===================================================== */
 
 const defaultButtons = [
 
@@ -1024,111 +1227,40 @@ let savedButtons =
     localStorage.getItem(
       "click_custom_buttons"
     )
-  ) || defaultButtons;
+  ) ||
+  defaultButtons;
 
 
-/* =================================================
-   DOM
-================================================= */
-
-const container =
-  document.getElementById(
-    "buttonContainer"
-  );
-
-const profileModal =
-  document.getElementById(
-    "profileModal"
-  );
-
-const addBtnModal =
-  document.getElementById(
-    "addBtnModal"
-  );
-
-const ownerAvatar =
-  document.getElementById(
-    "ownerAvatar"
-  );
-
-const guestAvatar =
-  document.getElementById(
-    "guestAvatar"
-  );
-
-const headerAvatar =
-  document.getElementById(
-    "headerAvatar"
-  );
-
-const roleText =
-  document.getElementById(
-    "roleText"
-  );
-
-const connectionStatus =
-  document.getElementById(
-    "connectionStatus"
-  );
-
-const roomInfo =
-  document.getElementById(
-    "roomInfo"
-  );
-
-const shareBtn =
-  document.getElementById(
-    "shareBtn"
-  );
-
-const leaveBtn =
-  document.getElementById(
-    "leaveBtn"
-  );
-
-const toast =
-  document.getElementById(
-    "toast"
-  );
-
-const messagePopup =
-  document.getElementById(
-    "messagePopup"
-  );
-
-const popupTitle =
-  document.getElementById(
-    "popupTitle"
-  );
-
-const popupMessage =
-  document.getElementById(
-    "popupMessage"
-  );
-
-
-/* =================================================
+/* =====================================================
    Toast
-================================================= */
+===================================================== */
 
 function showToast(text) {
 
-  toast.textContent = text;
+  toast.textContent =
+    text;
 
-  toast.classList.add("show");
+  toast.classList.add(
+    "show"
+  );
 
-  setTimeout(() => {
+  setTimeout(
+    () => {
 
-    toast.classList.remove("show");
+      toast.classList.remove(
+        "show"
+      );
 
-  }, 2500);
+    },
+    2500
+  );
 
 }
 
 
-/* =================================================
-   对方消息弹窗
-================================================= */
+/* =====================================================
+   消息
+===================================================== */
 
 function showMessage(
   title,
@@ -1145,201 +1277,805 @@ function showMessage(
     "show"
   );
 
-  clearTimeout(
-    messagePopupTimer
-  );
-
-  messagePopupTimer =
-    setTimeout(() => {
+  setTimeout(
+    () => {
 
       messagePopup.classList.remove(
         "show"
       );
 
-    }, 3500);
+    },
+    3500
+  );
 
 }
 
 
-/* =================================================
-   本地按钮
-================================================= */
+/* =====================================================
+   房间 ID
+===================================================== */
 
-function renderButtons() {
+function generateRoomId() {
 
-  container.innerHTML = "";
+  return crypto
+    .randomUUID()
+    .replaceAll("-", "")
+    .substring(0, 12);
 
-
-  savedButtons.forEach(
-    (btn, index) => {
-
-      const btnEl =
-        document.createElement(
-          "div"
-        );
-
-      btnEl.className =
-        "action-btn";
+}
 
 
-      btnEl.innerHTML = `
+/* =====================================================
+   初始化
+===================================================== */
 
-        <span class="btn-icon">
-          ${btn.icon}
-        </span>
+async function init() {
 
-        <span class="btn-label">
-          ${btn.label}
-        </span>
+  ownerAvatar.src =
+    defaultAvatar;
 
-      `;
+  guestAvatar.src =
+    defaultAvatar;
 
-
-      let pressTimer;
-
-
-      btnEl.addEventListener(
-        "touchstart",
-        () => {
-
-          pressTimer =
-            setTimeout(() => {
-
-              const ok =
-                confirm(
-                  `确定删除「${btn.label}」吗？`
-                );
-
-              if (!ok) return;
+  headerAvatar.src =
+    defaultAvatar;
 
 
-              savedButtons.splice(
-                index,
-                1
-              );
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
 
 
-              localStorage.setItem(
-                "click_custom_buttons",
-                JSON.stringify(
-                  savedButtons
-                )
-              );
+  const urlRoom =
+    params.get("room");
 
 
-              renderButtons();
+  if (urlRoom) {
 
-            }, 800);
+    await joinRoom(
+      urlRoom
+    );
 
-        }
-      );
+  }
 
+  else {
 
-      btnEl.addEventListener(
-        "touchend",
-        () => {
+    await createRoom();
 
-          clearTimeout(
-            pressTimer
-          );
-
-        }
-      );
+  }
 
 
-      btnEl.addEventListener(
-        "click",
-        async () => {
+  renderButtons();
 
-          await sendMessage(
-            btn.label,
-            btn.msg
-          );
-
-        }
-      );
+}
 
 
-      container.appendChild(
-        btnEl
-      );
+/* =====================================================
+   创建房间
+===================================================== */
 
-    }
+async function createRoom() {
+
+  roomId =
+    generateRoomId();
+
+  role =
+    "owner";
+
+
+  const avatar =
+    localStorage.getItem(
+      "click_my_avatar"
+    ) ||
+    defaultAvatar;
+
+
+  const { error } =
+    await supabase
+      .from("rooms")
+      .insert({
+
+        id: roomId,
+
+        owner_id: myId,
+
+        guest_id: null,
+
+        owner_avatar: avatar,
+
+        guest_avatar:
+          defaultAvatar,
+
+        active: true
+
+      });
+
+
+  if (error) {
+
+    console.error(error);
+
+    showToast(
+      "创建房间失败"
+    );
+
+    return;
+
+  }
+
+
+  localStorage.setItem(
+    "click_owner_room",
+    roomId
   );
 
 
-  const addBtn =
-    document.createElement(
-      "div"
+  window.history.replaceState(
+    {},
+    "",
+    `${window.location.pathname}?room=${roomId}`
+  );
+
+
+  startRealtime();
+
+  updateUI();
+
+}
+
+
+/* =====================================================
+   加入房间
+===================================================== */
+
+async function joinRoom(
+  id
+) {
+
+  roomId =
+    id;
+
+
+  const { data, error } =
+    await supabase
+      .from("rooms")
+      .select("*")
+      .eq("id", roomId)
+      .maybeSingle();
+
+
+  if (
+    error ||
+    !data
+  ) {
+
+    showInvalidRoom();
+
+    return;
+
+  }
+
+
+  if (
+    data.active !== true
+  ) {
+
+    showInvalidRoom();
+
+    return;
+
+  }
+
+
+  /* Owner */
+
+  if (
+    data.owner_id === myId
+  ) {
+
+    role =
+      "owner";
+
+  }
+
+
+  /* 原来的 Guest */
+
+  else if (
+    data.guest_id === myId
+  ) {
+
+    role =
+      "guest";
+
+  }
+
+
+  /* 新 Guest */
+
+  else if (
+    data.guest_id === null
+  ) {
+
+    role =
+      "guest";
+
+
+    const avatar =
+      localStorage.getItem(
+        "click_my_avatar"
+      ) ||
+      defaultAvatar;
+
+
+    const { error:
+      updateError
+    } =
+      await supabase
+        .from("rooms")
+        .update({
+
+          guest_id:
+            myId,
+
+          guest_avatar:
+            avatar
+
+        })
+        .eq(
+          "id",
+          roomId
+        );
+
+
+    if (updateError) {
+
+      console.error(
+        updateError
+      );
+
+      showToast(
+        "加入房间失败"
+      );
+
+      return;
+
+    }
+
+  }
+
+
+  else {
+
+    showToast(
+      "这个房间已经有成员"
     );
 
-  addBtn.className =
-    "action-btn add-btn";
+    return;
+
+  }
 
 
-  addBtn.innerHTML = `
-
-    <span class="btn-icon">
-      ＋
-    </span>
-
-    <span class="btn-label">
-      添加状态
-    </span>
-
-  `;
+  localStorage.setItem(
+    "click_current_room",
+    roomId
+  );
 
 
-  addBtn.onclick = () => {
+  startRealtime();
 
-    addBtnModal.classList.add(
-      "active"
+  updateUI();
+
+
+  await loadRoom();
+
+}
+
+
+/* =====================================================
+   获取房间
+===================================================== */
+
+async function loadRoom() {
+
+  const { data } =
+    await supabase
+      .from("rooms")
+      .select("*")
+      .eq("id", roomId)
+      .maybeSingle();
+
+
+  if (!data) {
+
+    showInvalidRoom();
+
+    return;
+
+  }
+
+
+  updateAvatars(
+    data
+  );
+
+}
+
+
+/* =====================================================
+   实时监听
+===================================================== */
+
+function startRealtime() {
+
+  if (
+    realtimeChannel
+  ) {
+
+    supabase.removeChannel(
+      realtimeChannel
+    );
+
+  }
+
+
+  realtimeChannel =
+    supabase
+      .channel(
+        `click-room-${roomId}`
+      )
+
+
+      /* 房间 */
+
+      .on(
+
+        "postgres_changes",
+
+        {
+
+          event: "*",
+
+          schema: "public",
+
+          table: "rooms",
+
+          filter:
+            `id=eq.${roomId}`
+
+        },
+
+        payload => {
+
+          if (
+            payload.eventType ===
+            "DELETE"
+          ) {
+
+            showInvalidRoom();
+
+            return;
+
+          }
+
+
+          const room =
+            payload.new;
+
+
+          if (
+            room.active !== true
+          ) {
+
+            showInvalidRoom();
+
+            return;
+
+          }
+
+
+          if (
+            role === "guest" &&
+            room.guest_id !== myId
+          ) {
+
+            showInvalidRoom();
+
+            return;
+
+          }
+
+
+          updateAvatars(
+            room
+          );
+
+          updateConnectionUI(
+            room
+          );
+
+        }
+
+      )
+
+
+      /* 消息 */
+
+      .on(
+
+        "postgres_changes",
+
+        {
+
+          event: "INSERT",
+
+          schema: "public",
+
+          table: "messages",
+
+          filter:
+            `room_id=eq.${roomId}`
+
+        },
+
+        payload => {
+
+          const message =
+            payload.new;
+
+
+          if (
+            message.sender_id ===
+            myId
+          ) {
+
+            return;
+
+          }
+
+
+          showMessage(
+
+            "对方",
+
+            message.message
+
+          );
+
+        }
+
+      )
+
+
+      .subscribe();
+
+}
+
+
+/* =====================================================
+   头像
+===================================================== */
+
+function updateAvatars(
+  room
+) {
+
+  ownerAvatar.src =
+    room.owner_avatar ||
+    defaultAvatar;
+
+
+  guestAvatar.src =
+    room.guest_avatar ||
+    defaultAvatar;
+
+
+  if (
+    role === "owner"
+  ) {
+
+    headerAvatar.src =
+      room.owner_avatar ||
+      defaultAvatar;
+
+  }
+
+  else {
+
+    headerAvatar.src =
+      room.guest_avatar ||
+      defaultAvatar;
+
+  }
+
+}
+
+
+/* =====================================================
+   UI
+===================================================== */
+
+function updateUI() {
+
+  if (
+    role === "owner"
+  ) {
+
+    roleText.textContent =
+      "你是这个 Click. 的主人";
+
+    shareBtn.style.display =
+      "block";
+
+    leaveBtn.textContent =
+      "断开链接";
+
+
+    document
+      .getElementById(
+        "ownerAvatarWrapper"
+      )
+      .classList.remove(
+        "locked"
+      );
+
+
+    document
+      .getElementById(
+        "guestAvatarWrapper"
+      )
+      .classList.add(
+        "locked"
+      );
+
+  }
+
+
+  else {
+
+    roleText.textContent =
+      "你是被邀请的成员";
+
+    shareBtn.style.display =
+      "none";
+
+    leaveBtn.textContent =
+      "退出链接";
+
+
+    document
+      .getElementById(
+        "ownerAvatarWrapper"
+      )
+      .classList.add(
+        "locked"
+      );
+
+
+    document
+      .getElementById(
+        "guestAvatarWrapper"
+      )
+      .classList.remove(
+        "locked"
+      );
+
+  }
+
+
+  roomInfo.textContent =
+    roomId
+      ? `房间 ID：${roomId}`
+      : "";
+
+}
+
+
+/* =====================================================
+   连接状态
+===================================================== */
+
+function updateConnectionUI(
+  room
+) {
+
+  if (
+    room.guest_id
+  ) {
+
+    connectionStatus.textContent =
+      "已连接";
+
+  }
+
+  else {
+
+    connectionStatus.textContent =
+      "等待对方加入";
+
+  }
+
+}
+
+
+/* =====================================================
+   发送消息
+===================================================== */
+
+async function sendMessage(
+  title,
+  message
+) {
+
+  if (
+    !roomId
+  ) {
+
+    showToast(
+      "当前没有房间"
+    );
+
+    return;
+
+  }
+
+
+  const { data: room } =
+    await supabase
+      .from("rooms")
+      .select("*")
+      .eq("id", roomId)
+      .maybeSingle();
+
+
+  if (
+    !room ||
+    room.active !== true
+  ) {
+
+    showToast(
+      "房间已经失效"
+    );
+
+    return;
+
+  }
+
+
+  if (
+    role === "owner" &&
+    !room.guest_id
+  ) {
+
+    showToast(
+      "对方还没有加入"
+    );
+
+    return;
+
+  }
+
+
+  if (
+    role === "guest" &&
+    room.guest_id !== myId
+  ) {
+
+    showToast(
+      "你已经退出这个房间"
+    );
+
+    return;
+
+  }
+
+
+  const { error } =
+    await supabase
+      .from("messages")
+      .insert({
+
+        room_id:
+          roomId,
+
+        sender_id:
+          myId,
+
+        sender_role:
+          role,
+
+        title:
+          title,
+
+        message:
+          message
+
+      });
+
+
+  if (error) {
+
+    console.error(error);
+
+    showToast(
+      "消息发送失败"
+    );
+
+    return;
+
+  }
+
+
+  showToast(
+    "已发送"
+  );
+
+}
+
+
+/* =====================================================
+   测试消息
+===================================================== */
+
+document
+  .getElementById(
+    "testMessageBtn"
+  )
+  .onclick =
+  () => {
+
+    sendMessage(
+      "测试信息",
+      "这是一条测试消息"
     );
 
   };
 
 
-  container.appendChild(
-    addBtn
-  );
-
-}
-
-
-renderButtons();
-
-
-/* =================================================
-   创建新按钮
-================================================= */
+/* =====================================================
+   新建按钮
+===================================================== */
 
 document
-  .getElementById("saveNewBtn")
-  .onclick = () => {
+  .getElementById(
+    "saveNewBtn"
+  )
+  .onclick =
+  () => {
 
     const icon =
-      document.getElementById(
-        "newIcon"
-      ).value || "✨";
+      document
+        .getElementById(
+          "newIcon"
+        )
+        .value ||
+      "✨";
 
 
     const label =
-      document.getElementById(
-        "newLabel"
-      ).value || "新状态";
+      document
+        .getElementById(
+          "newLabel"
+        )
+        .value ||
+      "新状态";
 
 
     const msg =
-      document.getElementById(
-        "newMsg"
-      ).value ||
+      document
+        .getElementById(
+          "newMsg"
+        )
+        .value ||
       "对方发送了一个新状态";
 
 
     savedButtons.push({
 
       id:
-        Date.now().toString(),
+        Date.now()
+        .toString(),
 
       icon,
 
@@ -1361,840 +2097,250 @@ document
     renderButtons();
 
 
-    document.getElementById(
-      "newIcon"
-    ).value = "";
-
-    document.getElementById(
-      "newLabel"
-    ).value = "";
-
-    document.getElementById(
-      "newMsg"
-    ).value = "";
+    document
+      .getElementById(
+        "newIcon"
+      )
+      .value = "";
 
 
-    addBtnModal.classList.remove(
-      "active"
-    );
+    document
+      .getElementById(
+        "newLabel"
+      )
+      .value = "";
+
+
+    document
+      .getElementById(
+        "newMsg"
+      )
+      .value = "";
+
+
+    addBtnModal
+      .classList
+      .remove(
+        "active"
+      );
 
   };
 
 
-/* =================================================
-   模态框关闭
-================================================= */
+/* =====================================================
+   状态按钮
+===================================================== */
 
-document
-  .querySelectorAll(
-    ".modal-overlay"
-  )
-  .forEach(modal => {
+function renderButtons() {
 
-    modal.addEventListener(
-      "click",
-      e => {
+  container.innerHTML =
+    "";
 
-        if (
-          e.target === modal
-        ) {
 
-          modal.classList.remove(
-            "active"
+  savedButtons.forEach(
+    (btn, index) => {
+
+      const el =
+        document
+          .createElement(
+            "div"
+          );
+
+
+      el.className =
+        "action-btn";
+
+
+      el.innerHTML = `
+
+        <span class="btn-icon">
+          ${btn.icon}
+        </span>
+
+        <span class="btn-label">
+          ${btn.label}
+        </span>
+
+      `;
+
+
+      let timer;
+
+
+      el.addEventListener(
+        "touchstart",
+        () => {
+
+          timer =
+            setTimeout(
+              () => {
+
+                if (
+                  confirm(
+                    `确定删除「${btn.label}」吗？`
+                  )
+                ) {
+
+                  savedButtons.splice(
+                    index,
+                    1
+                  );
+
+
+                  localStorage.setItem(
+                    "click_custom_buttons",
+                    JSON.stringify(
+                      savedButtons
+                    )
+                  );
+
+
+                  renderButtons();
+
+                }
+
+              },
+              800
+            );
+
+        }
+      );
+
+
+      el.addEventListener(
+        "touchend",
+        () => {
+
+          clearTimeout(
+            timer
           );
 
         }
-
-      }
-    );
-
-  });
-
-
-/* =================================================
-   登录 Firebase 匿名用户
-================================================= */
-
-signInAnonymously(auth)
-  .catch(error => {
-
-    console.error(error);
-
-    showToast(
-      "无法连接服务器"
-    );
-
-  });
-
-
-onAuthStateChanged(
-  auth,
-  async user => {
-
-    if (!user) return;
-
-    currentUser =
-      user;
-
-    await initializeRoom();
-
-  }
-);
-
-
-/* =================================================
-   判断 URL 中是否存在房间
-================================================= */
-
-async function initializeRoom() {
-
-  const params =
-    new URLSearchParams(
-      window.location.search
-    );
-
-  const urlRoom =
-    params.get("room");
-
-
-  if (urlRoom) {
-
-    roomId =
-      urlRoom;
-
-    await joinExistingRoom();
-
-  }
-
-  else {
-
-    await createNewRoom();
-
-  }
-
-}
-
-
-/* =================================================
-   生成房间 ID
-================================================= */
-
-function generateRoomId() {
-
-  const chars =
-    "abcdefghijklmnopqrstuvwxyz" +
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-    "0123456789";
-
-  let result = "";
-
-  for (
-    let i = 0;
-    i < 12;
-    i++
-  ) {
-
-    result +=
-      chars[
-        Math.floor(
-          Math.random() *
-          chars.length
-        )
-      ];
-
-  }
-
-  return result;
-
-}
-
-
-/* =================================================
-   创建房间
-================================================= */
-
-async function createNewRoom() {
-
-  roomId =
-    generateRoomId();
-
-  role =
-    "owner";
-
-
-  const roomRef =
-    ref(
-      db,
-      `rooms/${roomId}`
-    );
-
-
-  const roomData = {
-
-    active: true,
-
-    ownerUid:
-      currentUser.uid,
-
-    guestUid: null,
-
-    ownerAvatar:
-      localStorage.getItem(
-        "click_my_avatar"
-      ) || defaultAvatar,
-
-    guestAvatar:
-      defaultAvatar,
-
-    createdAt:
-      Date.now(),
-
-    status: null,
-
-    lastMessage: null
-
-  };
-
-
-  await set(
-    roomRef,
-    roomData
-  );
-
-
-  localStorage.setItem(
-    "click_owner_room",
-    roomId
-  );
-
-
-  startRoomListener();
-
-  updateUI();
-
-}
-
-
-/* =================================================
-   加入已有房间
-================================================= */
-
-async function joinExistingRoom() {
-
-  const roomRef =
-    ref(
-      db,
-      `rooms/${roomId}`
-    );
-
-
-  const snapshot =
-    await get(roomRef);
-
-
-  if (!snapshot.exists()) {
-
-    showInvalidRoom();
-
-    return;
-
-  }
-
-
-  const room =
-    snapshot.val();
-
-
-  /* Owner 自己重新打开 */
-
-  if (
-    room.ownerUid ===
-    currentUser.uid
-  ) {
-
-    role =
-      "owner";
-
-  }
-
-
-  /* 已经是这个 Guest */
-
-  else if (
-    room.guestUid ===
-    currentUser.uid
-  ) {
-
-    role =
-      "guest";
-
-  }
-
-
-  /* 新 Guest */
-
-  else if (
-    room.guestUid === null &&
-    room.active === true
-  ) {
-
-    role =
-      "guest";
-
-
-    await update(
-      roomRef,
-      {
-
-        guestUid:
-          currentUser.uid,
-
-        guestAvatar:
-          localStorage.getItem(
-            "click_my_avatar"
-          ) || defaultAvatar
-
-      }
-    );
-
-  }
-
-
-  else {
-
-    showToast(
-      "这个房间已经有其他成员"
-    );
-
-    return;
-
-  }
-
-
-  localStorage.setItem(
-    "click_current_room",
-    roomId
-  );
-
-
-  startRoomListener();
-
-  updateUI();
-
-}
-
-
-/* =================================================
-   房间实时监听
-================================================= */
-
-function startRoomListener() {
-
-  if (roomListener) {
-
-    roomListener();
-
-  }
-
-
-  const roomRef =
-    ref(
-      db,
-      `rooms/${roomId}`
-    );
-
-
-  roomListener =
-    onValue(
-      roomRef,
-      snapshot => {
-
-        if (
-          !snapshot.exists()
-        ) {
-
-          showInvalidRoom();
-
-          return;
-
-        }
-
-
-        const room =
-          snapshot.val();
-
-
-        /* 房间被 Owner 关闭 */
-
-        if (
-          room.active !== true
-        ) {
-
-          if (
-            role === "guest"
-          ) {
-
-            showInvalidRoom();
-
-          }
-
-          return;
-
-        }
-
-
-        /* Guest 被移除 */
-
-        if (
-          role === "guest" &&
-          room.guestUid !==
-          currentUser.uid
-        ) {
-
-          showInvalidRoom();
-
-          return;
-
-        }
-
-
-        updateAvatars(
-          room
-        );
-
-
-        updateConnectionUI(
-          room
-        );
-
-      }
-    );
-
-
-  startMessageListener();
-
-}
-
-
-/* =================================================
-   监听消息
-================================================= */
-
-function startMessageListener() {
-
-  const messagesRef =
-    ref(
-      db,
-      `rooms/${roomId}/messages`
-    );
-
-
-  let firstLoad = true;
-
-
-  messageListener =
-    onValue(
-      messagesRef,
-      snapshot => {
-
-        const data =
-          snapshot.val();
-
-
-        if (!data) return;
-
-
-        const messages =
-          Object.values(data)
-            .sort(
-              (a,b) =>
-                a.time - b.time
-            );
-
-
-        if (
-          firstLoad
-        ) {
-
-          firstLoad = false;
-
-          return;
-
-        }
-
-
-        const latest =
-          messages[
-            messages.length - 1
-          ];
-
-
-        if (!latest) return;
-
-
-        if (
-          latest.senderUid ===
-          currentUser.uid
-        ) {
-
-          return;
-
-        }
-
-
-        showMessage(
-          "对方",
-          latest.message
-        );
-
-      }
-    );
-
-}
-
-
-/* =================================================
-   更新头像
-================================================= */
-
-function updateAvatars(
-  room
-) {
-
-  ownerAvatar.src =
-    room.ownerAvatar ||
-    defaultAvatar;
-
-
-  guestAvatar.src =
-    room.guestAvatar ||
-    defaultAvatar;
-
-
-  if (
-    role === "owner"
-  ) {
-
-    headerAvatar.src =
-      room.ownerAvatar ||
-      defaultAvatar;
-
-  }
-
-  else {
-
-    headerAvatar.src =
-      room.guestAvatar ||
-      defaultAvatar;
-
-  }
-
-}
-
-
-/* =================================================
-   更新连接状态
-================================================= */
-
-function updateConnectionUI(
-  room
-) {
-
-  if (
-    room.guestUid
-  ) {
-
-    connectionStatus.textContent =
-      "已连接";
-
-  }
-
-  else {
-
-    connectionStatus.textContent =
-      "等待对方加入";
-
-  }
-
-
-  roomInfo.textContent =
-    `房间 ID：${roomId}`;
-
-}
-
-
-/* =================================================
-   UI 身份
-================================================= */
-
-function updateUI() {
-
-  if (
-    role === "owner"
-  ) {
-
-    roleText.textContent =
-      "你是这个 Click. 的主人";
-
-    shareBtn.style.display =
-      "block";
-
-    leaveBtn.style.display =
-      "block";
-
-    leaveBtn.textContent =
-      "断开链接";
-
-
-    /*
-      Owner 左侧头像可以修改
-      Guest 右侧头像不能修改
-    */
-
-    document
-      .getElementById(
-        "ownerAvatarWrapper"
-      )
-      .classList.remove(
-        "locked"
       );
 
 
-    document
-      .getElementById(
-        "guestAvatarWrapper"
-      )
-      .classList.add(
-        "locked"
+      el.onclick =
+        () => {
+
+          sendMessage(
+            btn.label,
+            btn.msg
+          );
+
+        };
+
+
+      container.appendChild(
+        el
       );
-
-  }
-
-  else {
-
-    roleText.textContent =
-      "你是被邀请加入的成员";
-
-    shareBtn.style.display =
-      "none";
-
-    leaveBtn.style.display =
-      "block";
-
-    leaveBtn.textContent =
-      "退出链接";
-
-
-    /*
-      Guest 左侧 Owner 头像不能修改
-      Guest 右侧自己的头像可以修改
-    */
-
-    document
-      .getElementById(
-        "ownerAvatarWrapper"
-      )
-      .classList.add(
-        "locked"
-      );
-
-
-    document
-      .getElementById(
-        "guestAvatarWrapper"
-      )
-      .classList.remove(
-        "locked"
-      );
-
-  }
-
-}
-
-
-/* =================================================
-   发送消息
-================================================= */
-
-async function sendMessage(
-  title,
-  message
-) {
-
-  if (
-    !roomId ||
-    !currentUser
-  ) {
-
-    showToast(
-      "当前没有连接"
-    );
-
-    return;
-
-  }
-
-
-  const roomSnapshot =
-    await get(
-      ref(
-        db,
-        `rooms/${roomId}`
-      )
-    );
-
-
-  if (
-    !roomSnapshot.exists()
-  ) {
-
-    showToast(
-      "房间已经失效"
-    );
-
-    return;
-
-  }
-
-
-  const room =
-    roomSnapshot.val();
-
-
-  if (
-    room.active !== true
-  ) {
-
-    showToast(
-      "房间已经断开"
-    );
-
-    return;
-
-  }
-
-
-  if (
-    role === "guest" &&
-    room.ownerUid ===
-    currentUser.uid
-  ) {
-
-    return;
-
-  }
-
-
-  if (
-    role === "owner" &&
-    !room.guestUid
-  ) {
-
-    showToast(
-      "对方还没有加入"
-    );
-
-    return;
-
-  }
-
-
-  const messagesRef =
-    ref(
-      db,
-      `rooms/${roomId}/messages`
-    );
-
-
-  const newMessage =
-    push(messagesRef);
-
-
-  await set(
-    newMessage,
-    {
-
-      senderUid:
-        currentUser.uid,
-
-      senderRole:
-        role,
-
-      title,
-
-      message,
-
-      time:
-        Date.now()
 
     }
   );
 
 
-  await update(
-    ref(
-      db,
-      `rooms/${roomId}`
-    ),
-    {
-
-      status:
-        title,
-
-      lastMessage:
-        message
-
-    }
-  );
+  const add =
+    document
+      .createElement(
+        "div"
+      );
 
 
-  showToast(
-    "已发送"
+  add.className =
+    "action-btn add-btn";
+
+
+  add.innerHTML = `
+
+    <span class="btn-icon">
+      ＋
+    </span>
+
+    <span class="btn-label">
+      添加状态
+    </span>
+
+  `;
+
+
+  add.onclick =
+    () => {
+
+      addBtnModal
+        .classList
+        .add(
+          "active"
+        );
+
+    };
+
+
+  container.appendChild(
+    add
   );
 
 }
 
 
-/* =================================================
-   测试消息按钮
-================================================= */
-
-document
-  .getElementById(
-    "testMessageBtn"
-  )
-  .onclick = async () => {
-
-    await sendMessage(
-      "测试信息",
-      "这是一条测试消息"
-    );
-
-  };
-
-
-/* =================================================
+/* =====================================================
    打开个人中心
-================================================= */
+===================================================== */
 
 document
   .getElementById(
     "openProfileBtn"
   )
-  .onclick = () => {
+  .onclick =
+  () => {
 
-    profileModal.classList.add(
-      "active"
-    );
+    profileModal
+      .classList
+      .add(
+        "active"
+      );
 
     updateUI();
 
   };
 
 
-/* =================================================
-   Owner 获取邀请链接
-================================================= */
+/* =====================================================
+   关闭 Modal
+===================================================== */
+
+document
+  .querySelectorAll(
+    ".modal-overlay"
+  )
+  .forEach(
+    modal => {
+
+      modal.addEventListener(
+        "click",
+        e => {
+
+          if (
+            e.target ===
+            modal
+          ) {
+
+            modal
+              .classList
+              .remove(
+                "active"
+              );
+
+          }
+
+        }
+      );
+
+    }
+  );
+
+
+/* =====================================================
+   分享链接
+===================================================== */
 
 shareBtn.onclick =
   async () => {
@@ -2208,31 +2354,7 @@ shareBtn.onclick =
     }
 
 
-    const roomRef =
-      ref(
-        db,
-        `rooms/${roomId}`
-      );
-
-
-    const snapshot =
-      await get(roomRef);
-
-
-    if (
-      !snapshot.exists()
-    ) {
-
-      showToast(
-        "房间不存在"
-      );
-
-      return;
-
-    }
-
-
-    const shareUrl =
+    const url =
       `${window.location.origin}` +
       `${window.location.pathname}` +
       `?room=${roomId}`;
@@ -2240,24 +2362,24 @@ shareBtn.onclick =
 
     try {
 
-      await navigator.clipboard
+      await navigator
+        .clipboard
         .writeText(
-          shareUrl
+          url
         );
 
 
       showToast(
-        "专属连接已复制"
+        "专属链接已复制"
       );
-
 
     }
 
     catch {
 
       prompt(
-        "请复制下面的链接",
-        shareUrl
+        "复制下面的专属链接",
+        url
       );
 
     }
@@ -2265,58 +2387,51 @@ shareBtn.onclick =
   };
 
 
-/* =================================================
+/* =====================================================
    Owner 断开 / Guest 退出
-================================================= */
+===================================================== */
 
 leaveBtn.onclick =
   async () => {
 
-    if (!roomId) return;
-
-
-    const roomRef =
-      ref(
-        db,
-        `rooms/${roomId}`
-      );
-
-
-    const snapshot =
-      await get(roomRef);
-
-
     if (
-      !snapshot.exists()
-    ) {
+      !roomId
+    ) return;
 
-      return;
-
-    }
-
-
-    const room =
-      snapshot.val();
-
-
-    /* =========================
-       Owner 主动断开
-    ========================= */
 
     if (
       role === "owner"
     ) {
 
-      await update(
-        roomRef,
-        {
+      /*
+        Owner 断开：
+        房间 active = false
+      */
 
-          active: false,
+      const { error } =
+        await supabase
+          .from("rooms")
+          .update({
 
-          guestUid: null
+            active:
+              false
 
-        }
-      );
+          })
+          .eq(
+            "id",
+            roomId
+          );
+
+
+      if (error) {
+
+        showToast(
+          "断开失败"
+        );
+
+        return;
+
+      }
 
 
       localStorage.removeItem(
@@ -2324,25 +2439,8 @@ leaveBtn.onclick =
       );
 
 
-      showToast(
-        "链接已断开"
-      );
-
-
-      setTimeout(
-        () => {
-
-          window.history.replaceState(
-            {},
-            "",
-            window.location.pathname
-          );
-
-          location.reload();
-
-        },
-        700
-      );
+      window.location.href =
+        window.location.pathname;
 
 
       return;
@@ -2350,34 +2448,44 @@ leaveBtn.onclick =
     }
 
 
-    /* =========================
-       Guest 主动退出
-    ========================= */
-
     if (
       role === "guest"
     ) {
 
-      if (
-        room.guestUid ===
-        currentUser.uid
-      ) {
+      /*
+        Guest 离开：
+        只清空 guest
+      */
 
-        await update(
-          roomRef,
-          {
+      const { error } =
+        await supabase
+          .from("rooms")
+          .update({
 
-            guestUid: null,
+            guest_id:
+              null,
 
-            guestAvatar:
-              defaultAvatar,
+            guest_avatar:
+              defaultAvatar
 
-            status: null,
+          })
+          .eq(
+            "id",
+            roomId
+          )
+          .eq(
+            "guest_id",
+            myId
+          );
 
-            lastMessage: null
 
-          }
+      if (error) {
+
+        showToast(
+          "退出失败"
         );
+
+        return;
 
       }
 
@@ -2387,103 +2495,27 @@ leaveBtn.onclick =
       );
 
 
-      showToast(
-        "已退出链接"
-      );
-
-
-      setTimeout(
-        () => {
-
-          window.history.replaceState(
-            {},
-            "",
-            window.location.pathname
-          );
-
-          location.reload();
-
-        },
-        700
-      );
+      window.location.href =
+        window.location.pathname;
 
     }
 
   };
 
 
-/* =================================================
-   Owner 头像
-================================================= */
-
-document
-  .getElementById(
-    "ownerAvatarWrapper"
-  )
-  .onclick = () => {
-
-    if (
-      role !== "owner"
-    ) {
-
-      showToast(
-        "这里只能查看对方头像"
-      );
-
-      return;
-
-    }
-
-
-    chooseAvatar(
-      "owner"
-    );
-
-  };
-
-
-/* =================================================
-   Guest 头像
-================================================= */
-
-document
-  .getElementById(
-    "guestAvatarWrapper"
-  )
-  .onclick = () => {
-
-    if (
-      role !== "guest"
-    ) {
-
-      showToast(
-        "这里只能查看对方头像"
-      );
-
-      return;
-
-    }
-
-
-    chooseAvatar(
-      "guest"
-    );
-
-  };
-
-
-/* =================================================
-   选择头像
-================================================= */
+/* =====================================================
+   头像选择
+===================================================== */
 
 function chooseAvatar(
   avatarRole
 ) {
 
   const input =
-    document.createElement(
-      "input"
-    );
+    document
+      .createElement(
+        "input"
+      );
 
 
   input.type =
@@ -2498,7 +2530,9 @@ function chooseAvatar(
     event => {
 
       const file =
-        event.target.files[0];
+        event
+          .target
+          .files[0];
 
 
       if (!file) return;
@@ -2511,55 +2545,49 @@ function chooseAvatar(
       reader.onload =
         async e => {
 
-          const imageData =
+          const image =
             e.target.result;
 
 
           localStorage.setItem(
             "click_my_avatar",
-            imageData
+            image
           );
 
 
-          const roomRef =
-            ref(
-              db,
-              `rooms/${roomId}`
-            );
-
-
-          if (
+          const field =
             avatarRole ===
             "owner"
-          ) {
+              ? "owner_avatar"
+              : "guest_avatar";
 
-            await update(
-              roomRef,
-              {
 
-                ownerAvatar:
-                  imageData
+          const { error } =
+            await supabase
+              .from("rooms")
+              .update({
 
-              }
+                [field]:
+                  image
+
+              })
+              .eq(
+                "id",
+                roomId
+              );
+
+
+          if (error) {
+
+            console.error(
+              error
             );
 
-          }
-
-
-          if (
-            avatarRole ===
-            "guest"
-          ) {
-
-            await update(
-              roomRef,
-              {
-
-                guestAvatar:
-                  imageData
-
-              }
+            showToast(
+              "头像更新失败"
             );
+
+            return;
 
           }
 
@@ -2583,41 +2611,88 @@ function chooseAvatar(
 }
 
 
-/* =================================================
+/* =====================================================
+   Owner 头像
+===================================================== */
+
+document
+  .getElementById(
+    "ownerAvatarWrapper"
+  )
+  .onclick =
+  () => {
+
+    if (
+      role !== "owner"
+    ) {
+
+      showToast(
+        "这是对方的头像"
+      );
+
+      return;
+
+    }
+
+
+    chooseAvatar(
+      "owner"
+    );
+
+  };
+
+
+/* =====================================================
+   Guest 头像
+===================================================== */
+
+document
+  .getElementById(
+    "guestAvatarWrapper"
+  )
+  .onclick =
+  () => {
+
+    if (
+      role !== "guest"
+    ) {
+
+      showToast(
+        "这是对方的头像"
+      );
+
+      return;
+
+    }
+
+
+    chooseAvatar(
+      "guest"
+    );
+
+  };
+
+
+/* =====================================================
    无效房间
-================================================= */
+===================================================== */
 
 function showInvalidRoom() {
 
-  if (roomListener) {
+  if (
+    realtimeChannel
+  ) {
 
-    roomListener();
-
-    roomListener =
-      null;
+    supabase.removeChannel(
+      realtimeChannel
+    );
 
   }
 
 
-  role = null;
-
-  roomId = null;
-
-
   document.body.innerHTML = `
 
-    <div style="
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:30px;
-      font-family:-apple-system,
-      BlinkMacSystemFont,
-      sans-serif;
-      background:#fafafa;
-      text-align:center;
-    ">
+    <div class="invalid-room">
 
       <div>
 
@@ -2628,25 +2703,27 @@ function showInvalidRoom() {
           ∞
         </div>
 
-        <h2 style="
-          font-weight:600;
-          margin-bottom:10px;
-        ">
+
+        <h2>
           这个链接已经失效
         </h2>
+
 
         <p style="
           color:#888;
           line-height:1.6;
         ">
-          房间可能已经被主人断开，
-          或者这个邀请链接不存在。
+          这个 Click. 房间已经被主人断开，
+          或者邀请链接不存在。
         </p>
 
+
         <button
-          onclick="location.href =
+          onclick="
+            location.href =
             location.origin +
-            location.pathname"
+            location.pathname
+          "
           style="
             margin-top:20px;
             border:none;
@@ -2657,7 +2734,7 @@ function showInvalidRoom() {
             font-size:15px;
           "
         >
-          创建自己的 Click.
+          创建新的 Click.
         </button>
 
       </div>
@@ -2669,66 +2746,14 @@ function showInvalidRoom() {
 }
 
 
-/* =================================================
-   防止 Owner 断网后留下错误状态
-================================================= */
+/* =====================================================
+   启动
+===================================================== */
 
-async function setupDisconnectProtection() {
-
-  if (
-    !currentUser ||
-    !roomId
-  ) return;
-
-
-  const connectionRef =
-    ref(
-      db,
-      `rooms/${roomId}/connections/${currentUser.uid}`
-    );
-
-
-  await onDisconnect(
-    connectionRef
-  ).remove();
-
-
-  await set(
-    connectionRef,
-    {
-
-      role,
-
-      time:
-        Date.now()
-
-    }
-  );
-
-}
-
-
-/* =================================================
-   页面初始化完成
-================================================= */
-
-window.addEventListener(
-  "load",
-  () => {
-
-    headerAvatar.src =
-      defaultAvatar;
-
-    ownerAvatar.src =
-      defaultAvatar;
-
-    guestAvatar.src =
-      defaultAvatar;
-
-  }
-);
+init();
 
 </script>
 
 </body>
+
 </html>
