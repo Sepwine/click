@@ -878,7 +878,62 @@ const supabase =
     SUPABASE_KEY
   );
 
+/* =====================================================
+   Service Worker
+===================================================== */
 
+async function registerServiceWorker() {
+
+  if (
+    !("serviceWorker" in navigator)
+  ) {
+
+    console.log(
+      "当前浏览器不支持 Service Worker"
+    );
+
+    return null;
+
+  }
+
+
+  try {
+
+    const registration =
+      await navigator
+        .serviceWorker
+        .register(
+          "/sw.js",
+          {
+            scope: "/"
+          }
+        );
+
+
+    console.log(
+      "Click Service Worker 已注册",
+      registration
+    );
+
+
+    return registration;
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "Service Worker 注册失败:",
+      error
+    );
+
+    return null;
+
+  }
+
+}
+
+  
 /* =====================================================
    默认头像
 ===================================================== */
@@ -2898,7 +2953,15 @@ async function startClick() {
    启动
 ===================================================== */
 
-startClick();
+async function bootClick() {
+
+  await registerServiceWorker();
+
+  await startClick();
+
+}
+
+bootClick();
 
 </script>
 
