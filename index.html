@@ -385,7 +385,7 @@ main {
 
 
 /* =========================
-   按钮
+   普通按钮
 ========================= */
 
 .primary-btn {
@@ -475,6 +475,118 @@ main {
   color: #999;
 
   word-break: break-all;
+}
+
+
+/* =========================
+   消息记录
+========================= */
+
+.history-section {
+  margin-top: 22px;
+
+  border-top:
+    1px solid var(--border);
+
+  padding-top: 20px;
+}
+
+.history-header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 12px;
+}
+
+.history-title {
+  font-size: .95rem;
+  font-weight: 600;
+}
+
+.history-clear {
+  border: none;
+
+  background: transparent;
+
+  color: #999;
+
+  font-size: .75rem;
+
+  padding: 5px;
+
+  cursor: pointer;
+}
+
+.history-list {
+  max-height: 260px;
+
+  overflow-y: auto;
+}
+
+.history-empty {
+  text-align: center;
+
+  color: #aaa;
+
+  font-size: .82rem;
+
+  padding: 25px 10px;
+}
+
+.history-item {
+  padding: 12px 0;
+
+  border-bottom:
+    1px solid #eee;
+}
+
+.history-item:last-child {
+  border-bottom: none;
+}
+
+.history-top {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  margin-bottom: 4px;
+}
+
+.history-name {
+  font-size: .82rem;
+
+  color: #777;
+
+  font-weight: 500;
+}
+
+.history-time {
+  font-size: .7rem;
+
+  color: #aaa;
+
+  white-space: nowrap;
+}
+
+.history-title-text {
+  font-size: .92rem;
+
+  font-weight: 500;
+
+  margin-bottom: 3px;
+}
+
+.history-message {
+  font-size: .8rem;
+
+  color: #777;
+
+  line-height: 1.5;
 }
 
 
@@ -741,6 +853,40 @@ main {
     </button>
 
 
+    <!-- 消息记录 -->
+
+    <div class="history-section">
+
+      <div class="history-header">
+
+        <div class="history-title">
+          消息记录
+        </div>
+
+        <button
+          class="history-clear"
+          id="clearHistoryBtn"
+        >
+          清空记录
+        </button>
+
+      </div>
+
+
+      <div
+        class="history-list"
+        id="historyList"
+      >
+
+        <div class="history-empty">
+          暂无消息记录
+        </div>
+
+      </div>
+
+    </div>
+
+
     <div
       class="room-info"
       id="roomInfo"
@@ -827,7 +973,7 @@ main {
 
 
 <!-- =========================
-     消息
+     消息弹窗
 ========================= -->
 
 <div id="messagePopup">
@@ -878,62 +1024,7 @@ const supabase =
     SUPABASE_KEY
   );
 
-/* =====================================================
-   Service Worker
-===================================================== */
 
-async function registerServiceWorker() {
-
-  if (
-    !(""sw.js"" in navigator)
-  ) {
-
-    console.log(
-      "当前浏览器不支持 Service Worker"
-    );
-
-    return null;
-
-  }
-
-
-  try {
-
-    const registration =
-      await navigator
-        .serviceWorker
-        .register(
-          "/sw.js",
-          {
-            scope: "/"
-          }
-        );
-
-
-    console.log(
-      "Click Service Worker 已注册",
-      registration
-    );
-
-
-    return registration;
-
-  }
-
-  catch (error) {
-
-    console.error(
-      "Service Worker 注册失败:",
-      error
-    );
-
-    return null;
-
-  }
-
-}
-
-  
 /* =====================================================
    默认头像
 ===================================================== */
@@ -941,13 +1032,9 @@ async function registerServiceWorker() {
 const defaultAvatar =
   "data:image/svg+xml;utf8," +
   "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>" +
-
   "<rect width='100' height='100' fill='%23eeeeee'/>" +
-
   "<circle cx='50' cy='38' r='18' fill='%23bbbbbb'/>" +
-
   "<path d='M20 90 C20 65 80 65 80 90' fill='%23bbbbbb'/>" +
-
   "</svg>";
 
 
@@ -1028,6 +1115,11 @@ const popupTitle =
 const popupMessage =
   document.getElementById(
     "popupMessage"
+  );
+
+const historyList =
+  document.getElementById(
+    "historyList"
   );
 
 
@@ -1144,11 +1236,6 @@ function showMessage(
 
 async function initUser() {
 
-  /*
-    先检查当前浏览器有没有已经存在的
-    Supabase 登录 session。
-  */
-
   const {
     data: {
       session
@@ -1171,10 +1258,6 @@ async function initUser() {
 
   }
 
-
-  /*
-    没有身份才创建匿名用户。
-  */
 
   const {
     data,
@@ -1264,12 +1347,6 @@ async function createOwnerRoom() {
     defaultAvatar;
 
 
-  console.log(
-    "Creating owner room:",
-    roomId
-  );
-
-
   const {
     data,
     error
@@ -1318,21 +1395,11 @@ async function createOwnerRoom() {
   }
 
 
-  console.log(
-    "Room created:",
-    data
-  );
-
-
   localStorage.setItem(
     "click_owner_room",
     roomId
   );
 
-
-  /*
-    首页不应该显示旧的 room 参数。
-  */
 
   const cleanUrl =
     window.location.origin +
@@ -1374,12 +1441,6 @@ async function joinExistingRoom(
 
   roomId =
     id;
-
-
-  console.log(
-    "Opening room:",
-    roomId
-  );
 
 
   const {
@@ -1436,13 +1497,7 @@ async function joinExistingRoom(
   }
 
 
-  /*
-    非常重要：
-
-    如果当前 Supabase 用户本身就是 Owner，
-    那么即使 URL 带 ?room=xxx，
-    也仍然是 Owner。
-  */
+  /* Owner */
 
   if (
     room.owner_id === myId
@@ -1468,10 +1523,7 @@ async function joinExistingRoom(
   }
 
 
-  /*
-    如果已经是这个房间的 Guest，
-    直接恢复 Guest 身份。
-  */
+  /* 已经是 Guest */
 
   if (
     room.guest_id === myId
@@ -1497,10 +1549,7 @@ async function joinExistingRoom(
   }
 
 
-  /*
-    如果房间没有 Guest，
-    当前用户成为 Guest。
-  */
+  /* 房间没有 Guest */
 
   if (
     room.guest_id === null
@@ -1518,27 +1567,27 @@ async function joinExistingRoom(
       error:
         updateError
     } =
-      await supabase
-        .from("rooms")
-        .update({
+    await supabase
+      .from("rooms")
+      .update({
 
-          guest_id:
-            myId,
+        guest_id:
+          myId,
 
-          guest_avatar:
-            avatar
+        guest_avatar:
+          avatar
 
-        })
-        .eq(
-          "id",
-          roomId
-        )
-        .is(
-          "guest_id",
-          null
-        )
-        .select()
-        .single();
+      })
+      .eq(
+        "id",
+        roomId
+      )
+      .is(
+        "guest_id",
+        null
+      )
+      .select()
+      .single();
 
 
     if (updateError) {
@@ -1579,10 +1628,6 @@ async function joinExistingRoom(
 
   }
 
-
-  /*
-    房间已经有别人。
-  */
 
   showInvalidRoom(
     "这个 Click. 房间已经有成员"
@@ -1642,12 +1687,6 @@ function startRealtime() {
 
         payload => {
 
-          console.log(
-            "Room realtime:",
-            payload
-          );
-
-
           if (
             payload.eventType ===
             "DELETE"
@@ -1679,12 +1718,6 @@ function startRealtime() {
 
           }
 
-
-          /*
-            Guest 被 Owner 断开
-            或者自己退出以后，
-            不再允许继续留在房间。
-          */
 
           if (
             role === "guest" &&
@@ -1746,7 +1779,8 @@ function startRealtime() {
 
 
           /*
-            不显示自己发送的消息。
+            自己发送的消息不弹。
+            但是它已经被保存到 messages 表。
           */
 
           if (
@@ -1767,6 +1801,14 @@ function startRealtime() {
             message.message
 
           );
+
+
+          /*
+            对方的新消息进入记录后，
+            如果记录页面已经打开，则刷新。
+          */
+
+          loadMessageHistory();
 
         }
 
@@ -1940,6 +1982,276 @@ function updateUI() {
 
 
 /* =====================================================
+   消息记录
+===================================================== */
+
+async function loadMessageHistory() {
+
+  if (
+    !roomId ||
+    !myId
+  ) {
+
+    historyList.innerHTML = `
+      <div class="history-empty">
+        暂无消息记录
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  const {
+    data,
+    error
+  } =
+    await supabase
+      .from("messages")
+      .select("*")
+      .eq(
+        "room_id",
+        roomId
+      )
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      )
+      .limit(100);
+
+
+  if (error) {
+
+    console.error(
+      "Load message history error:",
+      error
+    );
+
+    historyList.innerHTML = `
+      <div class="history-empty">
+        暂时无法读取消息记录
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  if (
+    !data ||
+    data.length === 0
+  ) {
+
+    historyList.innerHTML = `
+      <div class="history-empty">
+        暂无消息记录
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  historyList.innerHTML =
+    "";
+
+
+  data.forEach(
+    message => {
+
+      const item =
+        document.createElement(
+          "div"
+        );
+
+
+      item.className =
+        "history-item";
+
+
+      const isMine =
+        message.sender_id ===
+        myId;
+
+
+      const senderName =
+        isMine
+          ? "你"
+          : "对方";
+
+
+      let timeText =
+        "";
+
+
+      if (
+        message.created_at
+      ) {
+
+        const date =
+          new Date(
+            message.created_at
+          );
+
+
+        timeText =
+          date.toLocaleString(
+            "zh-CN",
+            {
+              month: "numeric",
+              day: "numeric",
+              hour: "2-digit",
+              minute: "2-digit"
+            }
+          );
+
+      }
+
+
+      item.innerHTML = `
+
+        <div class="history-top">
+
+          <div class="history-name">
+            ${senderName}
+          </div>
+
+          <div class="history-time">
+            ${timeText}
+          </div>
+
+        </div>
+
+        <div class="history-title-text">
+          ${escapeHtml(
+            message.title ||
+            "状态"
+          )}
+        </div>
+
+        <div class="history-message">
+          ${escapeHtml(
+            message.message ||
+            ""
+          )}
+        </div>
+
+      `;
+
+
+      historyList.appendChild(
+        item
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   HTML 转义
+===================================================== */
+
+function escapeHtml(
+  text
+) {
+
+  const div =
+    document.createElement(
+      "div"
+    );
+
+
+  div.textContent =
+    text == null
+      ? ""
+      : String(text);
+
+
+  return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   清空当前房间消息记录
+===================================================== */
+
+document
+  .getElementById(
+    "clearHistoryBtn"
+  )
+  .onclick =
+  async () => {
+
+    if (
+      !roomId
+    ) {
+
+      showToast(
+        "当前没有房间"
+      );
+
+      return;
+
+    }
+
+
+    const confirmed =
+      confirm(
+        "确定清空这个房间的消息记录吗？"
+      );
+
+
+    if (!confirmed)
+      return;
+
+
+    const {
+      error
+    } =
+      await supabase
+        .from("messages")
+        .delete()
+        .eq(
+          "room_id",
+          roomId
+        );
+
+
+    if (error) {
+
+      console.error(
+        "Clear history error:",
+        error
+      );
+
+      showToast(
+        "清空失败：" +
+        error.message
+      );
+
+      return;
+
+    }
+
+
+    loadMessageHistory();
+
+    showToast(
+      "消息记录已清空"
+    );
+
+  };
+
+
+/* =====================================================
    发送消息
 ===================================================== */
 
@@ -2073,6 +2385,14 @@ async function sendMessage(
     return;
 
   }
+
+
+  /*
+    自己发送的消息也会记录在数据库。
+    立即刷新记录，方便自己查看。
+  */
+
+  loadMessageHistory();
 
 
   showToast(
@@ -2224,11 +2544,11 @@ function renderButtons() {
       el.innerHTML = `
 
         <span class="btn-icon">
-          ${btn.icon}
+          ${escapeHtml(btn.icon)}
         </span>
 
         <span class="btn-label">
-          ${btn.label}
+          ${escapeHtml(btn.label)}
         </span>
 
       `;
@@ -2372,6 +2692,8 @@ document
 
     updateUI();
 
+    loadMessageHistory();
+
   };
 
 
@@ -2473,6 +2795,10 @@ leaveBtn.onclick =
     ) return;
 
 
+    /* =====================
+       Owner 断开
+    ===================== */
+
     if (
       role === "owner"
     ) {
@@ -2523,6 +2849,9 @@ leaveBtn.onclick =
             realtimeChannel
           );
 
+        realtimeChannel =
+          null;
+
       }
 
 
@@ -2535,6 +2864,10 @@ leaveBtn.onclick =
 
     }
 
+
+    /* =====================
+       Guest 退出
+    ===================== */
 
     if (
       role === "guest"
@@ -2588,6 +2921,9 @@ leaveBtn.onclick =
           .removeChannel(
             realtimeChannel
           );
+
+        realtimeChannel =
+          null;
 
       }
 
@@ -2835,7 +3171,7 @@ function showInvalidRoom(
           color:#888;
           line-height:1.6;
         ">
-          ${text}
+          ${escapeHtml(text)}
         </p>
 
 
@@ -2883,11 +3219,6 @@ function showInvalidRoom(
 
 async function startClick() {
 
-  /*
-    第一步：
-    获取 Supabase 匿名身份
-  */
-
   const userReady =
     await initUser();
 
@@ -2898,11 +3229,6 @@ async function startClick() {
 
   }
 
-
-  /*
-    第二步：
-    判断 URL 有没有邀请房间
-  */
 
   const params =
     new URLSearchParams(
@@ -2918,7 +3244,7 @@ async function startClick() {
 
   /*
     没有 room：
-    一律创建新的 Owner 房间。
+    创建 Owner 房间。
   */
 
   if (
@@ -2932,7 +3258,7 @@ async function startClick() {
 
   /*
     有 room：
-    才进入已有房间。
+    加入已有房间。
   */
 
   else {
@@ -2953,15 +3279,7 @@ async function startClick() {
    启动
 ===================================================== */
 
-async function bootClick() {
-
-  await registerServiceWorker();
-
-  await startClick();
-
-}
-
-bootClick();
+startClick();
 
 </script>
 
