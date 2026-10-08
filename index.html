@@ -1,0 +1,5548 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
+
+<title>Click.</title>
+
+<meta
+  name="apple-mobile-web-app-capable"
+  content="yes"
+>
+
+<style>
+
+:root {
+  --bg: #fafafa;
+  --text: #262626;
+  --border: #dbdbdb;
+  --card: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  background: var(--bg);
+  color: var(--text);
+
+  user-select: none;
+}
+
+
+/* =========================
+   顶栏
+========================= */
+
+header {
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo {
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-right: 5px;
+}
+
+.header-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.header-btn:active {
+  transform: scale(.94);
+  background: #f0f0f0;
+}
+
+
+/* =========================
+   页面切换
+========================= */
+
+.app-page {
+  display: none;
+  min-height: calc(100vh - 68px - 72px);
+  padding: 24px 20px 105px;
+}
+
+.app-page.active {
+  display: block;
+}
+
+#buttonsPage.active {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.button-container {
+  width: 100%;
+  max-width: 350px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+/* =========================
+   首页 / 连接管理
+========================= */
+
+.home-container {
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+.home-connection-card,
+.home-section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.home-connection-card {
+  text-align: center;
+}
+
+.home-avatars {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 4px 0 16px;
+}
+
+.home-avatar-wrapper {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.home-avatar-wrapper.locked {
+  cursor: default;
+}
+
+.home-avatar-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.home-mobius {
+  color: #aaa;
+  font-size: 25px;
+}
+
+.home-role {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.home-status {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 18px;
+}
+
+.home-action-row {
+  display: flex;
+  gap: 9px;
+}
+
+.home-action-btn {
+  flex: 1;
+  min-height: 43px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  border-radius: 14px;
+  font-size: 13px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.home-action-btn:active {
+  transform: scale(.97);
+}
+
+.home-action-btn.danger {
+  color: #777;
+}
+
+.home-room-name-btn {
+  width: 100%;
+  min-height: 46px;
+  margin-top: 22px;
+  padding: 0 15px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--card);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.home-room-name-btn:active {
+  transform: scale(.98);
+  background: #f5f5f5;
+}
+
+.home-room-info {
+  margin-top: 12px;
+  color: #aaa;
+  font-size: 11px;
+  word-break: break-all;
+}
+
+.home-section {
+  margin-top: 12px;
+  padding: 17px 18px;
+}
+
+.home-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 13px;
+}
+
+.home-section-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.home-section-desc {
+  color: #999;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.connection-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.connection-item {
+  width: 100%;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  background: #f7f7f7;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.connection-item.active {
+  border-color: var(--border);
+  background: var(--card);
+}
+
+.connection-mini-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.connection-item-main {
+  min-width: 0;
+  flex: 1;
+}
+
+.connection-item-name {
+  font-size: 13px;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.connection-item-meta {
+  color: #999;
+  font-size: 11px;
+  margin-top: 3px;
+}
+
+.connection-item-check {
+  color: #888;
+  font-size: 13px;
+}
+
+.connection-add-btn {
+  width: 100%;
+  margin-top: 8px;
+  min-height: 40px;
+  border: 1px dashed var(--border);
+  border-radius: 13px;
+  background: transparent;
+  color: #888;
+  cursor: pointer;
+}
+
+.global-message-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.global-message-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.global-message-title {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.global-message-desc {
+  font-size: 11px;
+  color: #999;
+  line-height: 1.45;
+}
+
+.switch {
+  width: 48px;
+  height: 28px;
+  border-radius: 999px;
+  border: 0;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  background: #ddd;
+  padding: 3px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background .2s ease;
+  box-shadow: none;
+}
+
+.switch:focus,
+.switch:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.switch span {
+  display: block;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,.12);
+  transition: transform .2s ease;
+}
+
+.switch.active {
+  background: #262626;
+}
+
+.switch.active span {
+  transform: translateX(20px);
+}
+
+.home-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 20px 0 12px;
+}
+
+.home-feature-btn {
+  width: 100%;
+  min-height: 46px;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  background: var(--card);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+}
+
+.home-feature-btn span:last-child {
+  color: #aaa;
+}
+
+/* =========================
+   底部导航
+========================= */
+
+.bottom-nav {
+  position: fixed;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  width: min(360px, calc(100% - 28px));
+  height: 58px;
+  padding: 5px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+  background: rgba(255,255,255,.88);
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 19px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.10);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  z-index: 80;
+}
+
+.bottom-nav-btn {
+  border: 0;
+  border-radius: 15px;
+  background: transparent;
+  color: #999;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bottom-nav-btn svg {
+  width: 21px;
+  height: 21px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.bottom-nav-btn.active {
+  background: #f0f0f0;
+  color: var(--text);
+}
+
+.action-btn {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 25px 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: transform .15s ease, background .15s ease;
+}
+
+.action-btn:active {
+  transform: scale(.97);
+  background: #f0f0f0;
+}
+
+.btn-icon {
+  font-size: 2rem;
+}
+
+.btn-label {
+  font-size: .9rem;
+  font-weight: 500;
+}
+
+.add-btn {
+  background: transparent;
+  border: 2px dashed var(--border);
+  color: #999;
+}
+
+/* =========================
+   Modal
+========================= */
+
+.modal-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  background:
+    rgba(0,0,0,.4);
+
+  backdrop-filter:
+    blur(8px);
+
+  display: flex;
+
+  justify-content: center;
+  align-items: flex-end;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transition:
+    opacity .25s ease;
+
+  z-index: 100;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  width: 100%;
+  max-width: 450px;
+
+  max-height: 90vh;
+
+  overflow-y: auto;
+
+  background: #fff;
+
+  border-radius:
+    20px 20px 0 0;
+
+  padding: 30px 20px;
+
+  transform:
+    translateY(100%);
+
+  transition:
+    transform .3s ease;
+}
+
+.modal-overlay.active
+.modal-content {
+  transform:
+    translateY(0);
+}
+
+
+/* =========================
+   头像
+========================= */
+
+.connection-avatars {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 20px;
+
+  margin-bottom: 25px;
+}
+
+.avatar-wrapper {
+  width: 70px;
+  height: 70px;
+
+  padding: 3px;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      45deg,
+      #d3cce3,
+      #e9e4f0
+    );
+
+  position: relative;
+
+  cursor: pointer;
+}
+
+.avatar-wrapper img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  border-radius: 50%;
+
+  border:
+    2px solid #fff;
+}
+
+.avatar-wrapper::after {
+  content: "+";
+
+  position: absolute;
+
+  right: -5px;
+  bottom: -5px;
+
+  width: 22px;
+  height: 22px;
+
+  border-radius: 50%;
+
+  background:
+    var(--text);
+
+  color: #fff;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-size: 12px;
+  font-weight: bold;
+
+  border:
+    2px solid #fff;
+}
+
+.avatar-wrapper.locked {
+  cursor: default;
+}
+
+.avatar-wrapper.locked::after {
+  content: "●";
+
+  background: #aaa;
+
+  font-size: 7px;
+}
+
+.mobius {
+  font-size: 2rem;
+  color: #999;
+}
+
+.role-text {
+  text-align: center;
+
+  font-size: .9rem;
+
+  margin-bottom: 8px;
+}
+
+.connection-status {
+  text-align: center;
+
+  font-size: .8rem;
+
+  color: #888;
+
+  margin-bottom: 20px;
+}
+
+
+/* =========================
+   按钮
+========================= */
+
+.primary-btn {
+  width: 100%;
+
+  border: none;
+
+  background:
+    var(--text);
+
+  color: #fff;
+
+  padding: 14px 20px;
+
+  border-radius: 8px;
+
+  font-size: 1rem;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  margin-top: 8px;
+}
+
+.secondary-btn {
+  background: #eee;
+  color: #333;
+}
+
+.danger-btn {
+  background: #e8e8e8;
+  color: #333;
+}
+
+
+/* =========================
+   表单
+========================= */
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  display: block;
+
+  font-size: .85rem;
+
+  color: #666;
+
+  margin-bottom: 5px;
+}
+
+.input-group input {
+  width: 100%;
+
+  padding: 12px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 8px;
+
+  font-size: 1rem;
+
+  outline: none;
+}
+
+.input-group input:focus {
+  border-color:
+    var(--text);
+}
+
+
+/* =========================
+   房间信息
+========================= */
+
+.room-info {
+  margin-top: 15px;
+
+  text-align: center;
+
+  font-size: .72rem;
+
+  color: #999;
+
+  word-break: break-all;
+}
+
+
+/* =========================
+   消息弹窗
+========================= */
+
+#messagePopup {
+  position: fixed;
+
+  top: 85px;
+  left: 50%;
+
+  width:
+    calc(100% - 40px);
+
+  max-width: 380px;
+
+  padding: 15px;
+
+  background: #fff;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 8px 30px
+    rgba(0,0,0,.15);
+
+  transform:
+    translate(-50%, -20px);
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transition:
+    all .25s ease;
+
+  z-index: 900;
+}
+
+#messagePopup.show {
+  opacity: 1;
+
+  transform:
+    translate(-50%, 0);
+}
+
+.popup-title {
+  color: #888;
+
+  font-size: .8rem;
+
+  margin-bottom: 5px;
+}
+
+.popup-message {
+  font-size: 1rem;
+
+  line-height: 1.5;
+}
+
+
+/* =========================
+   Toast
+========================= */
+
+#toast {
+  position: fixed;
+
+  left: 50%;
+  bottom: 30px;
+
+  transform:
+    translate(-50%, 20px);
+
+  background:
+    rgba(40,40,40,.92);
+
+  color: #fff;
+
+  padding:
+    12px 18px;
+
+  border-radius: 10px;
+
+  font-size: .9rem;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transition:
+    all .25s ease;
+
+  z-index: 1000;
+
+  max-width: 85%;
+
+  text-align: center;
+}
+
+#toast.show {
+  opacity: 1;
+
+  transform:
+    translate(-50%, 0);
+}
+
+
+/* =========================
+   无效房间
+========================= */
+
+.invalid-room {
+  min-height: 100vh;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+
+  text-align: center;
+}
+
+
+
+/* =========================
+   ✦ CSS 美化编辑器
+========================= */
+
+.style-modal-content {
+  max-height: 88vh;
+  overflow-y: auto;
+}
+
+.style-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.style-editor-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.style-editor-title {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -.2px;
+}
+
+.style-editor-top-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.style-editor-actions {
+  display: flex;
+  gap: 7px;
+}
+
+.style-editor-action,
+.style-close-btn {
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.style-editor-action:active,
+.style-close-btn:active,
+.style-bottom-btn:active {
+  transform: scale(.96);
+}
+
+.style-close-btn {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.style-css-input {
+  width: 100%;
+  min-height: 330px;
+  box-sizing: border-box;
+  resize: vertical;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--card);
+  color: var(--text);
+  padding: 15px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.65;
+  outline: none;
+  user-select: text;
+  -webkit-user-select: text;
+  -webkit-appearance: none;
+}
+
+.style-css-input:focus {
+  border-color: #b9b9b9;
+}
+
+.style-bottom {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.style-picker-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+
+.style-picker {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--card);
+  color: var(--text);
+  padding: 0 13px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 4px 16px rgba(0,0,0,.04);
+}
+
+.style-picker-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.style-picker-chevron {
+  flex-shrink: 0;
+  color: #999;
+  font-size: 12px;
+  transition: transform .2s ease;
+}
+
+.style-picker.open .style-picker-chevron {
+  transform: rotate(180deg);
+}
+
+.style-menu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(100% + 8px);
+  padding: 7px;
+  background: rgba(255,255,255,.97);
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 16px;
+  box-shadow: 0 14px 35px rgba(0,0,0,.14);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(5px) scale(.98);
+  transform-origin: bottom center;
+  transition: opacity .16s ease, transform .16s ease, visibility .16s ease;
+  z-index: 50;
+  max-height: 230px;
+  overflow-y: auto;
+}
+
+.style-menu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.style-option {
+  width: 100%;
+  min-height: 42px;
+  border: 0;
+  border-radius: 11px;
+  background: transparent;
+  color: var(--text);
+  padding: 0 11px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  text-align: left;
+  font-size: 14px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.style-option:hover,
+.style-option:active {
+  background: #f3f3f3;
+}
+
+.style-option.active {
+  background: #f0f0f0;
+  font-weight: 600;
+}
+
+.style-option-check {
+  color: #888;
+  font-size: 13px;
+}
+
+.style-empty-option {
+  padding: 12px 10px;
+  color: #999;
+  font-size: 13px;
+  text-align: center;
+}
+
+.style-bottom-btn {
+  flex-shrink: 0;
+  min-height: 42px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  border-radius: 14px;
+  padding: 0 14px;
+  font-size: 13px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.style-hint {
+  font-size: 12px;
+  color: #999;
+  line-height: 1.5;
+}
+
+.style-name-modal-content {
+  padding-top: 24px;
+}
+
+.style-name-modal-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.style-name-modal-desc {
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.style-name-input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  background: var(--card);
+  color: var(--text);
+  padding: 12px 13px;
+  font-size: 15px;
+  outline: none;
+  user-select: text;
+  -webkit-user-select: text;
+  -webkit-appearance: none;
+}
+
+.style-name-input:focus {
+  border-color: #aaa;
+}
+
+.style-name-modal-actions {
+  display: flex;
+  gap: 9px;
+  margin-top: 13px;
+}
+
+.style-name-modal-actions button {
+  flex: 1;
+}
+
+/* =========================
+   消息记录
+========================= */
+
+.history-modal-content {
+  max-height: 88vh;
+}
+
+.history-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.history-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.history-clear-btn {
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: #888;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.history-clear-btn:active {
+  transform: scale(.96);
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.history-item {
+  padding: 12px 13px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--card);
+}
+
+.history-item-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+.history-sender {
+  font-size: 12px;
+  color: #888;
+}
+
+.history-time {
+  font-size: 11px;
+  color: #aaa;
+}
+
+.history-message {
+  font-size: 14px;
+  line-height: 1.55;
+  word-break: break-word;
+}
+
+.history-empty {
+  padding: 40px 20px;
+  text-align: center;
+  color: #999;
+  font-size: 13px;
+}
+
+
+.connection-choice-modal {
+  padding-bottom: 24px;
+}
+
+.modal-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.modal-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.modal-subtitle {
+  margin-top: 5px;
+  font-size: 12px;
+  color: #999;
+}
+
+.modal-close-btn {
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: #f2f2f2;
+  color: #777;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.connection-choice-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.connection-choice {
+  min-height: 150px;
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  background: #fafafa;
+  padding: 18px 14px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  cursor: pointer;
+  transition: transform .15s ease, background .15s ease, border-color .15s ease;
+}
+
+.connection-choice:active {
+  transform: scale(.98);
+}
+
+.connection-choice.selected {
+  background: #f1f1f1;
+  border-color: #999;
+}
+
+.choice-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid var(--border);
+  font-size: 21px;
+  margin-bottom: 17px;
+}
+
+.choice-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.choice-desc {
+  margin-top: 6px;
+  color: #999;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.join-room-form {
+  display: none;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.join-room-form.active {
+  display: block;
+}
+
+.join-room-form label {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 12px;
+  color: #777;
+}
+
+.join-room-form input {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 13px;
+  font-size: 13px;
+  outline: none;
+}
+
+.join-room-form input:focus {
+  border-color: #999;
+}
+
+#styleImportInput {
+  display: none;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+  <div class="header-left">
+    <div class="logo">Click.</div>
+  </div>
+
+  <div class="header-left" id="buttonsHeaderActions">
+    <button class="header-btn" id="testMessageBtn" aria-label="测试消息" title="测试消息">♢</button>
+    <button class="header-btn" id="openHistoryBtn" aria-label="消息记录" title="消息记录">◷</button>
+  </div>
+
+</header>
+
+<main>
+
+  <section class="app-page active" id="buttonsPage">
+    <div class="button-container" id="buttonContainer"></div>
+  </section>
+
+  <section class="app-page" id="homePage">
+
+    <div class="home-container">
+
+      <div class="home-connection-card">
+
+        <div class="home-avatars">
+          <div class="home-avatar-wrapper" id="ownerAvatarWrapper">
+            <img id="ownerAvatar" alt="主人头像">
+          </div>
+          <div class="home-mobius">∞</div>
+          <div class="home-avatar-wrapper" id="guestAvatarWrapper">
+            <img id="guestAvatar" alt="成员头像">
+          </div>
+        </div>
+
+        <div class="home-role" id="roleText">正在初始化</div>
+        <div class="home-status" id="connectionStatus">正在连接</div>
+
+        <div class="home-action-row">
+          <button class="home-action-btn" id="shareBtn">🔗 获取连接</button>
+          <button class="home-action-btn danger" id="leaveBtn">断开</button>
+        </div>
+
+        <button class="home-room-name-btn" id="roomNameBtn" type="button">
+          未命名
+        </button>
+
+        <div class="home-room-info" id="roomInfo"></div>
+
+      </div>
+
+      <div class="home-section">
+        <div class="home-section-head">
+          <div>
+            <div class="home-section-title">切换 Click.</div>
+            <div class="home-section-desc">在已经设置好的连接之间快速切换，每个连接都有独立的按钮页。</div>
+          </div>
+        </div>
+
+        <div class="connection-list" id="connectionList"></div>
+        <button class="connection-add-btn" id="addConnectionBtn" type="button">＋ 添加一个 Click.</button>
+      </div>
+
+      <div class="home-section">
+        <div class="global-message-row">
+          <div class="global-message-text">
+            <div class="global-message-title">接收全部连接的消息</div>
+            <div class="global-message-desc">打开后，会同时监听你已经添加的所有 Click. 连接，适合 1vN 使用。</div>
+          </div>
+          <button class="switch" id="globalMessageSwitch" type="button" aria-label="全部消息开关">
+            <span></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="home-divider"></div>
+
+      <button class="home-feature-btn" id="styleBtn" type="button">
+        <span>✦ 美化 Click.</span>
+        <span>›</span>
+      </button>
+
+    </div>
+
+  </section>
+
+</main>
+
+<nav class="bottom-nav" id="bottomNav" aria-label="页面导航">
+  <button class="bottom-nav-btn active" data-page="buttonsPage" type="button" aria-label="按钮页" title="按钮">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6" height="6" rx="1.5"></rect><rect x="14" y="4" width="6" height="6" rx="1.5"></rect><rect x="4" y="14" width="6" height="6" rx="1.5"></rect><rect x="14" y="14" width="6" height="6" rx="1.5"></rect></svg>
+  </button>
+  <button class="bottom-nav-btn" data-page="homePage" type="button" aria-label="主页" title="主页">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5"></path><path d="M6.5 9.5V20h11V9.5"></path><path d="M10 20v-6h4v6"></path></svg>
+  </button>
+</nav>
+
+<!-- =========================
+     消息记录
+========================= -->
+
+<div
+  class="modal-overlay"
+  id="historyModal"
+>
+
+  <div
+    class="modal-content history-modal-content"
+  >
+
+    <div class="history-top">
+
+      <div class="history-title">
+        消息记录
+      </div>
+
+      <button
+        class="history-clear-btn"
+        id="clearHistoryBtn"
+        type="button"
+      >
+        清空记录
+      </button>
+
+    </div>
+
+    <div
+      class="history-list"
+      id="historyList"
+    >
+      <div class="history-empty">
+        暂无消息记录
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     新建状态
+========================= -->
+
+<div
+  class="modal-overlay"
+  id="addBtnModal"
+>
+
+  <div class="modal-content">
+
+    <h3>
+      新建状态按钮
+    </h3>
+
+
+    <div class="input-group">
+
+      <label>
+        Emoji 图标
+      </label>
+
+      <input
+        type="text"
+        id="newIcon"
+        placeholder="例如：🎮"
+        maxlength="2"
+      >
+
+    </div>
+
+
+    <div class="input-group">
+
+      <label>
+        按钮名称
+      </label>
+
+      <input
+        type="text"
+        id="newLabel"
+        placeholder="例如：打游戏"
+        maxlength="6"
+      >
+
+    </div>
+
+
+    <div class="input-group">
+
+      <label>
+        推送给对方的消息
+      </label>
+
+      <input
+        type="text"
+        id="newMsg"
+        placeholder="例如：对方正在打游戏"
+      >
+
+    </div>
+
+
+    <button
+      class="primary-btn"
+      id="saveNewBtn"
+    >
+      保存
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     添加 Click.
+========================= -->
+
+<div class="modal-overlay" id="addConnectionModal">
+  <div class="modal-content connection-choice-modal">
+    <div class="modal-title-row">
+      <div>
+        <div class="modal-title">添加 Click.</div>
+        <div class="modal-subtitle">选择你要建立的连接方式</div>
+      </div>
+      <button class="modal-close-btn" id="closeAddConnectionBtn" type="button">×</button>
+    </div>
+
+    <div class="connection-choice-grid">
+      <button class="connection-choice" id="createConnectionChoice" type="button">
+        <span class="choice-icon">+</span>
+        <span class="choice-title">创建房间</span>
+        <span class="choice-desc">创建一个新的 Click.，你将成为主人</span>
+      </button>
+
+      <button class="connection-choice" id="joinConnectionChoice" type="button">
+        <span class="choice-icon">↗</span>
+        <span class="choice-title">加入房间</span>
+        <span class="choice-desc">使用对方分享给你的邀请连接加入</span>
+      </button>
+    </div>
+
+    <div class="join-room-form" id="joinRoomForm">
+      <label for="joinRoomLink">邀请连接</label>
+      <input id="joinRoomLink" type="url" placeholder="粘贴对方分享的 Click. 连接" autocomplete="off">
+      <button class="primary-btn" id="confirmJoinRoomBtn" type="button">加入 Click.</button>
+    </div>
+  </div>
+</div>
+
+<!-- =========================
+     美化编辑器
+========================= -->
+
+<div
+  class="modal-overlay"
+  id="styleModal"
+>
+
+  <div
+    class="modal-content style-modal-content"
+  >
+
+    <div class="style-editor">
+
+      <div class="style-editor-top">
+
+        <div class="style-editor-title">
+          ✦ 美化
+        </div>
+
+        <div class="style-editor-top-right">
+
+          <div class="style-editor-actions">
+
+            <button
+              class="style-editor-action"
+              id="styleImportBtn"
+            >
+              导入
+            </button>
+
+            <button
+              class="style-editor-action"
+              id="styleExportBtn"
+            >
+              导出
+            </button>
+
+          </div>
+
+          <button
+            class="style-close-btn"
+            id="closeStyleBtn"
+            aria-label="关闭"
+          >
+            ×
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <textarea
+        class="style-css-input"
+        id="styleCssInput"
+        placeholder="在这里输入 CSS…"
+        spellcheck="false"
+      ></textarea>
+
+
+      <div class="style-bottom">
+
+        <div class="style-picker-wrap">
+
+          <button
+            class="style-picker"
+            id="stylePickerBtn"
+            type="button"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+          >
+
+            <span
+              class="style-picker-label"
+              id="stylePickerLabel"
+            >
+              选择已保存的美化
+            </span>
+
+            <span class="style-picker-chevron">⌄</span>
+
+          </button>
+
+          <div
+            class="style-menu"
+            id="styleMenu"
+            role="listbox"
+          ></div>
+
+        </div>
+
+
+        <button
+          class="style-bottom-btn"
+          id="resetStyleBtn"
+          type="button"
+        >
+          重置
+        </button>
+
+
+        <button
+          class="style-bottom-btn"
+          id="saveStyleBtn"
+          type="button"
+        >
+          保存
+        </button>
+
+      </div>
+
+
+      <div class="style-hint">
+        点击美化立即应用；长按已保存的美化可以删除。
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     美化命名弹窗
+========================= -->
+
+<div
+  class="modal-overlay"
+  id="styleNameModal"
+>
+
+  <div
+    class="modal-content style-name-modal-content"
+  >
+
+    <div class="style-name-modal-title">
+      保存美化
+    </div>
+
+    <div class="style-name-modal-desc">
+      给这套 CSS 起一个名字，之后可以随时从美化列表中切换。
+    </div>
+
+    <input
+      class="style-name-input"
+      id="styleNameInput"
+      type="text"
+      maxlength="30"
+      placeholder="例如：奶油粉"
+    >
+
+    <div class="style-name-modal-actions">
+
+      <button
+        class="style-bottom-btn"
+        id="cancelStyleNameBtn"
+        type="button"
+      >
+        取消
+      </button>
+
+      <button
+        class="style-bottom-btn"
+        id="confirmStyleNameBtn"
+        type="button"
+      >
+        保存
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<input
+  type="file"
+  id="styleImportInput"
+  accept=".css,text/css"
+>
+
+
+<!-- =========================
+     房间命名
+========================= -->
+
+<div
+  class="modal-overlay"
+  id="roomNameModal"
+>
+
+  <div
+    class="modal-content style-name-modal-content"
+  >
+
+    <div class="style-name-modal-title">
+      修改房间名称
+    </div>
+
+    <div class="style-name-modal-desc">
+      这个名称会同步给这个 Click. 的两个人。
+    </div>
+
+    <input
+      class="style-name-input"
+      id="roomNameInput"
+      type="text"
+      maxlength="30"
+      placeholder="例如：我们的 Click."
+      autocomplete="off"
+    >
+
+    <div class="style-name-modal-actions">
+
+      <button
+        class="style-bottom-btn"
+        id="cancelRoomNameBtn"
+        type="button"
+      >
+        取消
+      </button>
+
+      <button
+        class="style-bottom-btn"
+        id="saveRoomNameBtn"
+        type="button"
+      >
+        保存
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     消息
+========================= -->
+
+<div id="messagePopup">
+
+  <div
+    class="popup-title"
+    id="popupTitle"
+  >
+    对方
+  </div>
+
+  <div
+    class="popup-message"
+    id="popupMessage"
+  ></div>
+
+</div>
+
+
+<div id="toast"></div>
+
+
+<script type="module">
+
+
+/* =====================================================
+   Supabase
+===================================================== */
+
+import {
+  createClient
+}
+from
+"https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+
+const SUPABASE_URL =
+  "https://acuqmpgvaeuylmfckxdr.supabase.co";
+
+
+const SUPABASE_KEY =
+  "sb_publishable_E4qydEgRdGGUwrRw_ZiKIw_3AOC5xSZ";
+
+
+const supabase =
+  createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+/* =====================================================
+   默认头像
+===================================================== */
+
+const defaultAvatar =
+  "data:image/svg+xml;utf8," +
+  "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>" +
+
+  "<rect width='100' height='100' fill='%23eeeeee'/>" +
+
+  "<circle cx='50' cy='38' r='18' fill='%23bbbbbb'/>" +
+
+  "<path d='M20 90 C20 65 80 65 80 90' fill='%23bbbbbb'/>" +
+
+  "</svg>";
+
+
+/* =====================================================
+   DOM
+===================================================== */
+
+const container =
+  document.getElementById(
+    "buttonContainer"
+  );
+
+const addBtnModal =
+  document.getElementById(
+    "addBtnModal"
+  );
+
+
+const styleBtn =
+  document.getElementById(
+    "styleBtn"
+  );
+
+const styleModal =
+  document.getElementById(
+    "styleModal"
+  );
+
+const closeStyleBtn =
+  document.getElementById(
+    "closeStyleBtn"
+  );
+
+const styleCssInput =
+  document.getElementById(
+    "styleCssInput"
+  );
+
+const stylePickerBtn =
+  document.getElementById(
+    "stylePickerBtn"
+  );
+
+const stylePickerLabel =
+  document.getElementById(
+    "stylePickerLabel"
+  );
+
+const styleMenu =
+  document.getElementById(
+    "styleMenu"
+  );
+
+const saveStyleBtn =
+  document.getElementById(
+    "saveStyleBtn"
+  );
+
+const resetStyleBtn =
+  document.getElementById(
+    "resetStyleBtn"
+  );
+
+const styleImportBtn =
+  document.getElementById(
+    "styleImportBtn"
+  );
+
+const styleExportBtn =
+  document.getElementById(
+    "styleExportBtn"
+  );
+
+const styleImportInput =
+  document.getElementById(
+    "styleImportInput"
+  );
+
+const styleNameModal =
+  document.getElementById(
+    "styleNameModal"
+  );
+
+const styleNameInput =
+  document.getElementById(
+    "styleNameInput"
+  );
+
+const cancelStyleNameBtn =
+  document.getElementById(
+    "cancelStyleNameBtn"
+  );
+
+const confirmStyleNameBtn =
+  document.getElementById(
+    "confirmStyleNameBtn"
+  );
+
+const openHistoryBtn =
+  document.getElementById(
+    "openHistoryBtn"
+  );
+
+const historyModal =
+  document.getElementById(
+    "historyModal"
+  );
+
+const historyList =
+  document.getElementById(
+    "historyList"
+  );
+
+const clearHistoryBtn =
+  document.getElementById(
+    "clearHistoryBtn"
+  );
+
+const ownerAvatar =
+  document.getElementById(
+    "ownerAvatar"
+  );
+
+const guestAvatar =
+  document.getElementById(
+    "guestAvatar"
+  );
+
+const headerAvatar =
+  document.getElementById(
+    "headerAvatar"
+  );
+
+const roleText =
+  document.getElementById(
+    "roleText"
+  );
+
+const connectionStatus =
+  document.getElementById(
+    "connectionStatus"
+  );
+
+const roomInfo =
+  document.getElementById(
+    "roomInfo"
+  );
+
+const shareBtn =
+  document.getElementById(
+    "shareBtn"
+  );
+
+const leaveBtn =
+  document.getElementById(
+    "leaveBtn"
+  );
+
+const roomNameBtn =
+  document.getElementById(
+    "roomNameBtn"
+  );
+
+const roomNameModal =
+  document.getElementById(
+    "roomNameModal"
+  );
+
+const roomNameInput =
+  document.getElementById(
+    "roomNameInput"
+  );
+
+const cancelRoomNameBtn =
+  document.getElementById(
+    "cancelRoomNameBtn"
+  );
+
+const saveRoomNameBtn =
+  document.getElementById(
+    "saveRoomNameBtn"
+  );
+
+const toast =
+  document.getElementById(
+    "toast"
+  );
+
+const messagePopup =
+  document.getElementById(
+    "messagePopup"
+  );
+
+const popupTitle =
+  document.getElementById(
+    "popupTitle"
+  );
+
+const popupMessage =
+  document.getElementById(
+    "popupMessage"
+  );
+
+const buttonsPage = document.getElementById("buttonsPage");
+const homePage = document.getElementById("homePage");
+const buttonsHeaderActions = document.getElementById("buttonsHeaderActions");
+const bottomNav = document.getElementById("bottomNav");
+const connectionList = document.getElementById("connectionList");
+const addConnectionBtn = document.getElementById("addConnectionBtn");
+const addConnectionModal = document.getElementById("addConnectionModal");
+const closeAddConnectionBtn = document.getElementById("closeAddConnectionBtn");
+const createConnectionChoice = document.getElementById("createConnectionChoice");
+const joinConnectionChoice = document.getElementById("joinConnectionChoice");
+const joinRoomForm = document.getElementById("joinRoomForm");
+const joinRoomLink = document.getElementById("joinRoomLink");
+const confirmJoinRoomBtn = document.getElementById("confirmJoinRoomBtn");
+const globalMessageSwitch = document.getElementById("globalMessageSwitch");
+
+
+/* =====================================================
+   当前状态
+===================================================== */
+
+let myId = null;
+
+let roomId = null;
+
+let role = null;
+
+let realtimeChannel = null;
+
+
+/* =====================================================
+   默认按钮
+===================================================== */
+
+const defaultButtons = [
+
+  {
+    id: "eat",
+    icon: "🍴",
+    label: "吃饭",
+    msg: "对方准备去吃饭了"
+  },
+
+  {
+    id: "sleep",
+    icon: "🌙",
+    label: "睡觉",
+    msg: "对方困了，准备休息"
+  }
+
+];
+
+
+const BUTTONS_STORAGE_KEY = "click_buttons_by_room";
+const CONNECTIONS_STORAGE_KEY = "click_saved_connections";
+const GLOBAL_MESSAGES_KEY = "click_global_messages";
+const CURRENT_ROOM_KEY = "click_current_room";
+const ROOM_NAME_INDEX_KEY = "click_room_name_index";
+
+let savedButtons = defaultButtons.map(item => ({ ...item }));
+let savedConnections = [];
+let globalChannels = new Map();
+let currentConnectionName = "当前 Click.";
+let currentRoomName = "未命名";
+
+
+/* =====================================================
+   多 Click. / 多按钮页
+===================================================== */
+
+function getSavedConnections() {
+  try {
+    const value = JSON.parse(localStorage.getItem(CONNECTIONS_STORAGE_KEY) || "[]");
+    return Array.isArray(value) ? value : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveSavedConnections(list) {
+  savedConnections = list;
+  localStorage.setItem(CONNECTIONS_STORAGE_KEY, JSON.stringify(list));
+}
+
+function getNextDefaultRoomName() {
+  const index = Number(localStorage.getItem(ROOM_NAME_INDEX_KEY) || "0");
+  return index === 0 ? "未命名" : `未命名${index}`;
+}
+
+function advanceDefaultRoomNameIndex() {
+  const index = Number(localStorage.getItem(ROOM_NAME_INDEX_KEY) || "0");
+  localStorage.setItem(ROOM_NAME_INDEX_KEY, String(index + 1));
+}
+
+function rememberConnection(room, name = "") {
+  if (!room || !room.id) return;
+
+  const list = getSavedConnections();
+  const existing = list.find(item => item.roomId === room.id);
+  const fallbackName = role === "owner" ? "我的 Click." : "已连接的 Click.";
+
+  const item = {
+    roomId: room.id,
+    name: (room.room_name || name || existing?.name || fallbackName).trim(),
+    role: room.owner_id === myId ? "owner" : (room.guest_id === myId ? "guest" : role),
+    ownerAvatar: room.owner_avatar || defaultAvatar,
+    guestAvatar: room.guest_avatar || defaultAvatar,
+    updatedAt: Date.now()
+  };
+
+  if (existing) {
+    Object.assign(existing, item);
+  } else {
+    list.unshift(item);
+  }
+
+  saveSavedConnections(list);
+  localStorage.setItem(CURRENT_ROOM_KEY, room.id);
+  renderConnectionList();
+}
+
+function loadButtonsForRoom(id) {
+  if (!id) {
+    savedButtons = defaultButtons.map(item => ({ ...item }));
+    return;
+  }
+
+  let all = {};
+  try {
+    all = JSON.parse(localStorage.getItem(BUTTONS_STORAGE_KEY) || "{}");
+  } catch {
+    all = {};
+  }
+
+  if (!all[id]) {
+    const legacy = JSON.parse(localStorage.getItem("click_custom_buttons") || "null");
+    all[id] = Array.isArray(legacy) && legacy.length
+      ? legacy
+      : defaultButtons.map(item => ({ ...item }));
+    localStorage.setItem(BUTTONS_STORAGE_KEY, JSON.stringify(all));
+  }
+
+  savedButtons = Array.isArray(all[id]) ? all[id] : defaultButtons.map(item => ({ ...item }));
+}
+
+function saveButtonsForRoom() {
+  if (!roomId) return;
+  let all = {};
+  try {
+    all = JSON.parse(localStorage.getItem(BUTTONS_STORAGE_KEY) || "{}");
+  } catch {
+    all = {};
+  }
+  all[roomId] = savedButtons;
+  localStorage.setItem(BUTTONS_STORAGE_KEY, JSON.stringify(all));
+}
+
+function renderConnectionList() {
+  if (!connectionList) return;
+
+  savedConnections = getSavedConnections();
+
+  if (!savedConnections.length) {
+    connectionList.innerHTML = `<div class="style-empty-option">还没有设置其他 Click. 连接</div>`;
+    return;
+  }
+
+  connectionList.innerHTML = savedConnections.map(item => {
+    const avatar = item.role === "guest"
+      ? (item.guestAvatar || defaultAvatar)
+      : (item.ownerAvatar || defaultAvatar);
+    const active = item.roomId === roomId;
+    const meta = item.role === "owner" ? "主人" : "成员";
+    return `
+      <button class="connection-item ${active ? "active" : ""}" data-room-id="${escapeHtml(item.roomId)}" type="button">
+        <img class="connection-mini-avatar" src="${avatar}" alt="">
+        <span class="connection-item-main">
+          <span class="connection-item-name">${escapeHtml(item.name || "Click.")}</span>
+          <span class="connection-item-meta">${meta}${active ? " · 当前" : ""}</span>
+        </span>
+        <span class="connection-item-check">${active ? "✓" : "›"}</span>
+      </button>
+    `;
+  }).join("");
+
+  connectionList.querySelectorAll(".connection-item").forEach(button => {
+    button.addEventListener("click", () => {
+      switchToConnection(button.dataset.roomId);
+    });
+
+
+  });
+}
+
+async function switchToConnection(id) {
+  if (!id || id === roomId) {
+    showPage("buttonsPage");
+    return;
+  }
+
+  const target = savedConnections.find(item => item.roomId === id);
+  if (!target) return;
+
+  const ok = await joinExistingRoom(id, true);
+  if (!ok) return;
+
+  loadButtonsForRoom(roomId);
+  renderButtons();
+  window.history.replaceState({}, "", window.location.origin + window.location.pathname + "?room=" + roomId);
+  showPage("buttonsPage");
+  refreshGlobalSubscriptions();
+}
+
+function showPage(pageId) {
+  const isHome = pageId === "homePage";
+  buttonsPage.classList.toggle("active", !isHome);
+  homePage.classList.toggle("active", isHome);
+
+  bottomNav.querySelectorAll(".bottom-nav-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.page === pageId);
+  });
+
+  buttonsHeaderActions.style.visibility = isHome ? "hidden" : "visible";
+
+  if (isHome) {
+    updateUI();
+    renderConnectionList();
+    updateGlobalMessageSwitch();
+  }
+}
+
+bottomNav.querySelectorAll(".bottom-nav-btn").forEach(btn => {
+  btn.addEventListener("click", () => showPage(btn.dataset.page));
+});
+
+function updateGlobalMessageSwitch() {
+  const enabled = localStorage.getItem(GLOBAL_MESSAGES_KEY) === "true";
+  globalMessageSwitch.classList.toggle("active", enabled);
+}
+
+async function refreshGlobalSubscriptions() {
+  for (const channel of globalChannels.values()) {
+    await supabase.removeChannel(channel);
+  }
+  globalChannels.clear();
+
+  if (localStorage.getItem(GLOBAL_MESSAGES_KEY) !== "true") return;
+
+  savedConnections = getSavedConnections();
+
+  for (const item of savedConnections) {
+    if (!item.roomId || item.roomId === roomId) continue;
+
+    const channel = supabase
+      .channel(`click-global-${item.roomId}`)
+      .on("postgres_changes", {
+        event: "INSERT",
+        schema: "public",
+        table: "messages",
+        filter: `room_id=eq.${item.roomId}`
+      }, payload => {
+        const message = payload.new;
+        if (!message || message.sender_id === myId) return;
+        showMessage(item.name || "Click.", message.message);
+      })
+      .subscribe();
+
+    globalChannels.set(item.roomId, channel);
+  }
+}
+
+if (globalMessageSwitch) {
+  globalMessageSwitch.onclick = async () => {
+    const enabled = localStorage.getItem(GLOBAL_MESSAGES_KEY) === "true";
+    localStorage.setItem(GLOBAL_MESSAGES_KEY, String(!enabled));
+    updateGlobalMessageSwitch();
+    await refreshGlobalSubscriptions();
+    showToast(!enabled ? "已开启全部连接消息" : "已关闭全部连接消息");
+  };
+}
+
+function closeAddConnectionModal() {
+  addConnectionModal?.classList.remove("active");
+  joinRoomForm?.classList.remove("active");
+  createConnectionChoice?.classList.remove("selected");
+  joinConnectionChoice?.classList.remove("selected");
+  if (joinRoomLink) joinRoomLink.value = "";
+}
+
+if (addConnectionBtn) {
+  addConnectionBtn.onclick = () => {
+    addConnectionModal?.classList.add("active");
+  };
+}
+
+if (closeAddConnectionBtn) {
+  closeAddConnectionBtn.onclick = closeAddConnectionModal;
+}
+
+if (createConnectionChoice) {
+  createConnectionChoice.onclick = async () => {
+    createConnectionChoice.classList.add("selected");
+    joinConnectionChoice?.classList.remove("selected");
+    joinRoomForm?.classList.remove("active");
+
+    const ok = await createOwnerRoom();
+    if (!ok) return;
+
+    loadButtonsForRoom(roomId);
+    renderButtons();
+    showPage("buttonsPage");
+    await refreshGlobalSubscriptions();
+    closeAddConnectionModal();
+    showToast("新的 Click. 已创建");
+  };
+}
+
+if (joinConnectionChoice) {
+  joinConnectionChoice.onclick = () => {
+    joinConnectionChoice.classList.add("selected");
+    createConnectionChoice?.classList.remove("selected");
+    joinRoomForm?.classList.add("active");
+    setTimeout(() => joinRoomLink?.focus(), 50);
+  };
+}
+
+if (confirmJoinRoomBtn) {
+  confirmJoinRoomBtn.onclick = async () => {
+    const value = joinRoomLink?.value.trim();
+    if (!value) {
+      showToast("请粘贴邀请连接");
+      return;
+    }
+
+    let id = value;
+    try {
+      const url = new URL(value);
+      id = url.searchParams.get("room") || "";
+    } catch {
+      showToast("请使用对方分享的 Click. 邀请连接");
+      return;
+    }
+
+    if (!id) {
+      showToast("这个邀请连接无效");
+      return;
+    }
+
+    const ok = await joinExistingRoom(id, true);
+    if (!ok) return;
+
+    loadButtonsForRoom(roomId);
+    renderButtons();
+    window.history.replaceState({}, "", window.location.origin + window.location.pathname + "?room=" + roomId);
+    showPage("buttonsPage");
+    await refreshGlobalSubscriptions();
+    closeAddConnectionModal();
+  };
+}
+
+
+/* =====================================================
+   Toast
+===================================================== */
+
+function showToast(
+  text
+) {
+
+  toast.textContent =
+    text;
+
+  toast.classList.add(
+    "show"
+  );
+
+  setTimeout(
+    () => {
+
+      toast.classList.remove(
+        "show"
+      );
+
+    },
+    2500
+  );
+
+}
+
+
+/* =====================================================
+   消息弹窗
+===================================================== */
+
+function showMessage(
+  title,
+  message
+) {
+
+  popupTitle.textContent =
+    title;
+
+  popupMessage.textContent =
+    message;
+
+  messagePopup.classList.add(
+    "show"
+  );
+
+  setTimeout(
+    () => {
+
+      messagePopup.classList.remove(
+        "show"
+      );
+
+    },
+    3500
+  );
+
+}
+
+
+/* =====================================================
+   消息历史记录
+===================================================== */
+
+function escapeHtml(text) {
+
+  const div =
+    document.createElement("div");
+
+  div.textContent =
+    text ?? "";
+
+  return div.innerHTML;
+
+}
+
+
+function formatHistoryTime(value) {
+
+  if (!value) {
+
+    return "";
+
+  }
+
+  const date =
+    new Date(value);
+
+  if (
+    Number.isNaN(
+      date.getTime()
+    )
+  ) {
+
+    return "";
+
+  }
+
+  return date.toLocaleString(
+    "zh-CN",
+    {
+      month: "numeric",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    }
+  );
+
+}
+
+
+async function loadMessageHistory() {
+
+  if (
+    !roomId ||
+    !historyList
+  ) {
+
+    return;
+
+  }
+
+  historyList.innerHTML =
+    `<div class="history-empty">正在加载…</div>`;
+
+
+  const {
+    data,
+    error
+  } =
+    await supabase
+      .from("messages")
+      .select(
+        "id, sender_id, sender_role, title, message, created_at"
+      )
+      .eq(
+        "room_id",
+        roomId
+      )
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      )
+      .limit(100);
+
+
+  if (error) {
+
+    console.error(
+      "Load message history error:",
+      error
+    );
+
+    historyList.innerHTML =
+      `<div class="history-empty">消息记录加载失败</div>`;
+
+    return;
+
+  }
+
+
+  if (!data || !data.length) {
+
+    historyList.innerHTML =
+      `<div class="history-empty">暂无消息记录</div>`;
+
+    return;
+
+  }
+
+
+  historyList.innerHTML =
+    data.map(
+      item => {
+
+        const sender =
+          item.sender_id === myId
+            ? "我"
+            : "对方";
+
+        const title =
+          item.title ||
+          sender;
+
+        return `
+          <div class="history-item">
+            <div class="history-item-top">
+              <span class="history-sender">
+                ${escapeHtml(title)}
+              </span>
+              <span class="history-time">
+                ${escapeHtml(
+                  formatHistoryTime(
+                    item.created_at
+                  )
+                )}
+              </span>
+            </div>
+            <div class="history-message">
+              ${escapeHtml(item.message)}
+            </div>
+          </div>
+        `;
+
+      }
+    ).join("");
+
+}
+
+
+if (openHistoryBtn) {
+
+  openHistoryBtn.onclick =
+    async () => {
+
+      historyModal
+        .classList
+        .add("active");
+
+      await loadMessageHistory();
+
+    };
+
+}
+
+
+if (clearHistoryBtn) {
+
+  clearHistoryBtn.onclick =
+    async () => {
+
+      if (!roomId) {
+
+        return;
+
+      }
+
+      const confirmed =
+        confirm(
+          "确定要清空这个房间的全部消息记录吗？"
+        );
+
+      if (!confirmed) {
+
+        return;
+
+      }
+
+      const {
+        error
+      } =
+        await supabase
+          .from("messages")
+          .delete()
+          .eq(
+            "room_id",
+            roomId
+          );
+
+      if (error) {
+
+        console.error(
+          "Clear message history error:",
+          error
+        );
+
+        showToast(
+          "清空失败：" +
+          error.message
+        );
+
+        return;
+
+      }
+
+      await loadMessageHistory();
+
+      showToast(
+        "消息记录已清空"
+      );
+
+    };
+
+}
+
+
+/* =====================================================
+   获得匿名 Supabase 用户
+===================================================== */
+
+async function initUser() {
+
+  /*
+    先检查当前浏览器有没有已经存在的
+    Supabase 登录 session。
+  */
+
+  const {
+    data: {
+      session
+    }
+  } =
+    await supabase
+      .auth
+      .getSession();
+
+
+  if (
+    session &&
+    session.user
+  ) {
+
+    myId =
+      session.user.id;
+
+    return true;
+
+  }
+
+
+  /*
+    没有身份才创建匿名用户。
+  */
+
+  const {
+    data,
+    error
+  } =
+    await supabase
+      .auth
+      .signInAnonymously();
+
+
+  if (error) {
+
+    console.error(
+      "Anonymous Auth error:",
+      error
+    );
+
+    showToast(
+      "匿名身份创建失败，请检查 Supabase Anonymous Sign-ins"
+    );
+
+    return false;
+
+  }
+
+
+  if (
+    !data ||
+    !data.user
+  ) {
+
+    showToast(
+      "没有获得 Supabase 用户身份"
+    );
+
+    return false;
+
+  }
+
+
+  myId =
+    data.user.id;
+
+
+  return true;
+
+}
+
+
+/* =====================================================
+   生成房间 ID
+===================================================== */
+
+function generateRoomId() {
+
+  return crypto
+    .randomUUID()
+    .replaceAll(
+      "-",
+      ""
+    )
+    .substring(
+      0,
+      12
+    );
+
+}
+
+
+/* =====================================================
+   创建 Owner 房间
+===================================================== */
+
+async function createOwnerRoom() {
+
+  roomId =
+    generateRoomId();
+
+  role =
+    "owner";
+
+
+  const avatar =
+    localStorage.getItem(
+      "click_my_avatar"
+    ) ||
+    defaultAvatar;
+
+  const roomName =
+    getNextDefaultRoomName();
+
+
+  console.log(
+    "Creating owner room:",
+    roomId,
+    roomName
+  );
+
+
+  const {
+    data,
+    error
+  } =
+    await supabase
+      .from("rooms")
+      .insert({
+
+        id:
+          roomId,
+
+        owner_id:
+          myId,
+
+        guest_id:
+          null,
+
+        owner_avatar:
+          avatar,
+
+        guest_avatar:
+          defaultAvatar,
+
+        room_name:
+          roomName,
+
+        active:
+          true
+
+      })
+      .select()
+      .single();
+
+
+  if (error) {
+
+    console.error(
+      "Create room error:",
+      error
+    );
+
+    showToast(
+      "创建房间失败：" +
+      error.message
+    );
+
+    return false;
+
+  }
+
+
+  console.log(
+    "Room created:",
+    data
+  );
+
+  advanceDefaultRoomNameIndex();
+
+
+  localStorage.setItem(
+    "click_owner_room",
+    roomId
+  );
+
+
+  /*
+    首页不应该显示旧的 room 参数。
+  */
+
+  const cleanUrl =
+    window.location.origin +
+    window.location.pathname;
+
+
+  window.history.replaceState(
+    {},
+    "",
+    cleanUrl
+  );
+
+
+  startRealtime();
+
+  loadButtonsForRoom(roomId);
+  rememberConnection(data);
+  updateUI();
+
+  updateAvatars(
+    data
+  );
+
+  updateConnectionUI(
+    data
+  );
+
+
+  return true;
+
+}
+
+
+/* =====================================================
+   加入已有房间
+===================================================== */
+
+async function joinExistingRoom(
+  id,
+  silent = false
+) {
+
+  roomId =
+    id;
+
+
+  console.log(
+    "Opening room:",
+    roomId
+  );
+
+
+  const {
+    data: room,
+    error
+  } =
+    await supabase
+      .from("rooms")
+      .select("*")
+      .eq(
+        "id",
+        roomId
+      )
+      .maybeSingle();
+
+
+  if (error) {
+
+    console.error(
+      "Room lookup error:",
+      error
+    );
+
+    showInvalidRoom(
+      "无法读取这个 Click. 房间"
+    );
+
+    return false;
+
+  }
+
+
+  if (!room) {
+
+    showInvalidRoom(
+      "这个 Click. 房间不存在"
+    );
+
+    return false;
+
+  }
+
+
+  if (
+    room.active !== true
+  ) {
+
+    showInvalidRoom(
+      "这个 Click. 房间已经被主人断开"
+    );
+
+    return false;
+
+  }
+
+
+  /*
+    非常重要：
+
+    如果当前 Supabase 用户本身就是 Owner，
+    那么即使 URL 带 ?room=xxx，
+    也仍然是 Owner。
+  */
+
+  if (
+    room.owner_id === myId
+  ) {
+
+    role =
+      "owner";
+
+    startRealtime();
+
+    updateAvatars(
+      room
+    );
+
+    updateConnectionUI(
+      room
+    );
+
+    loadButtonsForRoom(roomId);
+    rememberConnection(room);
+    updateUI();
+
+    return true;
+
+  }
+
+
+  /*
+    如果已经是这个房间的 Guest，
+    直接恢复 Guest 身份。
+  */
+
+  if (
+    room.guest_id === myId
+  ) {
+
+    role =
+      "guest";
+
+    startRealtime();
+
+    updateAvatars(
+      room
+    );
+
+    updateConnectionUI(
+      room
+    );
+
+    loadButtonsForRoom(roomId);
+    rememberConnection(room);
+    updateUI();
+
+    return true;
+
+  }
+
+
+  /*
+    如果房间没有 Guest，
+    当前用户成为 Guest。
+  */
+
+  if (
+    room.guest_id === null
+  ) {
+
+    const avatar =
+      localStorage.getItem(
+        "click_my_avatar"
+      ) ||
+      defaultAvatar;
+
+
+    const {
+      data: updatedRoom,
+      error:
+        updateError
+    } =
+      await supabase
+        .from("rooms")
+        .update({
+
+          guest_id:
+            myId,
+
+          guest_avatar:
+            avatar
+
+        })
+        .eq(
+          "id",
+          roomId
+        )
+        .is(
+          "guest_id",
+          null
+        )
+        .select()
+        .single();
+
+
+    if (updateError) {
+
+      console.error(
+        "Join room error:",
+        updateError
+      );
+
+      showToast(
+        "加入房间失败：" +
+        updateError.message
+      );
+
+      return false;
+
+    }
+
+
+    role =
+      "guest";
+
+
+    startRealtime();
+
+    updateAvatars(
+      updatedRoom
+    );
+
+    updateConnectionUI(
+      updatedRoom
+    );
+
+    loadButtonsForRoom(roomId);
+    rememberConnection(updatedRoom);
+    updateUI();
+
+
+    return true;
+
+  }
+
+
+  /*
+    房间已经有别人。
+  */
+
+  showInvalidRoom(
+    "这个 Click. 房间已经有成员"
+  );
+
+
+  return false;
+
+}
+
+
+/* =====================================================
+   实时连接
+===================================================== */
+
+function startRealtime() {
+
+  if (
+    realtimeChannel
+  ) {
+
+    supabase
+      .removeChannel(
+        realtimeChannel
+      );
+
+  }
+
+
+  realtimeChannel =
+    supabase
+      .channel(
+        `click-room-${roomId}`
+      )
+
+
+      /* ---------------------
+         房间变化
+      --------------------- */
+
+      .on(
+
+        "postgres_changes",
+
+        {
+
+          event: "*",
+
+          schema: "public",
+
+          table: "rooms",
+
+          filter:
+            `id=eq.${roomId}`
+
+        },
+
+        payload => {
+
+          console.log(
+            "Room realtime:",
+            payload
+          );
+
+
+          if (
+            payload.eventType ===
+            "DELETE"
+          ) {
+
+            showInvalidRoom(
+              "这个 Click. 房间已经被删除"
+            );
+
+            return;
+
+          }
+
+
+          const room =
+            payload.new;
+
+
+          if (
+            !room ||
+            room.active !== true
+          ) {
+
+            showInvalidRoom(
+              "主人已经断开了这个 Click."
+            );
+
+            return;
+
+          }
+
+
+          /*
+            Guest 被 Owner 断开
+            或者自己退出以后，
+            不再允许继续留在房间。
+          */
+
+          if (
+            role === "guest" &&
+            room.guest_id !== myId
+          ) {
+
+            showInvalidRoom(
+              "你已经离开这个 Click. 房间"
+            );
+
+            return;
+
+          }
+
+
+          updateAvatars(
+            room
+          );
+
+          updateConnectionUI(
+            room
+          );
+
+          rememberConnection(
+            room
+          );
+
+        }
+
+      )
+
+
+      /* ---------------------
+         消息变化
+      --------------------- */
+
+      .on(
+
+        "postgres_changes",
+
+        {
+
+          event: "INSERT",
+
+          schema: "public",
+
+          table: "messages",
+
+          filter:
+            `room_id=eq.${roomId}`
+
+        },
+
+        payload => {
+
+          const message =
+            payload.new;
+
+
+          if (
+            !message
+          ) return;
+
+
+          /*
+            不显示自己发送的消息。
+          */
+
+          if (
+            message.sender_id ===
+            myId
+          ) {
+
+            if (
+              historyModal.classList.contains(
+                "active"
+              )
+            ) {
+
+              loadMessageHistory();
+
+            }
+
+            return;
+
+          }
+
+
+          showMessage(
+
+            message.title ||
+            "对方",
+
+            message.message
+
+          );
+
+          if (
+            historyModal.classList.contains(
+              "active"
+            )
+          ) {
+
+            loadMessageHistory();
+
+          }
+
+        }
+
+      )
+
+
+      .subscribe(
+        status => {
+
+          console.log(
+            "Realtime status:",
+            status
+          );
+
+        }
+      );
+
+}
+
+
+/* =====================================================
+   更新头像
+===================================================== */
+
+function updateAvatars(
+  room
+) {
+
+  ownerAvatar.src =
+    room.owner_avatar ||
+    defaultAvatar;
+
+
+  guestAvatar.src =
+    room.guest_avatar ||
+    defaultAvatar;
+
+
+  if (
+    role === "owner"
+  ) {
+
+    headerAvatar.src =
+      room.owner_avatar ||
+      defaultAvatar;
+
+  }
+
+  else {
+
+    headerAvatar.src =
+      room.guest_avatar ||
+      defaultAvatar;
+
+  }
+
+}
+
+
+/* =====================================================
+   更新连接状态
+===================================================== */
+
+function updateRoomNameUI(
+  room
+) {
+  const name =
+    (room?.room_name || "未命名").trim() ||
+    "未命名";
+
+  currentRoomName = name;
+
+  if (roomNameBtn) {
+    roomNameBtn.textContent = name;
+    roomNameBtn.title = name;
+  }
+
+  if (roomId) {
+    const item = getSavedConnections().find(
+      connection => connection.roomId === roomId
+    );
+
+    if (item && item.name !== name) {
+      item.name = name;
+      saveSavedConnections(
+        getSavedConnections().map(connection =>
+          connection.roomId === roomId
+            ? { ...connection, name }
+            : connection
+        )
+      );
+    }
+  }
+
+  renderConnectionList();
+}
+
+
+function updateConnectionUI(
+  room
+) {
+
+  updateRoomNameUI(room);
+
+  if (
+    room.guest_id
+  ) {
+
+    connectionStatus.textContent =
+      "已连接";
+
+  }
+
+  else {
+
+    connectionStatus.textContent =
+      "等待对方加入";
+
+  }
+
+}
+
+
+/* =====================================================
+   更新个人中心
+===================================================== */
+
+function updateUI() {
+
+  if (role === "owner") {
+    roleText.textContent = "你是这个 Click. 的主人";
+    shareBtn.style.display = "block";
+    leaveBtn.textContent = "断开";
+    ownerAvatarWrapper.classList.remove("locked");
+    guestAvatarWrapper.classList.add("locked");
+  }
+
+  else if (role === "guest") {
+    roleText.textContent = "你是被邀请的成员";
+    shareBtn.style.display = "block";
+    leaveBtn.textContent = "退出";
+    ownerAvatarWrapper.classList.add("locked");
+    guestAvatarWrapper.classList.remove("locked");
+  }
+
+  roomInfo.textContent = roomId ? `房间 ID：${roomId}` : "";
+
+  if (roomNameBtn) {
+    roomNameBtn.textContent = currentRoomName || "未命名";
+    roomNameBtn.title = currentRoomName || "未命名";
+  }
+
+  renderConnectionList();
+}
+
+
+/* =====================================================
+   发送消息
+===================================================== */
+
+async function sendMessage(
+  title,
+  message
+) {
+
+  if (
+    !roomId ||
+    !role ||
+    !myId
+  ) {
+
+    showToast(
+      "当前没有有效房间"
+    );
+
+    return;
+
+  }
+
+
+  const {
+    data: room,
+    error
+  } =
+    await supabase
+      .from("rooms")
+      .select("*")
+      .eq(
+        "id",
+        roomId
+      )
+      .maybeSingle();
+
+
+  if (
+    error ||
+    !room
+  ) {
+
+    showToast(
+      "房间不存在"
+    );
+
+    return;
+
+  }
+
+
+  if (
+    room.active !== true
+  ) {
+
+    showToast(
+      "房间已经失效"
+    );
+
+    return;
+
+  }
+
+
+  if (
+    role === "owner" &&
+    !room.guest_id
+  ) {
+
+    showToast(
+      "对方还没有加入"
+    );
+
+    return;
+
+  }
+
+
+  if (
+    role === "guest" &&
+    room.guest_id !== myId
+  ) {
+
+    showToast(
+      "你已经退出这个房间"
+    );
+
+    return;
+
+  }
+
+
+  const {
+    error:
+      sendError
+  } =
+    await supabase
+      .from("messages")
+      .insert({
+
+        room_id:
+          roomId,
+
+        sender_id:
+          myId,
+
+        sender_role:
+          role,
+
+        title:
+          title,
+
+        message:
+          message
+
+      });
+
+
+  if (sendError) {
+
+    console.error(
+      "Send message error:",
+      sendError
+    );
+
+    showToast(
+      "消息发送失败：" +
+      sendError.message
+    );
+
+    return;
+
+  }
+
+
+  showToast(
+    "已发送"
+  );
+
+}
+
+
+/* =====================================================
+   测试消息按钮
+===================================================== */
+
+document
+  .getElementById(
+    "testMessageBtn"
+  )
+  .onclick =
+  () => {
+
+    sendMessage(
+      "测试信息",
+      "这是一条来自 Click. 的测试消息"
+    );
+
+  };
+
+
+/* =====================================================
+   新建状态
+===================================================== */
+
+document
+  .getElementById(
+    "saveNewBtn"
+  )
+  .onclick =
+  () => {
+
+    const icon =
+      document
+        .getElementById(
+          "newIcon"
+        )
+        .value ||
+      "✨";
+
+
+    const label =
+      document
+        .getElementById(
+          "newLabel"
+        )
+        .value ||
+      "新状态";
+
+
+    const msg =
+      document
+        .getElementById(
+          "newMsg"
+        )
+        .value ||
+      "对方发送了一个新状态";
+
+
+    savedButtons.push({
+
+      id:
+        Date.now().toString(),
+
+      icon:
+        icon,
+
+      label:
+        label,
+
+      msg:
+        msg
+
+    });
+
+
+    saveButtonsForRoom();
+
+
+    renderButtons();
+
+
+    document
+      .getElementById(
+        "newIcon"
+      )
+      .value = "";
+
+
+    document
+      .getElementById(
+        "newLabel"
+      )
+      .value = "";
+
+
+    document
+      .getElementById(
+        "newMsg"
+      )
+      .value = "";
+
+
+    addBtnModal
+      .classList
+      .remove(
+        "active"
+      );
+
+  };
+
+
+/* =====================================================
+   渲染按钮
+===================================================== */
+
+function renderButtons() {
+
+  container.innerHTML =
+    "";
+
+
+  savedButtons.forEach(
+    (btn, index) => {
+
+      const el =
+        document
+          .createElement(
+            "div"
+          );
+
+
+      el.className =
+        "action-btn";
+
+
+      el.innerHTML = `
+
+        <span class="btn-icon">
+          ${btn.icon}
+        </span>
+
+        <span class="btn-label">
+          ${btn.label}
+        </span>
+
+      `;
+
+
+      let pressTimer;
+
+
+      el.addEventListener(
+        "touchstart",
+        () => {
+
+          pressTimer =
+            setTimeout(
+              () => {
+
+                if (
+                  confirm(
+                    `确定删除「${btn.label}」吗？`
+                  )
+                ) {
+
+                  savedButtons.splice(
+                    index,
+                    1
+                  );
+
+
+                  saveButtonsForRoom();
+
+
+                  renderButtons();
+
+                }
+
+              },
+              800
+            );
+
+        }
+      );
+
+
+      el.addEventListener(
+        "touchend",
+        () => {
+
+          clearTimeout(
+            pressTimer
+          );
+
+        }
+      );
+
+
+      el.addEventListener(
+        "click",
+        () => {
+
+          sendMessage(
+            btn.label,
+            btn.msg
+          );
+
+        }
+      );
+
+
+      container.appendChild(
+        el
+      );
+
+    }
+  );
+
+
+  const add =
+    document
+      .createElement(
+        "div"
+      );
+
+
+  add.className =
+    "action-btn add-btn";
+
+
+  add.innerHTML = `
+
+    <span class="btn-icon">
+      ＋
+    </span>
+
+    <span class="btn-label">
+      添加状态
+    </span>
+
+  `;
+
+
+  add.onclick =
+    () => {
+
+      addBtnModal
+        .classList
+        .add(
+          "active"
+        );
+
+    };
+
+
+  container.appendChild(
+    add
+  );
+
+}
+
+
+/* =====================================================
+   关闭 Modal
+===================================================== */
+
+document
+  .querySelectorAll(
+    ".modal-overlay"
+  )
+  .forEach(
+    modal => {
+
+      modal.addEventListener(
+        "click",
+        event => {
+
+          if (
+            event.target ===
+            modal
+          ) {
+
+            modal
+              .classList
+              .remove(
+                "active"
+              );
+
+          }
+
+        }
+      );
+
+    }
+  );
+
+
+/* =====================================================
+   获取邀请链接
+===================================================== */
+
+function openRoomNameModal() {
+  if (!roomId) {
+    showToast("当前没有有效房间");
+    return;
+  }
+
+  roomNameInput.value =
+    currentRoomName || "未命名";
+
+  roomNameModal.classList.add("active");
+
+  setTimeout(() => {
+    roomNameInput.focus();
+    roomNameInput.select();
+  }, 120);
+}
+
+function closeRoomNameModal() {
+  roomNameModal.classList.remove("active");
+}
+
+if (roomNameBtn) {
+  roomNameBtn.onclick = () => {
+    openRoomNameModal();
+  };
+}
+
+if (cancelRoomNameBtn) {
+  cancelRoomNameBtn.onclick = () => {
+    closeRoomNameModal();
+  };
+}
+
+if (saveRoomNameBtn) {
+  saveRoomNameBtn.onclick = async () => {
+    if (!roomId) {
+      closeRoomNameModal();
+      return;
+    }
+
+    const name =
+      roomNameInput.value.trim();
+
+    if (!name) {
+      showToast("房间名称不能为空");
+      return;
+    }
+
+    saveRoomNameBtn.disabled = true;
+
+    const {
+      data: updatedRoom,
+      error
+    } =
+      await supabase
+        .from("rooms")
+        .update({
+          room_name: name
+        })
+        .eq(
+          "id",
+          roomId
+        )
+        .select()
+        .single();
+
+    saveRoomNameBtn.disabled = false;
+
+    if (error) {
+      console.error(
+        "Room name update error:",
+        error
+      );
+
+      showToast(
+        "名称保存失败：" +
+        error.message
+      );
+
+      return;
+    }
+
+    updateRoomNameUI(
+      updatedRoom
+    );
+
+    rememberConnection(
+      updatedRoom,
+      name
+    );
+
+    closeRoomNameModal();
+    showToast("房间名称已保存");
+  };
+}
+
+if (roomNameInput) {
+  roomNameInput.addEventListener(
+    "keydown",
+    event => {
+      if (event.key === "Enter") {
+        saveRoomNameBtn?.click();
+      }
+
+      if (event.key === "Escape") {
+        closeRoomNameModal();
+      }
+    }
+  );
+}
+
+
+shareBtn.onclick =
+  async () => {
+
+    if (
+      role !== "owner" ||
+      !roomId
+    ) {
+
+      return;
+
+    }
+
+
+    const shareUrl =
+      window.location.origin +
+      window.location.pathname +
+      "?room=" +
+      roomId;
+
+
+    try {
+
+      await navigator
+        .clipboard
+        .writeText(
+          shareUrl
+        );
+
+
+      showToast(
+        "专属连接已复制"
+      );
+
+    }
+
+    catch {
+
+      prompt(
+        "复制下面的专属连接",
+        shareUrl
+      );
+
+    }
+
+  };
+
+
+/* =====================================================
+   Owner 断开 / Guest 退出
+===================================================== */
+
+leaveBtn.onclick =
+  async () => {
+
+    if (
+      !roomId
+    ) return;
+
+
+    if (
+      role === "owner"
+    ) {
+
+      const {
+        error
+      } =
+        await supabase
+          .from("rooms")
+          .update({
+
+            active:
+              false
+
+          })
+          .eq(
+            "id",
+            roomId
+          )
+          .eq(
+            "owner_id",
+            myId
+          );
+
+
+      if (error) {
+
+        console.error(
+          error
+        );
+
+        showToast(
+          "断开失败：" +
+          error.message
+        );
+
+        return;
+
+      }
+
+
+      if (
+        realtimeChannel
+      ) {
+
+        await supabase
+          .removeChannel(
+            realtimeChannel
+          );
+
+      }
+
+
+      savedConnections = getSavedConnections().filter(item => item.roomId !== roomId);
+      saveSavedConnections(savedConnections);
+      window.location.href =
+        window.location.origin +
+        window.location.pathname;
+
+
+      return;
+
+    }
+
+
+    if (
+      role === "guest"
+    ) {
+
+      const {
+        error
+      } =
+        await supabase
+          .from("rooms")
+          .update({
+
+            guest_id:
+              null,
+
+            guest_avatar:
+              defaultAvatar
+
+          })
+          .eq(
+            "id",
+            roomId
+          )
+          .eq(
+            "guest_id",
+            myId
+          );
+
+
+      if (error) {
+
+        console.error(
+          error
+        );
+
+        showToast(
+          "退出失败：" +
+          error.message
+        );
+
+        return;
+
+      }
+
+
+      if (
+        realtimeChannel
+      ) {
+
+        await supabase
+          .removeChannel(
+            realtimeChannel
+          );
+
+      }
+
+
+      savedConnections = getSavedConnections().filter(item => item.roomId !== roomId);
+      saveSavedConnections(savedConnections);
+      window.location.href =
+        window.location.origin +
+        window.location.pathname;
+
+    }
+
+  };
+
+
+/* =====================================================
+   修改头像
+===================================================== */
+
+function chooseAvatar(
+  avatarRole
+) {
+
+  const input =
+    document
+      .createElement(
+        "input"
+      );
+
+
+  input.type =
+    "file";
+
+
+  input.accept =
+    "image/png,image/jpeg,image/webp";
+
+
+  input.onchange =
+    event => {
+
+      const file =
+        event
+          .target
+          .files[0];
+
+
+      if (!file)
+        return;
+
+
+      const reader =
+        new FileReader();
+
+
+      reader.onload =
+        async e => {
+
+          const image =
+            e.target.result;
+
+
+          localStorage.setItem(
+            "click_my_avatar",
+            image
+          );
+
+
+          let field;
+
+
+          if (
+            avatarRole ===
+            "owner"
+          ) {
+
+            field =
+              "owner_avatar";
+
+          }
+
+          else {
+
+            field =
+              "guest_avatar";
+
+          }
+
+
+          const {
+            error
+          } =
+            await supabase
+              .from("rooms")
+              .update({
+
+                [field]:
+                  image
+
+              })
+              .eq(
+                "id",
+                roomId
+              );
+
+
+          if (error) {
+
+            console.error(
+              error
+            );
+
+            showToast(
+              "头像更新失败：" +
+              error.message
+            );
+
+            return;
+
+          }
+
+
+          const currentRoom = {
+            id: roomId,
+            owner_id: role === "owner" ? myId : null,
+            guest_id: role === "guest" ? myId : null,
+            owner_avatar: avatarRole === "owner" ? image : ownerAvatar.src,
+            guest_avatar: avatarRole === "guest" ? image : guestAvatar.src
+          };
+          rememberConnection(currentRoom);
+          updateAvatars(currentRoom);
+          showToast(
+            "头像已更新"
+          );
+
+        };
+
+
+      reader.readAsDataURL(
+        file
+      );
+
+    };
+
+
+  input.click();
+
+}
+
+
+/* =====================================================
+   Owner 头像
+===================================================== */
+
+document
+  .getElementById(
+    "ownerAvatarWrapper"
+  )
+  .onclick =
+  () => {
+
+    if (
+      role !== "owner"
+    ) {
+
+      showToast(
+        "这是邀请人的头像"
+      );
+
+      return;
+
+    }
+
+
+    chooseAvatar(
+      "owner"
+    );
+
+  };
+
+
+/* =====================================================
+   Guest 头像
+===================================================== */
+
+document
+  .getElementById(
+    "guestAvatarWrapper"
+  )
+  .onclick =
+  () => {
+
+    if (
+      role !== "guest"
+    ) {
+
+      showToast(
+        "这是被邀请人的头像"
+      );
+
+      return;
+
+    }
+
+
+    chooseAvatar(
+      "guest"
+    );
+
+  };
+
+
+/* =====================================================
+   无效房间
+===================================================== */
+
+function showInvalidRoom(
+  text
+) {
+
+  if (
+    realtimeChannel
+  ) {
+
+    supabase
+      .removeChannel(
+        realtimeChannel
+      );
+
+    realtimeChannel =
+      null;
+
+  }
+
+
+  document.body.innerHTML = `
+
+    <div class="invalid-room">
+
+      <div>
+
+        <div style="
+          font-size:48px;
+          margin-bottom:20px;
+        ">
+          ∞
+        </div>
+
+
+        <h2>
+          Click.
+        </h2>
+
+
+        <p style="
+          color:#888;
+          line-height:1.6;
+        ">
+          ${text}
+        </p>
+
+
+        <button
+          id="backHomeBtn"
+          style="
+            margin-top:20px;
+            border:none;
+            background:#262626;
+            color:#fff;
+            padding:13px 24px;
+            border-radius:8px;
+            font-size:15px;
+          "
+        >
+          创建新的 Click.
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  document
+    .getElementById(
+      "backHomeBtn"
+    )
+    .onclick =
+    () => {
+
+      window.location.href =
+        window.location.origin +
+        window.location.pathname;
+
+    };
+
+}
+
+
+/* =====================================================
+   初始化 Click.
+===================================================== */
+
+async function startClick() {
+
+  /*
+    第一步：
+    获取 Supabase 匿名身份
+  */
+
+  const userReady =
+    await initUser();
+
+
+  if (!userReady) {
+
+    return;
+
+  }
+
+
+  /*
+    第二步：
+    判断 URL 有没有邀请房间
+  */
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+
+  const invitedRoom =
+    params.get(
+      "room"
+    );
+
+
+  /*
+    没有 room：优先恢复上一次使用的 Click.。
+    第一次打开才创建新的 Owner 房间。
+  */
+
+  if (!invitedRoom) {
+
+    const lastRoom = localStorage.getItem(CURRENT_ROOM_KEY);
+
+    if (lastRoom) {
+      const restored = await joinExistingRoom(lastRoom, true);
+      if (!restored) {
+        await createOwnerRoom();
+      }
+    } else {
+      await createOwnerRoom();
+    }
+
+  }
+
+
+  /*
+    有 room：
+    才进入已有房间。
+  */
+
+  else {
+
+    await joinExistingRoom(
+      invitedRoom
+    );
+
+  }
+
+
+  loadButtonsForRoom(roomId);
+  renderButtons();
+  renderConnectionList();
+  refreshGlobalSubscriptions();
+  showPage("buttonsPage");
+
+}
+
+
+/* =====================================================
+   ✦ CSS 美化管理器
+===================================================== */
+
+const STYLE_STORAGE_KEY =
+  "click_saved_styles";
+
+const ACTIVE_STYLE_KEY =
+  "click_active_style";
+
+let selectedStyleId =
+  localStorage.getItem(
+    ACTIVE_STYLE_KEY
+  ) || null;
+
+
+function getSavedStyles() {
+
+  try {
+
+    return JSON.parse(
+      localStorage.getItem(
+        STYLE_STORAGE_KEY
+      ) || "[]"
+    );
+
+  } catch {
+
+    return [];
+
+  }
+
+}
+
+
+function saveStyles(styles) {
+
+  localStorage.setItem(
+    STYLE_STORAGE_KEY,
+    JSON.stringify(styles)
+  );
+
+}
+
+
+function applyCustomStyle(css) {
+
+  let styleElement =
+    document.getElementById(
+      "click-custom-style"
+    );
+
+  if (!styleElement) {
+
+    styleElement =
+      document.createElement(
+        "style"
+      );
+
+    styleElement.id =
+      "click-custom-style";
+
+    document.head.appendChild(
+      styleElement
+    );
+
+  }
+
+  styleElement.textContent =
+    css || "";
+
+}
+
+
+function closeStyleMenu() {
+
+  styleMenu
+    .classList
+    .remove("open");
+
+  stylePickerBtn
+    .classList
+    .remove("open");
+
+  stylePickerBtn.setAttribute(
+    "aria-expanded",
+    "false"
+  );
+
+}
+
+
+function loadSavedStyles() {
+
+  const styles =
+    getSavedStyles();
+
+  const activeId =
+    localStorage.getItem(
+      ACTIVE_STYLE_KEY
+    );
+
+  selectedStyleId =
+    activeId || null;
+
+  styleMenu.innerHTML = "";
+
+  if (!styles.length) {
+
+    styleMenu.innerHTML =
+      `<div class="style-empty-option">还没有保存的美化</div>`;
+
+    stylePickerLabel.textContent =
+      "选择已保存的美化";
+
+    return;
+
+  }
+
+  let activeName =
+    "选择已保存的美化";
+
+  styles.forEach(
+    style => {
+
+      const option =
+        document.createElement("button");
+
+      option.type = "button";
+      option.className =
+        "style-option";
+
+      if (
+        style.id === activeId
+      ) {
+
+        option.classList.add(
+          "active"
+        );
+
+        activeName =
+          style.name;
+
+      }
+
+      option.innerHTML = `
+        <span>${escapeHtml(style.name)}</span>
+        <span class="style-option-check">
+          ${
+            style.id === activeId
+              ? "✓"
+              : ""
+          }
+        </span>
+      `;
+
+      option.addEventListener(
+        "click",
+        () => {
+
+          applySavedStyle(
+            style.id
+          );
+
+          closeStyleMenu();
+
+        }
+      );
+
+      let timer = null;
+
+      option.addEventListener(
+        "pointerdown",
+        () => {
+
+          timer = setTimeout(
+            () => {
+
+              deleteSavedStyle(
+                style.id
+              );
+
+            },
+            750
+          );
+
+        }
+      );
+
+      [
+        "pointerup",
+        "pointercancel",
+        "pointerleave"
+      ].forEach(
+        eventName => {
+
+          option.addEventListener(
+            eventName,
+            () => {
+
+              clearTimeout(timer);
+
+            }
+          );
+
+        }
+      );
+
+      styleMenu.appendChild(
+        option
+      );
+
+    }
+  );
+
+  stylePickerLabel.textContent =
+    activeName;
+
+}
+
+
+function applySavedStyle(id) {
+
+  const styles =
+    getSavedStyles();
+
+  const style =
+    styles.find(
+      item =>
+        item.id === id
+    );
+
+  if (!style) {
+
+    return;
+
+  }
+
+  selectedStyleId =
+    style.id;
+
+  styleCssInput.value =
+    style.css;
+
+  applyCustomStyle(
+    style.css
+  );
+
+  localStorage.setItem(
+    ACTIVE_STYLE_KEY,
+    style.id
+  );
+
+  loadSavedStyles();
+
+  showToast(
+    "美化已应用"
+  );
+
+}
+
+
+function deleteSavedStyle(id) {
+
+  const styles =
+    getSavedStyles();
+
+  const style =
+    styles.find(
+      item =>
+        item.id === id
+    );
+
+  if (!style) {
+
+    return;
+
+  }
+
+  const confirmed =
+    confirm(
+      `确定要删除「${style.name}」吗？`
+    );
+
+  if (!confirmed) {
+
+    return;
+
+  }
+
+  const newStyles =
+    styles.filter(
+      item =>
+        item.id !== id
+    );
+
+  saveStyles(
+    newStyles
+  );
+
+  if (
+    selectedStyleId === id
+  ) {
+
+    selectedStyleId = null;
+
+    localStorage.removeItem(
+      ACTIVE_STYLE_KEY
+    );
+
+    applyCustomStyle("");
+
+    styleCssInput.value =
+      "";
+
+  }
+
+  loadSavedStyles();
+
+  showToast(
+    "美化已删除"
+  );
+
+}
+
+
+stylePickerBtn.addEventListener(
+  "click",
+  event => {
+
+    event.stopPropagation();
+
+    const isOpen =
+      styleMenu.classList.contains(
+        "open"
+      );
+
+    if (isOpen) {
+
+      closeStyleMenu();
+
+      return;
+
+    }
+
+    loadSavedStyles();
+
+    styleMenu
+      .classList
+      .add("open");
+
+    stylePickerBtn
+      .classList
+      .add("open");
+
+    stylePickerBtn.setAttribute(
+      "aria-expanded",
+      "true"
+    );
+
+  }
+);
+
+
+document.addEventListener(
+  "click",
+  event => {
+
+    if (
+      !event.target.closest(
+        ".style-picker-wrap"
+      )
+    ) {
+
+      closeStyleMenu();
+
+    }
+
+  }
+);
+
+
+styleBtn.onclick =
+  () => {
+
+    loadSavedStyles();
+
+    styleModal
+      .classList
+      .add("active");
+
+  };
+
+
+closeStyleBtn.onclick =
+  () => {
+
+    styleModal
+      .classList
+      .remove("active");
+
+    closeStyleMenu();
+
+  };
+
+
+saveStyleBtn.addEventListener(
+  "click",
+  () => {
+
+    const css =
+      styleCssInput.value;
+
+    if (!css.trim()) {
+
+      alert(
+        "请先输入 CSS"
+      );
+
+      return;
+
+    }
+
+    const styles =
+      getSavedStyles();
+
+    const current =
+      styles.find(
+        item =>
+          item.id ===
+          selectedStyleId
+      );
+
+    styleNameInput.value =
+      current
+        ? current.name
+        : "";
+
+    styleNameModal
+      .classList
+      .add("active");
+
+    setTimeout(
+      () => {
+
+        styleNameInput.focus();
+
+      },
+      120
+    );
+
+  }
+);
+
+
+function closeStyleNameModal() {
+
+  styleNameModal
+    .classList
+    .remove("active");
+
+}
+
+
+cancelStyleNameBtn.onclick =
+  () => {
+
+    closeStyleNameModal();
+
+  };
+
+
+confirmStyleNameBtn.onclick =
+  () => {
+
+    const name =
+      styleNameInput.value.trim();
+
+    const css =
+      styleCssInput.value;
+
+    if (!name) {
+
+      alert(
+        "请先输入美化名称"
+      );
+
+      return;
+
+    }
+
+    if (!css.trim()) {
+
+      closeStyleNameModal();
+
+      return;
+
+    }
+
+    const styles =
+      getSavedStyles();
+
+    const currentIndex =
+      styles.findIndex(
+        item =>
+          item.id ===
+          selectedStyleId
+      );
+
+    const id =
+      currentIndex >= 0
+        ? selectedStyleId
+        : "style_" +
+          Date.now().toString();
+
+    const item = {
+      id: id,
+      name: name,
+      css: css
+    };
+
+    if (currentIndex >= 0) {
+
+      styles[currentIndex] =
+        item;
+
+    } else {
+
+      styles.push(item);
+
+    }
+
+    saveStyles(
+      styles
+    );
+
+    selectedStyleId =
+      id;
+
+    localStorage.setItem(
+      ACTIVE_STYLE_KEY,
+      id
+    );
+
+    applyCustomStyle(
+      css
+    );
+
+    loadSavedStyles();
+
+    closeStyleNameModal();
+
+    showToast(
+      currentIndex >= 0
+        ? "美化已更新"
+        : "美化已保存"
+    );
+
+  };
+
+
+styleNameInput.addEventListener(
+  "keydown",
+  event => {
+
+    if (
+      event.key ===
+      "Enter"
+    ) {
+
+      event.preventDefault();
+
+      confirmStyleNameBtn.click();
+
+    }
+
+  }
+);
+
+
+resetStyleBtn.addEventListener(
+  "click",
+  () => {
+
+    styleCssInput.value =
+      "";
+
+    selectedStyleId =
+      null;
+
+    styleNameInput.value =
+      "";
+
+    closeStyleMenu();
+
+    stylePickerLabel.textContent =
+      "选择已保存的美化";
+
+    showToast(
+      "编辑框已重置"
+    );
+
+  }
+);
+
+
+styleImportBtn.addEventListener(
+  "click",
+  () => {
+
+    styleImportInput.value =
+      "";
+
+    styleImportInput.click();
+
+  }
+);
+
+
+styleImportInput.addEventListener(
+  "change",
+  async event => {
+
+    const file =
+      event.target.files[0];
+
+    if (!file) {
+
+      return;
+
+    }
+
+    try {
+
+      const css =
+        await file.text();
+
+      styleCssInput.value =
+        css;
+
+      selectedStyleId =
+        null;
+
+      stylePickerLabel.textContent =
+        "选择已保存的美化";
+
+      showToast(
+        "CSS 已导入"
+      );
+
+    } catch {
+
+      alert(
+        "CSS 导入失败"
+      );
+
+    }
+
+  }
+);
+
+
+styleExportBtn.addEventListener(
+  "click",
+  () => {
+
+    const css =
+      styleCssInput.value;
+
+    if (!css.trim()) {
+
+      alert(
+        "当前没有可以导出的 CSS"
+      );
+
+      return;
+
+    }
+
+    const styles =
+      getSavedStyles();
+
+    const current =
+      styles.find(
+        item =>
+          item.id ===
+          selectedStyleId
+      );
+
+    const name =
+      current?.name ||
+      "click-style";
+
+    const blob =
+      new Blob(
+        [css],
+        {
+          type: "text/css"
+        }
+      );
+
+    const url =
+      URL.createObjectURL(
+        blob
+      );
+
+    const link =
+      document.createElement(
+        "a"
+      );
+
+    link.href =
+      url;
+
+    link.download =
+      name + ".css";
+
+    document.body.appendChild(
+      link
+    );
+
+    link.click();
+
+    link.remove();
+
+    URL.revokeObjectURL(
+      url
+    );
+
+    showToast(
+      "CSS 已导出"
+    );
+
+  }
+);
+
+
+function restoreActiveStyle() {
+
+  const activeId =
+    localStorage.getItem(
+      ACTIVE_STYLE_KEY
+    );
+
+  if (!activeId) {
+
+    return;
+
+  }
+
+  const styles =
+    getSavedStyles();
+
+  const style =
+    styles.find(
+      item =>
+        item.id === activeId
+    );
+
+  if (!style) {
+
+    localStorage.removeItem(
+      ACTIVE_STYLE_KEY
+    );
+
+    return;
+
+  }
+
+  selectedStyleId =
+    style.id;
+
+  applyCustomStyle(
+    style.css
+  );
+
+}
+
+
+restoreActiveStyle();
+
+
+/* =====================================================
+   启动
+===================================================== */
+
+startClick();
+
+</script>
+
+</body>
+
+</html>
